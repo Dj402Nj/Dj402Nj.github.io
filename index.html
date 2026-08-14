@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 مدیریت مالی هوشمند</title>
+    <style>
+        /* ظاهر مثل قبل */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            color: #fff;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px;
+        }
+        .card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 8px;
+        }
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            transition: 0.3s;
+            margin: 3px;
+        }
+        .btn:hover { opacity: 0.8; transform: scale(1.02); }
+        .btn-primary { background: #ffd700; color: #333; }
+        .btn-success { background: #00c853; color: #fff; }
+        .btn-danger { background: #ff1744; color: #fff; }
+        .btn-group { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+        .btn-group .btn { flex: 1; min-width: 50px; text-align: center; }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            margin: 4px 0;
+            font-size: 13px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+        .task-item, .loan-item, .savings-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            margin: 3px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+        .task-item.done label { text-decoration: line-through; opacity: 0.6; }
+        .task-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: #ffd700; }
+        .task-item label { flex: 1; }
+        .loan-item { border-right: 3px solid #ff5252; }
+        .loan-item.paid { border-right-color: #00e676; }
+        .loan-detail { font-size: 11px; opacity: 0.8; width: 100%; }
+        .stat {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 18px; font-weight: bold; color: #ffd700; }
+        .stat-number.green { color: #00e676; }
+        .stat-number.red { color: #ff5252; }
+        .stat-label { font-size: 10px; opacity: 0.8; }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin: 4px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+        .progress-fill.green { background: linear-gradient(90deg, #00c853, #00e676); }
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .tab-bar .btn {
+            flex: 1;
+            font-size: 11px;
+            padding: 6px 4px;
+            background: rgba(255,255,255,0.1);
+            min-width: 45px;
+        }
+        .tab-bar .btn.active { background: #ffd700; color: #333; }
+        .hidden { display: none; }
+        .sms-box {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 8px 0;
+            border-right: 3px solid #00ff88;
+        }
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 12px;
+        }
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+            border-radius: 20px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-content h2 { color: #ffd700; margin-bottom: 12px; }
+        .quote {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+            font-style: italic;
+            font-size: 13px;
+            margin-bottom: 15px;
+            border-right: 3px solid #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quote" id="quote">🌅 بارگذاری جمله...</div>
+
+        <div class="tab-bar">
+            <button class="btn active" onclick="showTab('dashboard')">📊 خانه</button>
+            <button class="btn" onclick="showTab('reports')">📈 گزارش</button>
+            <button class="btn" onclick="showTab('savings')">🏦 پس‌انداز</button>
+            <button class="btn" onclick="showTab('loans')">💰 اقساط</button>
+        </div>
+
+        <!-- ====== داشبورد ====== -->
+        <div id="tab-dashboard">
+            <div id="smsSection" style="display:none;" class="card">
+                <div class="card-title">📩 پیامک جدید</div>
+                <div class="sms-box">
+                    <p>💰 مبلغ: <strong id="smsAmount"></strong> ریال</p>
+                    <p>🏦 بانک: <strong id="smsBank"></strong></p>
+                    <p>📅 تاریخ: <strong id="smsDate"></strong></p>
+                </div>
+                <div class="card-title">❓ برای چیه؟</div>
+                <div class="btn-group">
+                    <button class="btn" onclick="setCategory('خوراک')">🍔 خوراک</button>
+                    <button class="btn" onclick="setCategory('قبض')">💡 قبض</button>
+                    <button class="btn" onclick="setCategory('حمل')">🚗 حمل</button>
+                    <button class="btn" onclick="setCategory('خرید')">🛍 خرید</button>
+                    <button class="btn" onclick="setCategory('سایر')">📦 سایر</button>
+                </div>
+                <input type="text" id="customCategoryInput" placeholder="دسته جدید...">
+                <button class="btn btn-primary" onclick="saveTransaction()" style="width:100%;margin-top:8px;">✅ ذخیره</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">✅ کارهای امروز <span id="todayDate" style="font-size:11px;opacity:0.6;"></span></div>
+                <div id="taskList"></div>
+                <input type="text" id="newTaskInput" placeholder="کار جدید...">
+                <button class="btn" onclick="addTask()" style="width:100%;margin-top:4px;">➕ افزودن</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📊 امروز</div>
+                <div class="stat">
+                    <div class="stat-item"><div class="stat-number red" id="todayExpense">۰</div><div class="stat-label">هزینه</div></div>
+                    <div class="stat-item"><div class="stat-number blue" id="todayCount">۰</div><div class="stat-label">تعداد</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== گزارشات ====== -->
+        <div id="tab-reports" class="hidden">
+            <div class="card">
+                <div class="card-title">📈 گزارشات</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="showReport('monthly')">📅 ماهانه</button>
+                    <button class="btn" onclick="showReport('yearly')">📅 سالانه</button>
+                </div>
+                <div id="reportContent" style="margin-top:12px;"><p style="opacity:0.6;">یک گزینه رو انتخاب کن</p></div>
+            </div>
+        </div>
+
+        <!-- ====== پس‌انداز ====== -->
+        <div id="tab-savings" class="hidden">
+            <div class="card">
+                <div class="card-title">🏦 پس‌انداز ماهانه</div>
+                <div id="savingsDisplay">
+                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;"><span>🎯 هدف:</span><strong id="monthlyGoal">۰</strong></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;"><span>💰 پس‌انداز:</span><strong id="savedSoFar" style="color:#00e676;">۰</strong></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;"><span>⏳ باقیمانده:</span><strong id="remainingSave" style="color:#ffd700;">۰</strong></div>
+                    <div class="progress-bar"><div class="progress-fill green" id="savingsProgress" style="width:0%;"></div></div>
+                    <div class="btn-group">
+                        <button class="btn" onclick="addSavings()">➕ ثبت</button>
+                        <button class="btn" onclick="setMonthlyGoal()">🎯 هدف</button>
+                        <button class="btn btn-success" onclick="showPurchaseModal()">🛍 خرید</button>
+                    </div>
+                    <div id="savingsHistory" style="margin-top:8px;max-height:120px;overflow-y:auto;"></div>
+                    <div id="purchasesList" style="margin-top:8px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== اقساط ====== -->
+        <div id="tab-loans" class="hidden">
+            <div class="card">
+                <div class="card-title">💰 اقساط</div>
+                <div id="loanList"></div>
+                <input type="text" id="loanName" placeholder="نام قسط (مثل بانک ملی)">
+                <input type="number" id="loanTotal" placeholder="مبلغ کل (ریال)">
+                <input type="number" id="loanPaid" placeholder="پرداخت شده (ریال)" value="0">
+                <input type="text" id="loanDue" placeholder="تاریخ قسط بعدی (مثل ۱۴۰۵/۰۶/۰۵)">
+                <button class="btn btn-primary" onclick="addLoan()" style="width:100%;margin-top:4px;">➕ افزودن قسط</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== مودال‌ها ====== -->
+    <div class="modal" id="forceModal">
+        <div class="modal-content">
+            <h2>⏳ لطفاً پاسخ بدید!</h2>
+            <p id="forceMessage">برای ادامه، اقدام مورد نیاز رو انجام بدید.</p>
+            <button class="btn btn-primary" onclick="closeModal()">باشه</button>
+        </div>
+    </div>
+
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <h2>🛍 ثبت خرید با پس‌انداز</h2>
+            <input type="text" id="purchaseItem" placeholder="چی خریدی؟ (مثلاً گوشی)">
+            <input type="number" id="purchaseAmount" placeholder="مبلغ (ریال)">
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="savePurchase()">✅ ثبت</button>
+                <button class="btn" onclick="closePurchaseModal()">❌ انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let db;
+        const DB_NAME = 'FinanceDB_v3';
+
+        function openDB() {
+            return new Promise((resolve) => {
+                const req = indexedDB.open(DB_NAME, 1);
+                req.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('transactions')) db.createObjectStore('transactions', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('tasks')) db.createObjectStore('tasks', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('loans')) db.createObjectStore('loans', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('savings')) db.createObjectStore('savings', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('goals')) db.createObjectStore('goals', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('purchases')) db.createObjectStore('purchases', { keyPath: 'id', autoIncrement: true });
+                };
+                req.onsuccess = () => { db = req.result; resolve(); };
+            });
+        }
+
+        function addData(store, data) {
+            return new Promise((resolve) => {
+                const tx = db.transaction(store, 'readwrite');
+                tx.objectStore(store).add(data).onsuccess = () => resolve();
+            });
+        }
+        function getAllData(store) {
+            return new Promise((resolve) => {
+                const tx = db.transaction(store, 'readonly');
+                tx.objectStore(store).getAll().onsuccess = (e) => resolve(e.target.result);
+            });
+        }
+        function updateData(store, data) {
+            return new Promise((resolve) => {
+                const tx = db.transaction(store, 'readwrite');
+                tx.objectStore(store).put(data).onsuccess = () => resolve();
+            });
+        }
+        function deleteData(store, id) {
+            return new Promise((resolve) => {
+                const tx = db.transaction(store, 'readwrite');
+                tx.objectStore(store).delete(id).onsuccess = () => resolve();
+            });
+        }
+
+        // ========== تاریخ شمسی ==========
+        function toPersianDate(date) {
+            return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(date));
+        }
+        function getTodayPersian() { return toPersianDate(new Date()); }
+        function getCurrentMonth() { return getTodayPersian().slice(0, 7); }
+        function getCurrentYear() { return getTodayPersian().slice(0, 4); }
+
+        // ========== تب‌ها ==========
+        function showTab(tab) {
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tab).classList.remove('hidden');
+            document.querySelectorAll('.tab-bar .btn').forEach(el => el.classList.remove('active'));
+            document.querySelector('.tab-bar .btn[onclick*="' + tab + '"]').classList.add('active');
+            if (tab === 'reports') showReport('monthly');
+            if (tab === 'savings') { loadSavings(); loadPurchases(); }
+            if (tab === 'loans') loadLoans();
+        }
+
+        // ========== جمله انگیزشی ==========
+        async function fetchQuote() {
+            try {
+                const res = await fetch('https://api.quotable.io/random');
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('quote').innerHTML = '🌅 "' + data.content + '" — ' + data.author;
+                } else throw new Error();
+            } catch {
+                document.getElementById('quote').innerHTML = '🌅 "Believe you can and you\'re halfway there." — Theodore Roosevelt';
+            }
+        }
+
+        // ========== پیامک ==========
+        let pendingSMS = null;
+
+        function receiveSMS(bank, amount, date) {
+            const persianDate = date ? toPersianDate(date) : getTodayPersian();
+            pendingSMS = { bank, amount, date: persianDate, category: null };
+            document.getElementById('smsSection').style.display = 'block';
+            document.getElementById('smsAmount').textContent = amount;
+            document.getElementById('smsBank').textContent = bank;
+            document.getElementById('smsDate').textContent = persianDate;
+            showForceModal('دسته‌بندی رو انتخاب کن!');
+            localStorage.setItem('pendingSMS', JSON.stringify(pendingSMS));
+        }
+
+        function setCategory(cat) {
+            if (pendingSMS) {
+                pendingSMS.category = cat;
+                localStorage.setItem('pendingSMS', JSON.stringify(pendingSMS));
+            }
+        }
+
+        async function saveTransaction() {
+            if (!pendingSMS || !pendingSMS.category) {
+                alert('دسته‌بندی رو انتخاب کن!');
+                return;
+            }
+            const custom = document.getElementById('customCategoryInput').value.trim();
+            await addData('transactions', {
+                bank: pendingSMS.bank,
+                amount: parseInt(pendingSMS.amount.replace(/,/g, '')),
+                date: pendingSMS.date,
+                category: custom || pendingSMS.category,
+                type: 'expense',
+                timestamp: new Date().toISOString(),
+                persianDate: getTodayPersian()
+            });
+            pendingSMS = null;
+            localStorage.removeItem('pendingSMS');
+            document.getElementById('smsSection').style.display = 'none';
+            document.getElementById('customCategoryInput').value = '';
+            updateTodayStats();
+            hideForceModal();
+            alert('✅ ذخیره شد!');
+        }
+
+        function checkPendingSMS() {
+            const saved = localStorage.getItem('pendingSMS');
+            if (saved) {
+                pendingSMS = JSON.parse(saved);
+                if (pendingSMS && !pendingSMS.category) {
+                    document.getElementById('smsSection').style.display = 'block';
+                    document.getElementById('smsAmount').textContent = pendingSMS.amount;
+                    document.getElementById('smsBank').textContent = pendingSMS.bank;
+                    document.getElementById('smsDate').textContent = pendingSMS.date;
+                    showForceModal('دسته‌بندی رو انتخاب کن!');
+                }
+            }
+        }
+
+        // ========== کارها ==========
+        async function loadTasks() {
+            const tasks = await getAllData('tasks');
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            const today = getTodayPersian();
+            const todayTasks = tasks.filter(t => t.date === today);
+            if (todayTasks.length === 0) {
+                list.innerHTML = '<p style="opacity:0.7;">✨ امروز کاری ثبت نشده</p>';
+                return;
+            }
+            todayTasks.forEach(task => {
+                const div = document.createElement('div');
+                div.className = 'task-item' + (task.done ? ' done' : '');
+                div.innerHTML = '<input type="checkbox" ' + (task.done ? 'checked' : '') + ' onchange="toggleTask(' + task.id + ', this.checked)"><label>' + task.text + '</label><span class="date-badge" style="font-size:9px;opacity:0.5;background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:10px;">' + task.date + '</span><button onclick="deleteTask(' + task.id + ')" style="background:rgba(255,0,0,0.3);border:none;color:#fff;border-radius:5px;padding:0 6px;cursor:pointer;">✕</button>';
+                list.appendChild(div);
+            });
+            
+            // فقط اگه کاری هست و همه تیک نخوردن، مودال رو نشون بده
+            const hasUndone = todayTasks.some(t => !t.done);
+            if (hasUndone && todayTasks.length > 0) {
+                showForceModal('لطفاً کارهای روزانه رو تیک بزنید!');
+            } else {
+                hideForceModal();
+            }
+        }
+
+        async function toggleTask(id, done) {
+            const tasks = await getAllData('tasks');
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.done = done;
+                await updateData('tasks', task);
+                loadTasks(); // این دوباره چک میکنه و اگه همه تیک خورده باشن مودال رو میبنده
+            }
+        }
+
+        async function deleteTask(id) {
+            if (confirm('حذف؟')) {
+                await deleteData('tasks', id);
+                loadTasks();
+            }
+        }
+
+        async function addTask() {
+            const input = document.getElementById('newTaskInput');
+            const text = input.value.trim();
+            if (!text) {
+                alert('متن کار رو بنویس!');
+                return;
+            }
+            await addData('tasks', { text, done: false, date: getTodayPersian() });
+            input.value = '';
+            loadTasks();
+        }
+
+        // ========== اقساط ==========
+        async function loadLoans() {
+            const loans = await getAllData('loans');
+            const list = document.getElementById('loanList');
+            list.innerHTML = '';
+            if (loans.length === 0) {
+                list.innerHTML = '<p style="opacity:0.7;">💳 هیچ قسطی ثبت نشده</p>';
+                return;
+            }
+            loans.forEach(loan => {
+                const rem = loan.total - loan.paid;
+                const prog = loan.total > 0 ? (loan.paid / loan.total) * 100 : 0;
+                const div = document.createElement('div');
+                div.className = 'loan-item' + (rem === 0 ? ' paid' : '');
+                div.innerHTML = '<strong>' + loan.name + '</strong><div class="loan-detail">کل: ' + loan.total.toLocaleString() + ' | پرداخت: ' + loan.paid.toLocaleString() + ' | باقی: <strong style="color:' + (rem === 0 ? '#00e676' : '#ff5252') + '">' + rem.toLocaleString() + '</strong></div><div class="progress-bar"><div class="progress-fill" style="width:' + Math.min(prog, 100) + '%"></div></div><div class="loan-detail">📅 ثبت: ' + (loan.createdAt ? toPersianDate(loan.createdAt) : 'نامشخص') + (loan.nextDue && loan.nextDue !== 'نامشخص' ? ' | قسط بعدی: ' + loan.nextDue : '') + '</div><div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;"><input type="number" id="payment_' + loan.id + '" placeholder="مبلغ" style="flex:1;min-width:60px;"><button class="btn btn-success" onclick="payLoan(' + loan.id + ')" style="padding:4px 8px;font-size:11px;">💳 پرداخت</button><button class="btn btn-danger" onclick="deleteLoan(' + loan.id + ')" style="padding:4px 8px;font-size:11px;">🗑️</button></div>';
+                list.appendChild(div);
+            });
+            checkLoanReminders(loans);
+        }
+
+        async function payLoan(id) {
+            const input = document.getElementById('payment_' + id);
+            const amount = parseInt(input.value);
+            if (!amount || amount <= 0) {
+                alert('مبلغ معتبر وارد کن!');
+                return;
+            }
+            const loans = await getAllData('loans');
+            const loan = loans.find(l => l.id === id);
+            if (loan) {
+                loan.paid += amount;
+                if (loan.paid > loan.total) loan.paid = loan.total;
+                await updateData('loans', loan);
+                loadLoans();
+                alert('✅ پرداخت ثبت شد!');
+            }
+        }
+        async function deleteLoan(id) {
+            if (confirm('حذف؟')) {
+                await deleteData('loans', id);
+                loadLoans();
+            }
+        }
+        async function addLoan() {
+            const name = document.getElementById('loanName').value.trim();
+            const total = parseInt(document.getElementById('loanTotal').value);
+            const paid = parseInt(document.getElementById('loanPaid').value) || 0;
+            const nextDue = document.getElementById('loanDue').value.trim();
+            if (!name || !total) {
+                alert('نام و مبلغ کل رو وارد کن!');
+                return;
+            }
+            await addData('loans', { name, total, paid, nextDue: nextDue || 'نامشخص', createdAt: new Date().toISOString() });
+            document.getElementById('loanName').value = '';
+            document.getElementById('loanTotal').value = '';
+            document.getElementById('loanPaid').value = '0';
+            document.getElementById('loanDue').value = '';
+            loadLoans();
+            alert('✅ قسط اضافه شد!');
+        }
+
+        function checkLoanReminders(loans) {
+            const today = new Date();
+            loans.forEach(loan => {
+                if (loan.nextDue && loan.nextDue !== 'نامشخص' && loan.paid < loan.total) {
+                    const parts = loan.nextDue.split('/');
+                    if (parts.length === 3) {
+                        const due = new Date(parseInt(parts[0]) + 1300, parseInt(parts[1]) - 1, parseInt(parts[2]));
+                        const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+                        if (diff === 3) alert('⚠️ ۳ روز تا قسط ' + loan.name + ' مونده! (' + loan.nextDue + ')');
+                        if (diff === 0) alert('⚠️ امروز موعد قسط ' + loan.name + ' هست!');
+                    }
+                }
+            });
+        }
+
+        // ========== پس‌انداز ==========
+        async function loadSavings() {
+            const savings = await getAllData('savings');
+            const goals = await getAllData('goals');
+            const now = new Date();
+            const goal = goals.find(g => g.month === now.getMonth() && g.year === now.getFullYear());
+            const monthlyGoal = goal ? goal.amount : 0;
+            const thisMonth = savings.filter(s => {
+                const d = new Date(s.date);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            });
+            const total = thisMonth.reduce((s, i) => s + i.amount, 0);
+            document.getElementById('monthlyGoal').textContent = monthlyGoal > 0 ? monthlyGoal.toLocaleString() + ' ریال' : 'ثبت نشده';
+            document.getElementById('savedSoFar').textContent = total.toLocaleString() + ' ریال';
+            document.getElementById('remainingSave').textContent = Math.max(0, monthlyGoal - total).toLocaleString() + ' ریال';
+            document.getElementById('savingsProgress').style.width = monthlyGoal > 0 ? Math.min((total / monthlyGoal) * 100, 100) + '%' : '0%';
+            const history = document.getElementById('savingsHistory');
+            history.innerHTML = '';
+            if (thisMonth.length === 0) history.innerHTML = '<p style="opacity:0.7;font-size:12px;">⏳ هنوز پس‌اندازی ثبت نشده</p>';
+            else thisMonth.slice(-5).reverse().forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'savings-item';
+                div.innerHTML = '<span class="date" style="opacity:0.6;font-size:10px;">📅 ' + toPersianDate(s.date) + '</span><span class="amount" style="color:#00e676;font-weight:bold;">+' + s.amount.toLocaleString() + ' ریال</span>';
+                history.appendChild(div);
+            });
+        }
+
+        async function addSavings() {
+            const amount = prompt('💰 چقدر پس‌انداز کردی؟ (ریال)');
+            if (!amount) return;
+            const num = parseInt(amount.replace(/,/g, ''));
+            if (!num || num <= 0) {
+                alert('عدد معتبر وارد کن!');
+                return;
+            }
+            await addData('savings', { amount: num, date: new Date().toISOString() });
+            loadSavings();
+            alert('✅ پس‌انداز ثبت شد!');
+        }
+        async function setMonthlyGoal() {
+            const amount = prompt('🎯 هدف پس‌انداز این ماه (ریال):');
+            if (!amount) return;
+            const num = parseInt(amount.replace(/,/g, ''));
+            if (!num || num <= 0) {
+                alert('عدد معتبر وارد کن!');
+                return;
+            }
+            const now = new Date();
+            const goals = await getAllData('goals');
+            const existing = goals.find(g => g.month === now.getMonth() && g.year === now.getFullYear());
+            if (existing) await deleteData('goals', existing.id);
+            await addData('goals', { month: now.getMonth(), year: now.getFullYear(), amount: num });
+            loadSavings();
+            alert('✅ هدف ثبت شد!');
+        }
+
+        // ========== خرید ==========
+        async function loadPurchases() {
+            const purchases = await getAllData('purchases');
+            const list = document.getElementById('purchasesList');
+            list.innerHTML = '';
+            if (purchases.length === 0) {
+                list.innerHTML = '<p style="opacity:0.5;font-size:12px;">🛍 هنوز خریدی ثبت نشده</p>';
+                return;
+            }
+            purchases.slice(-5).reverse().forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'savings-item';
+                div.innerHTML = '<span>🛍 ' + p.item + '</span><span class="amount" style="color:#00e676;font-weight:bold;">' + p.amount.toLocaleString() + ' ریال</span><span class="date" style="opacity:0.6;font-size:10px;">' + (p.date ? toPersianDate(p.date) : getTodayPersian()) + '</span>';
+                list.appendChild(div);
+            });
+        }
+        function showPurchaseModal() { document.getElementById('purchaseModal').style.display = 'flex'; }
+        function closePurchaseModal() { document.getElementById('purchaseModal').style.display = 'none'; }
+        async function savePurchase() {
+            const item = document.getElementById('purchaseItem').value.trim();
+            const amount = parseInt(document.getElementById('purchaseAmount').value);
+            if (!item || !amount) {
+                alert('اسم و مبلغ رو وارد کن!');
+                return;
+            }
+            await addData('purchases', { item, amount, date: new Date().toISOString() });
+            document.getElementById('purchaseItem').value = '';
+            document.getElementById('purchaseAmount').value = '';
+            closePurchaseModal();
+            loadPurchases();
+            alert('✅ خرید ثبت شد!');
+        }
+
+        // ========== گزارشات ==========
+        async function showReport(type) {
+            const transactions = await getAllData('transactions');
+            const savings = await getAllData('savings');
+            const content = document.getElementById('reportContent');
+            let filtered = [];
+            let title = '';
+            if (type === 'monthly') {
+                const month = getCurrentMonth();
+                filtered = transactions.filter(t => t.persianDate && t.persianDate.startsWith(month));
+                title = '📅 گزارش ماه ' + month;
+            } else if (type === 'yearly') {
+                const year = getCurrentYear();
+                filtered = transactions.filter(t => t.persianDate && t.persianDate.startsWith(year));
+                title = '📅 گزارش سال ' + year;
+            }
+            const total = filtered.reduce((s, t) => s + t.amount, 0);
+            const cats = {};
+            filtered.forEach(t => { cats[t.category] = (cats[t.category] || 0) + t.amount; });
+            let html = '<p style="font-weight:bold;">' + title + '</p><p>مجموع هزینه: ' + total.toLocaleString() + ' ریال</p><p style="font-size:12px;opacity:0.7;">تعداد: ' + filtered.length + ' تراکنش</p>';
+            if (Object.keys(cats).length > 0) {
+                html += '<div style="margin-top:8px;">';
+                for (const [cat, amt] of Object.entries(cats)) {
+                    html += '<div class="report-item"><span class="cat">' + cat + '</span><span class="amt">' + amt.toLocaleString() + ' ریال</span></div>';
+                }
+                html += '</div>';
+            } else {
+                html += '<p style="opacity:0.6;margin-top:8px;">هیچ هزینه‌ای ثبت نشده</p>';
+            }
+            const now = new Date();
+            const monthSavings = savings.filter(s => {
+                const d = new Date(s.date);
+                if (type === 'monthly') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                else return d.getFullYear() === now.getFullYear();
+            });
+            const totalSave = monthSavings.reduce((s, i) => s + i.amount, 0);
+            html += '<p style="margin-top:8px;">🏦 پس‌انداز: ' + totalSave.toLocaleString() + ' ریال</p>';
+            content.innerHTML = html;
+        }
+
+        // ========== آمار امروز ==========
+        async function updateTodayStats() {
+            const transactions = await getAllData('transactions');
+            const today = getTodayPersian();
+            const todayTxs = transactions.filter(t => t.persianDate === today);
+            const total = todayTxs.reduce((s, t) => s + t.amount, 0);
+            document.getElementById('todayExpense').textContent = total.toLocaleString();
+            document.getElementById('todayCount').textContent = todayTxs.length;
+        }
+
+        // ========== مودال اجبار (اصلاح‌شده) ==========
+        function showForceModal(msg) {
+            document.getElementById('forceMessage').textContent = msg || 'برای ادامه، اقدام مورد نیاز رو انجام بدید.';
+            document.getElementById('forceModal').style.display = 'flex';
+        }
+        
+        function hideForceModal() {
+            document.getElementById('forceModal').style.display = 'none';
+        }
+
+        // ✅ اصلاح اینجا: وقتی دکمه "باشه" رو میزنه، فقط مودال رو میبنده
+        function closeModal() {
+            hideForceModal();
+            // دیگه کاری نمیکنه، کاربر خودش کارها رو تیک میزنه
+        }
+
+        // ========== شروع ==========
+        async function init() {
+            await openDB();
+            document.getElementById('todayDate').textContent = getTodayPersian();
+            loadTasks();
+            loadLoans();
+            loadSavings();
+            loadPurchases();
+            updateTodayStats();
+            checkPendingSMS();
+            fetchQuote();
+        }
+
+        init();
+        setInterval(fetchQuote, 3600000);
+        setInterval(updateTodayStats, 60000);
+    </script>
+</body>
+</html>

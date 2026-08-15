@@ -318,13 +318,44 @@
             border-radius: 10px;
             margin-top: 8px;
         }
+        .month-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .month-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 8px;
+            margin: 3px 0;
+            font-size: 13px;
+        }
+        .item-row .del-btn {
+            background: #ff1744;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 2px 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="quote" id="quote">🌙 Welcome to Mehdiar</div>
 
-        <!-- ====== Info Section ====== -->
+        <!-- ====== Date Info ====== -->
         <div class="card">
             <div class="card-title">📅 Today</div>
             <div id="dateInfo" class="info-grid">
@@ -377,20 +408,28 @@
                 <button class="btn btn-primary" onclick="saveTransaction()" style="width:100%;margin-top:8px;">✅ Save</button>
             </div>
 
-            <!-- ====== Add Income / Expense ====== -->
+            <!-- ====== Income / Expense by Month ====== -->
             <div class="card">
-                <div class="card-title">💰 Add Income / Expense</div>
-                <input type="number" id="amountInput" placeholder="Amount (IRR)...">
-                <input type="text" id="descInput" placeholder="Description...">
+                <div class="card-title">💰 Income / Expense by Month</div>
+                <div id="incomeExpenseContainer"></div>
+                <div style="display:flex;gap:5px;margin-top:10px;">
+                    <input type="number" id="amountInput" placeholder="Amount (IRR)" style="flex:1;">
+                    <input type="text" id="descInput" placeholder="Desc" style="flex:1;">
+                </div>
                 <div class="btn-group">
-                    <button class="btn btn-success" onclick="addIncome()" style="flex:1;">➕ Income</button>
-                    <button class="btn btn-danger" onclick="addExpense()" style="flex:1;">➖ Expense</button>
+                    <button class="btn btn-success" onclick="addIncome()">➕ Income</button>
+                    <button class="btn btn-danger" onclick="addExpense()">➖ Expense</button>
                 </div>
             </div>
 
-            <!-- ====== New Categories ====== -->
+            <!-- ====== Specific Expenses (Rent, Faezeh, Personal) ====== -->
             <div class="card">
                 <div class="card-title">🏠 Specific Expenses</div>
+                <div id="specificExpensesContainer"></div>
+                <div style="display:flex;gap:5px;margin-top:10px;">
+                    <input type="number" id="specAmountInput" placeholder="Amount (IRR)" style="flex:1;">
+                    <input type="text" id="specDescInput" placeholder="Desc" style="flex:1;">
+                </div>
                 <div class="btn-group">
                     <button class="btn btn-danger" onclick="addSpecificExpense('Rent')">🏠 Rent</button>
                     <button class="btn btn-danger" onclick="addSpecificExpense('Faezeh')">👩 Faezeh</button>
@@ -399,7 +438,7 @@
             </div>
 
             <div class="card">
-                <div class="card-title">✅ Today's Tasks <span id="todayDateLabel" style="font-size:11px;opacity:0.6;"></span></div>
+                <div class="card-title">✅ Today's Tasks</div>
                 <div id="taskList"></div>
                 <input type="text" id="newTaskInput" placeholder="New task...">
                 <button class="btn" onclick="addTask()" style="width:100%;margin-top:4px;">➕ Add Task</button>
@@ -575,7 +614,7 @@
         }
 
         // ============================================================
-        //  Persian Date
+        //  Persian Date & Info
         // ============================================================
         function toPersianDate(date) {
             return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(
@@ -588,9 +627,6 @@
 
         function getCurrentYear() { return getTodayPersian().slice(0, 4); }
 
-        // ============================================================
-        //  Date Info
-        // ============================================================
         function updateDateInfo() {
             const now = new Date();
             const start = new Date(now.getFullYear(), 0, 1);
@@ -606,7 +642,6 @@
             document.getElementById('daysRemaining').textContent = daysRemaining;
             document.getElementById('weeksRemaining').textContent = weeksRemaining;
 
-            // Motivation
             const msgs = [
                 '🔥 Get up and go after your goal!',
                 '💪 Every day is a new chance!',
@@ -618,7 +653,6 @@
                 '🎯 Stay focused, stay strong!'
             ];
             document.getElementById('motivationMessage').textContent = msgs[daysPassed % msgs.length];
-            document.getElementById('todayDateLabel').textContent = getTodayPersian();
         }
 
         // ============================================================
@@ -633,6 +667,8 @@
             if (tab === 'savings') { loadSavings();
                 loadPurchases(); }
             if (tab === 'loans') loadLoans();
+            if (tab === 'dashboard') { renderIncomeExpense();
+                renderSpecificExpenses(); }
         }
 
         // ============================================================
@@ -651,8 +687,50 @@
         }
 
         // ============================================================
-        //  Income / Expense
+        //  Income / Expense by Month (with Edit & Delete)
         // ============================================================
+        async function renderIncomeExpense() {
+            const transactions = await getAllData('transactions');
+            const container = document.getElementById('incomeExpenseContainer');
+            container.innerHTML = '';
+
+            const months = {};
+            transactions.forEach(t => {
+                const month = t.persianDate.slice(0, 7);
+                if (!months[month]) months[month] = [];
+                months[month].push(t);
+            });
+
+            const sortedMonths = Object.keys(months).sort();
+            if (sortedMonths.length === 0) {
+                container.innerHTML = '<p style="opacity:0.7;">No data yet.</p>';
+                return;
+            }
+
+            sortedMonths.forEach(month => {
+                const box = document.createElement('div');
+                box.className = 'month-box';
+                const totalIncome = months[month].filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+                const totalExpense = months[month].filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+
+                box.innerHTML = `<div class="month-title">📅 ${month} (Income: ${totalIncome} | Expense: ${totalExpense})</div>`;
+                months[month].forEach(t => {
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    const typeLabel = t.type === 'income' ? '💰 Income' : '💸 Expense';
+                    row.innerHTML = `
+                            <span>${typeLabel} - ${t.amount.toLocaleString()} IRR (${t.description || ''})</span>
+                            <div>
+                                <button class="del-btn" onclick="editTransaction(${t.id})">✏️</button>
+                                <button class="del-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
+                            </div>
+                        `;
+                    box.appendChild(row);
+                });
+                container.appendChild(box);
+            });
+        }
+
         async function addIncome() {
             const amount = parseInt(document.getElementById('amountInput').value);
             const desc = document.getElementById('descInput').value.trim() || 'Income';
@@ -667,6 +745,7 @@
             });
             document.getElementById('amountInput').value = '';
             document.getElementById('descInput').value = '';
+            renderIncomeExpense();
             updateTodayStats();
             alert('✅ Income added!');
         }
@@ -685,29 +764,123 @@
             });
             document.getElementById('amountInput').value = '';
             document.getElementById('descInput').value = '';
+            renderIncomeExpense();
             updateTodayStats();
             alert('✅ Expense added!');
         }
 
+        async function editTransaction(id) {
+            const transactions = await getAllData('transactions');
+            const t = transactions.find(tx => tx.id === id);
+            if (!t) return;
+            const newAmount = prompt('Edit amount (IRR):', t.amount);
+            if (newAmount === null) return;
+            const numAmount = parseInt(newAmount);
+            if (!numAmount || numAmount <= 0) { alert('Invalid amount!'); return; }
+            const newDesc = prompt('Edit description:', t.description) || t.description;
+            t.amount = numAmount;
+            t.description = newDesc;
+            await updateData('transactions', t);
+            renderIncomeExpense();
+            updateTodayStats();
+            alert('✅ Updated!');
+        }
+
+        async function deleteTransaction(id) {
+            if (!confirm('Delete this item?')) return;
+            await deleteData('transactions', id);
+            renderIncomeExpense();
+            updateTodayStats();
+            alert('🗑️ Deleted!');
+        }
+
         // ============================================================
-        //  Specific Expenses (Rent, Faezeh, Personal)
+        //  Specific Expenses (Rent, Faezeh, Personal) with Delete
         // ============================================================
+        async function renderSpecificExpenses() {
+            const transactions = await getAllData('transactions');
+            const container = document.getElementById('specificExpensesContainer');
+            container.innerHTML = '';
+
+            const categories = ['Rent', 'Faezeh', 'Personal'];
+            const data = transactions.filter(t => categories.includes(t.category));
+
+            if (data.length === 0) {
+                container.innerHTML = '<p style="opacity:0.7;">No specific expenses yet.</p>';
+                return;
+            }
+
+            const grouped = {};
+            data.forEach(t => {
+                const key = t.category + '_' + t.persianDate.slice(0, 7);
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(t);
+            });
+
+            Object.keys(grouped).sort().forEach(key => {
+                const [cat, month] = key.split('_');
+                const box = document.createElement('div');
+                box.className = 'month-box';
+                const total = grouped[key].reduce((s, t) => s + t.amount, 0);
+                box.innerHTML = `<div class="month-title">🏠 ${cat} - ${month} (Total: ${total.toLocaleString()} IRR)</div>`;
+                grouped[key].forEach(t => {
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    row.innerHTML = `
+                            <span>${t.amount.toLocaleString()} IRR - ${t.description || ''}</span>
+                            <div>
+                                <button class="del-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
+                                <button class="del-btn" onclick="deleteSpecificExpense(${t.id})">🗑️</button>
+                            </div>
+                        `;
+                    box.appendChild(row);
+                });
+                container.appendChild(box);
+            });
+        }
+
         async function addSpecificExpense(category) {
-            const amount = prompt(`💰 Amount for ${category} (IRR):`);
-            if (!amount) return;
-            const num = parseInt(amount.replace(/,/g, ''));
-            if (!num || num <= 0) { alert('Enter a valid amount!'); return; }
-            const desc = prompt(`📝 Description for ${category} (optional):`) || category;
+            const amount = parseInt(document.getElementById('specAmountInput').value);
+            const desc = document.getElementById('specDescInput').value.trim() || category;
+            if (!amount || amount <= 0) { alert('Enter a valid amount!'); return; }
             await addData('transactions', {
-                amount: num,
+                amount: amount,
                 description: desc,
                 type: 'expense',
                 category: category,
                 persianDate: getTodayPersian(),
                 timestamp: new Date().toISOString()
             });
+            document.getElementById('specAmountInput').value = '';
+            document.getElementById('specDescInput').value = '';
+            renderSpecificExpenses();
             updateTodayStats();
-            alert(`✅ ${category} expense added!`);
+            alert(`✅ ${category} added!`);
+        }
+
+        async function editSpecificExpense(id) {
+            const transactions = await getAllData('transactions');
+            const t = transactions.find(tx => tx.id === id);
+            if (!t) return;
+            const newAmount = prompt('Edit amount (IRR):', t.amount);
+            if (newAmount === null) return;
+            const numAmount = parseInt(newAmount);
+            if (!numAmount || numAmount <= 0) { alert('Invalid amount!'); return; }
+            const newDesc = prompt('Edit description:', t.description) || t.description;
+            t.amount = numAmount;
+            t.description = newDesc;
+            await updateData('transactions', t);
+            renderSpecificExpenses();
+            updateTodayStats();
+            alert('✅ Updated!');
+        }
+
+        async function deleteSpecificExpense(id) {
+            if (!confirm('Delete this item?')) return;
+            await deleteData('transactions', id);
+            renderSpecificExpenses();
+            updateTodayStats();
+            alert('🗑️ Deleted!');
         }
 
         // ============================================================
@@ -752,6 +925,8 @@
             localStorage.removeItem('pendingSMS');
             document.getElementById('smsSection').style.display = 'none';
             document.getElementById('customCategoryInput').value = '';
+            renderIncomeExpense();
+            renderSpecificExpenses();
             updateTodayStats();
             hideForceModal();
             alert('✅ Saved!');
@@ -1215,6 +1390,8 @@
             loadLoans();
             loadSavings();
             loadPurchases();
+            renderIncomeExpense();
+            renderSpecificExpenses();
             updateTodayStats();
             checkPendingSMS();
             fetchQuote();
@@ -1226,4 +1403,4 @@
         setInterval(updateDateInfo, 60000);
     </script>
 </body>
-</html>
+    </html>

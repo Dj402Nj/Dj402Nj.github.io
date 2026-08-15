@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-   
-    <meta name="application-name" content="مدیریت مالی">>
-</head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="application-name" content="مدیریت مالی هوشمند">
+    <meta name="apple-mobile-web-app-title" content="مدیریت مالی">
+    <meta name="theme-color" content="#667eea">
     <title>💰 مدیریت مالی هوشمند</title>
     <style>
-        /* ظاهر مثل قبل */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ====== ظاهر کلی ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: Tahoma, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,13 +24,14 @@
         .container {
             max-width: 500px;
             margin: 0 auto;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 15px;
         }
+        /* ====== کارت‌ها ====== */
         .card {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 15px;
             padding: 12px;
             margin-bottom: 12px;
@@ -37,6 +42,7 @@
             color: #ffd700;
             margin-bottom: 8px;
         }
+        /* ====== دکمه‌ها ====== */
         .btn {
             padding: 8px 14px;
             border: none;
@@ -44,72 +50,102 @@
             font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: #fff;
             transition: 0.3s;
             margin: 3px;
         }
-        .btn:hover { opacity: 0.8; transform: scale(1.02); }
-        .btn-primary { background: #ffd700; color: #333; }
-        .btn-success { background: #00c853; color: #fff; }
-        .btn-danger { background: #ff1744; color: #fff; }
-        .btn-group { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-        .btn-group .btn { flex: 1; min-width: 50px; text-align: center; }
-        input, select {
+        .btn:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
+        .btn-primary {
+            background: #ffd700;
+            color: #333;
+        }
+        .btn-success {
+            background: #00c853;
+            color: #fff;
+        }
+        .btn-danger {
+            background: #ff1744;
+            color: #fff;
+        }
+        .btn-group {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .btn-group .btn {
+            flex: 1;
+            min-width: 50px;
+            text-align: center;
+        }
+        /* ====== ورودی‌ها ====== */
+        input,
+        select {
             width: 100%;
             padding: 8px;
             border: none;
             border-radius: 8px;
             margin: 4px 0;
             font-size: 13px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             color: #333;
         }
-        .task-item, .loan-item, .savings-item {
+        /* ====== لیست کارها ====== */
+        .task-item {
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 6px 8px;
             margin: 3px 0;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             font-size: 12px;
             flex-wrap: wrap;
         }
-        .task-item.done label { text-decoration: line-through; opacity: 0.6; }
-        .task-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: #ffd700; }
-        .task-item label { flex: 1; }
-        .loan-item { border-right: 3px solid #ff5252; }
-        .loan-item.paid { border-right-color: #00e676; }
-        .loan-detail { font-size: 11px; opacity: 0.8; width: 100%; }
+        .task-item.done label {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .task-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #ffd700;
+        }
+        .task-item label {
+            flex: 1;
+        }
+        /* ====== آمار ====== */
         .stat {
             display: flex;
             justify-content: space-around;
             padding: 8px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             margin: 8px 0;
         }
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 18px; font-weight: bold; color: #ffd700; }
-        .stat-number.green { color: #00e676; }
-        .stat-number.red { color: #ff5252; }
-        .stat-label { font-size: 10px; opacity: 0.8; }
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            margin: 4px 0;
-            overflow: hidden;
+        .stat-item {
+            text-align: center;
         }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ff6b6b);
-            border-radius: 10px;
-            transition: width 0.5s;
+        .stat-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd700;
         }
-        .progress-fill.green { background: linear-gradient(90deg, #00c853, #00e676); }
+        .stat-number.red {
+            color: #ff5252;
+        }
+        .stat-number.green {
+            color: #00e676;
+        }
+        .stat-label {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+        /* ====== تب‌ها ====== */
         .tab-bar {
             display: flex;
             gap: 4px;
@@ -120,34 +156,48 @@
             flex: 1;
             font-size: 11px;
             padding: 6px 4px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             min-width: 45px;
         }
-        .tab-bar .btn.active { background: #ffd700; color: #333; }
-        .hidden { display: none; }
-        .sms-box {
-            background: rgba(255,255,255,0.2);
-            padding: 12px;
-            border-radius: 10px;
-            margin: 8px 0;
-            border-right: 3px solid #00ff88;
+        .tab-bar .btn.active {
+            background: #ffd700;
+            color: #333;
         }
-        .report-item {
+        .hidden {
+            display: none;
+        }
+        /* ====== پس‌انداز ====== */
+        .savings-item {
             display: flex;
             justify-content: space-between;
             padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 12px;
         }
+        /* ====== نقل قول ====== */
+        .quote {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+            font-style: italic;
+            font-size: 13px;
+            margin-bottom: 15px;
+            border-right: 3px solid #ffd700;
+        }
+        /* ====== مودال ====== */
         .modal {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 999;
+            backdrop-filter: blur(5px);
         }
         .modal-content {
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -157,23 +207,79 @@
             width: 90%;
             text-align: center;
         }
-        .modal-content h2 { color: #ffd700; margin-bottom: 12px; }
-        .quote {
-            background: rgba(255,255,255,0.2);
-            padding: 10px;
-            border-radius: 15px;
-            text-align: center;
-            font-style: italic;
-            font-size: 13px;
-            margin-bottom: 15px;
-            border-right: 3px solid #ffd700;
+        .modal-content h2 {
+            color: #ffd700;
+            margin-bottom: 12px;
+        }
+        .modal-content .btn {
+            margin: 4px;
+        }
+        .loan-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            margin: 3px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            flex-wrap: wrap;
+            border-right: 3px solid #ff5252;
+        }
+        .loan-item.paid {
+            border-right-color: #00e676;
+        }
+        .loan-detail {
+            font-size: 11px;
+            opacity: 0.8;
+            width: 100%;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 4px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+        .progress-fill.green {
+            background: linear-gradient(90deg, #00c853, #00e676);
+        }
+        .sms-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 8px 0;
+            border-right: 3px solid #00ff88;
+        }
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+        }
+        .date-badge {
+            font-size: 9px;
+            opacity: 0.5;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- ====== جمله انگیزشی ====== -->
         <div class="quote" id="quote">🌅 بارگذاری جمله...</div>
 
+        <!-- ====== تب‌ها ====== -->
         <div class="tab-bar">
             <button class="btn active" onclick="showTab('dashboard')">📊 خانه</button>
             <button class="btn" onclick="showTab('reports')">📈 گزارش</button>
@@ -181,8 +287,9 @@
             <button class="btn" onclick="showTab('loans')">💰 اقساط</button>
         </div>
 
-        <!-- ====== داشبورد ====== -->
+        <!-- ====== تب داشبورد ====== -->
         <div id="tab-dashboard">
+            <!-- بخش پیامک -->
             <div id="smsSection" style="display:none;" class="card">
                 <div class="card-title">📩 پیامک جدید</div>
                 <div class="sms-box">
@@ -202,6 +309,7 @@
                 <button class="btn btn-primary" onclick="saveTransaction()" style="width:100%;margin-top:8px;">✅ ذخیره</button>
             </div>
 
+            <!-- کارهای روزانه -->
             <div class="card">
                 <div class="card-title">✅ کارهای امروز <span id="todayDate" style="font-size:11px;opacity:0.6;"></span></div>
                 <div id="taskList"></div>
@@ -209,16 +317,23 @@
                 <button class="btn" onclick="addTask()" style="width:100%;margin-top:4px;">➕ افزودن</button>
             </div>
 
+            <!-- آمار امروز -->
             <div class="card">
                 <div class="card-title">📊 امروز</div>
                 <div class="stat">
-                    <div class="stat-item"><div class="stat-number red" id="todayExpense">۰</div><div class="stat-label">هزینه</div></div>
-                    <div class="stat-item"><div class="stat-number blue" id="todayCount">۰</div><div class="stat-label">تعداد</div></div>
+                    <div class="stat-item">
+                        <div class="stat-number red" id="todayExpense">۰</div>
+                        <div class="stat-label">هزینه</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number green" id="todayCount">۰</div>
+                        <div class="stat-label">تعداد</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ====== گزارشات ====== -->
+        <!-- ====== تب گزارشات ====== -->
         <div id="tab-reports" class="hidden">
             <div class="card">
                 <div class="card-title">📈 گزارشات</div>
@@ -226,19 +341,32 @@
                     <button class="btn btn-primary" onclick="showReport('monthly')">📅 ماهانه</button>
                     <button class="btn" onclick="showReport('yearly')">📅 سالانه</button>
                 </div>
-                <div id="reportContent" style="margin-top:12px;"><p style="opacity:0.6;">یک گزینه رو انتخاب کن</p></div>
+                <div id="reportContent" style="margin-top:12px;">
+                    <p style="opacity:0.6;">یک گزینه رو انتخاب کن</p>
+                </div>
             </div>
         </div>
 
-        <!-- ====== پس‌انداز ====== -->
+        <!-- ====== تب پس‌انداز ====== -->
         <div id="tab-savings" class="hidden">
             <div class="card">
                 <div class="card-title">🏦 پس‌انداز ماهانه</div>
                 <div id="savingsDisplay">
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;"><span>🎯 هدف:</span><strong id="monthlyGoal">۰</strong></div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;"><span>💰 پس‌انداز:</span><strong id="savedSoFar" style="color:#00e676;">۰</strong></div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;"><span>⏳ باقیمانده:</span><strong id="remainingSave" style="color:#ffd700;">۰</strong></div>
-                    <div class="progress-bar"><div class="progress-fill green" id="savingsProgress" style="width:0%;"></div></div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
+                        <span>🎯 هدف:</span>
+                        <strong id="monthlyGoal">۰</strong>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
+                        <span>💰 پس‌انداز:</span>
+                        <strong id="savedSoFar" style="color:#00e676;">۰</strong>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
+                        <span>⏳ باقیمانده:</span>
+                        <strong id="remainingSave" style="color:#ffd700;">۰</strong>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill green" id="savingsProgress" style="width:0%;"></div>
+                    </div>
                     <div class="btn-group">
                         <button class="btn" onclick="addSavings()">➕ ثبت</button>
                         <button class="btn" onclick="setMonthlyGoal()">🎯 هدف</button>
@@ -250,7 +378,7 @@
             </div>
         </div>
 
-        <!-- ====== اقساط ====== -->
+        <!-- ====== تب اقساط ====== -->
         <div id="tab-loans" class="hidden">
             <div class="card">
                 <div class="card-title">💰 اقساط</div>
@@ -286,6 +414,9 @@
     </div>
 
     <script>
+        // ============================================================
+        //  دیتابیس
+        // ============================================================
         let db;
         const DB_NAME = 'FinanceDB_v3';
 
@@ -294,14 +425,21 @@
                 const req = indexedDB.open(DB_NAME, 1);
                 req.onupgradeneeded = (e) => {
                     const db = e.target.result;
-                    if (!db.objectStoreNames.contains('transactions')) db.createObjectStore('transactions', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('tasks')) db.createObjectStore('tasks', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('loans')) db.createObjectStore('loans', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('savings')) db.createObjectStore('savings', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('goals')) db.createObjectStore('goals', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('purchases')) db.createObjectStore('purchases', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('transactions')) db.createObjectStore('transactions', { keyPath: 'id',
+                        autoIncrement: true });
+                    if (!db.objectStoreNames.contains('tasks')) db.createObjectStore('tasks', { keyPath: 'id',
+                        autoIncrement: true });
+                    if (!db.objectStoreNames.contains('loans')) db.createObjectStore('loans', { keyPath: 'id',
+                        autoIncrement: true });
+                    if (!db.objectStoreNames.contains('savings')) db.createObjectStore('savings', { keyPath: 'id',
+                        autoIncrement: true });
+                    if (!db.objectStoreNames.contains('goals')) db.createObjectStore('goals', { keyPath: 'id',
+                        autoIncrement: true });
+                    if (!db.objectStoreNames.contains('purchases')) db.createObjectStore('purchases', { keyPath: 'id',
+                        autoIncrement: true });
                 };
-                req.onsuccess = () => { db = req.result; resolve(); };
+                req.onsuccess = () => { db = req.result;
+                    resolve(); };
             });
         }
 
@@ -311,18 +449,21 @@
                 tx.objectStore(store).add(data).onsuccess = () => resolve();
             });
         }
+
         function getAllData(store) {
             return new Promise((resolve) => {
                 const tx = db.transaction(store, 'readonly');
                 tx.objectStore(store).getAll().onsuccess = (e) => resolve(e.target.result);
             });
         }
+
         function updateData(store, data) {
             return new Promise((resolve) => {
                 const tx = db.transaction(store, 'readwrite');
                 tx.objectStore(store).put(data).onsuccess = () => resolve();
             });
         }
+
         function deleteData(store, id) {
             return new Promise((resolve) => {
                 const tx = db.transaction(store, 'readwrite');
@@ -330,26 +471,37 @@
             });
         }
 
-        // ========== تاریخ شمسی ==========
+        // ============================================================
+        //  توابع تاریخ شمسی
+        // ============================================================
         function toPersianDate(date) {
-            return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(date));
+            return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(
+            date));
         }
+
         function getTodayPersian() { return toPersianDate(new Date()); }
+
         function getCurrentMonth() { return getTodayPersian().slice(0, 7); }
+
         function getCurrentYear() { return getTodayPersian().slice(0, 4); }
 
-        // ========== تب‌ها ==========
+        // ============================================================
+        //  تب‌ها
+        // ============================================================
         function showTab(tab) {
             document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tab).classList.remove('hidden');
             document.querySelectorAll('.tab-bar .btn').forEach(el => el.classList.remove('active'));
             document.querySelector('.tab-bar .btn[onclick*="' + tab + '"]').classList.add('active');
             if (tab === 'reports') showReport('monthly');
-            if (tab === 'savings') { loadSavings(); loadPurchases(); }
+            if (tab === 'savings') { loadSavings();
+                loadPurchases(); }
             if (tab === 'loans') loadLoans();
         }
 
-        // ========== جمله انگیزشی ==========
+        // ============================================================
+        //  جمله انگیزشی
+        // ============================================================
         async function fetchQuote() {
             try {
                 const res = await fetch('https://api.quotable.io/random');
@@ -362,7 +514,9 @@
             }
         }
 
-        // ========== پیامک ==========
+        // ============================================================
+        //  پیامک
+        // ============================================================
         let pendingSMS = null;
 
         function receiveSMS(bank, amount, date) {
@@ -421,7 +575,9 @@
             }
         }
 
-        // ========== کارها ==========
+        // ============================================================
+        //  کارهای روزانه
+        // ============================================================
         async function loadTasks() {
             const tasks = await getAllData('tasks');
             const list = document.getElementById('taskList');
@@ -435,17 +591,15 @@
             todayTasks.forEach(task => {
                 const div = document.createElement('div');
                 div.className = 'task-item' + (task.done ? ' done' : '');
-                div.innerHTML = '<input type="checkbox" ' + (task.done ? 'checked' : '') + ' onchange="toggleTask(' + task.id + ', this.checked)"><label>' + task.text + '</label><span class="date-badge" style="font-size:9px;opacity:0.5;background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:10px;">' + task.date + '</span><button onclick="deleteTask(' + task.id + ')" style="background:rgba(255,0,0,0.3);border:none;color:#fff;border-radius:5px;padding:0 6px;cursor:pointer;">✕</button>';
+                div.innerHTML = '<input type="checkbox" ' + (task.done ? 'checked' : '') +
+                    ' onchange="toggleTask(' + task.id + ', this.checked)"><label>' + task.text +
+                    '</label><span class="date-badge">' + task.date +
+                    '</span><button onclick="deleteTask(' + task.id +
+                    ')" style="background:rgba(255,0,0,0.3);border:none;color:#fff;border-radius:5px;padding:0 6px;cursor:pointer;">✕</button>';
                 list.appendChild(div);
             });
-            
-            // فقط اگه کاری هست و همه تیک نخوردن، مودال رو نشون بده
-            const hasUndone = todayTasks.some(t => !t.done);
-            if (hasUndone && todayTasks.length > 0) {
-                showForceModal('لطفاً کارهای روزانه رو تیک بزنید!');
-            } else {
-                hideForceModal();
-            }
+            if (todayTasks.some(t => !t.done)) showForceModal('کارها رو تیک بزن!');
+            else hideForceModal();
         }
 
         async function toggleTask(id, done) {
@@ -454,7 +608,7 @@
             if (task) {
                 task.done = done;
                 await updateData('tasks', task);
-                loadTasks(); // این دوباره چک میکنه و اگه همه تیک خورده باشن مودال رو میبنده
+                loadTasks();
             }
         }
 
@@ -477,7 +631,9 @@
             loadTasks();
         }
 
-        // ========== اقساط ==========
+        // ============================================================
+        //  اقساط
+        // ============================================================
         async function loadLoans() {
             const loans = await getAllData('loans');
             const list = document.getElementById('loanList');
@@ -491,7 +647,19 @@
                 const prog = loan.total > 0 ? (loan.paid / loan.total) * 100 : 0;
                 const div = document.createElement('div');
                 div.className = 'loan-item' + (rem === 0 ? ' paid' : '');
-                div.innerHTML = '<strong>' + loan.name + '</strong><div class="loan-detail">کل: ' + loan.total.toLocaleString() + ' | پرداخت: ' + loan.paid.toLocaleString() + ' | باقی: <strong style="color:' + (rem === 0 ? '#00e676' : '#ff5252') + '">' + rem.toLocaleString() + '</strong></div><div class="progress-bar"><div class="progress-fill" style="width:' + Math.min(prog, 100) + '%"></div></div><div class="loan-detail">📅 ثبت: ' + (loan.createdAt ? toPersianDate(loan.createdAt) : 'نامشخص') + (loan.nextDue && loan.nextDue !== 'نامشخص' ? ' | قسط بعدی: ' + loan.nextDue : '') + '</div><div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;"><input type="number" id="payment_' + loan.id + '" placeholder="مبلغ" style="flex:1;min-width:60px;"><button class="btn btn-success" onclick="payLoan(' + loan.id + ')" style="padding:4px 8px;font-size:11px;">💳 پرداخت</button><button class="btn btn-danger" onclick="deleteLoan(' + loan.id + ')" style="padding:4px 8px;font-size:11px;">🗑️</button></div>';
+                div.innerHTML = '<strong>' + loan.name +
+                    '</strong><div class="loan-detail">کل: ' + loan.total.toLocaleString() + ' | پرداخت: ' + loan
+                    .paid.toLocaleString() + ' | باقی: <strong style="color:' + (rem === 0 ? '#00e676' : '#ff5252') +
+                    '">' + rem.toLocaleString() +
+                    '</strong></div><div class="progress-bar"><div class="progress-fill" style="width:' + Math.min(prog,
+                        100) + '%"></div></div><div class="loan-detail">📅 ثبت: ' + (loan.createdAt ? toPersianDate(loan
+                        .createdAt) : 'نامشخص') + (loan.nextDue && loan.nextDue !== 'نامشخص' ? ' | قسط بعدی: ' + loan
+                    .nextDue : '') +
+                    '</div><div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;"><input type="number" id="payment_' +
+                    loan.id + '" placeholder="مبلغ" style="flex:1;min-width:60px;"><button class="btn btn-success" onclick="payLoan(' +
+                    loan.id +
+                    ')" style="padding:4px 8px;font-size:11px;">💳 پرداخت</button><button class="btn btn-danger" onclick="deleteLoan(' +
+                    loan.id + ')" style="padding:4px 8px;font-size:11px;">🗑️</button></div>';
                 list.appendChild(div);
             });
             checkLoanReminders(loans);
@@ -514,12 +682,14 @@
                 alert('✅ پرداخت ثبت شد!');
             }
         }
+
         async function deleteLoan(id) {
             if (confirm('حذف؟')) {
                 await deleteData('loans', id);
                 loadLoans();
             }
         }
+
         async function addLoan() {
             const name = document.getElementById('loanName').value.trim();
             const total = parseInt(document.getElementById('loanTotal').value);
@@ -553,7 +723,9 @@
             });
         }
 
-        // ========== پس‌انداز ==========
+        // ============================================================
+        //  پس‌انداز
+        // ============================================================
         async function loadSavings() {
             const savings = await getAllData('savings');
             const goals = await getAllData('goals');
@@ -565,17 +737,23 @@
                 return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
             });
             const total = thisMonth.reduce((s, i) => s + i.amount, 0);
-            document.getElementById('monthlyGoal').textContent = monthlyGoal > 0 ? monthlyGoal.toLocaleString() + ' ریال' : 'ثبت نشده';
+            document.getElementById('monthlyGoal').textContent = monthlyGoal > 0 ? monthlyGoal.toLocaleString() +
+                ' ریال' : 'ثبت نشده';
             document.getElementById('savedSoFar').textContent = total.toLocaleString() + ' ریال';
-            document.getElementById('remainingSave').textContent = Math.max(0, monthlyGoal - total).toLocaleString() + ' ریال';
-            document.getElementById('savingsProgress').style.width = monthlyGoal > 0 ? Math.min((total / monthlyGoal) * 100, 100) + '%' : '0%';
+            document.getElementById('remainingSave').textContent = Math.max(0, monthlyGoal - total).toLocaleString() +
+                ' ریال';
+            document.getElementById('savingsProgress').style.width = monthlyGoal > 0 ? Math.min((total / monthlyGoal) *
+                100, 100) + '%' : '0%';
             const history = document.getElementById('savingsHistory');
             history.innerHTML = '';
-            if (thisMonth.length === 0) history.innerHTML = '<p style="opacity:0.7;font-size:12px;">⏳ هنوز پس‌اندازی ثبت نشده</p>';
+            if (thisMonth.length === 0) history.innerHTML =
+            '<p style="opacity:0.7;font-size:12px;">⏳ هنوز پس‌اندازی ثبت نشده</p>';
             else thisMonth.slice(-5).reverse().forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'savings-item';
-                div.innerHTML = '<span class="date" style="opacity:0.6;font-size:10px;">📅 ' + toPersianDate(s.date) + '</span><span class="amount" style="color:#00e676;font-weight:bold;">+' + s.amount.toLocaleString() + ' ریال</span>';
+                div.innerHTML = '<span class="date" style="opacity:0.6;font-size:10px;">📅 ' + toPersianDate(s.date) +
+                    '</span><span class="amount" style="color:#00e676;font-weight:bold;">+' + s.amount
+                    .toLocaleString() + ' ریال</span>';
                 history.appendChild(div);
             });
         }
@@ -592,6 +770,7 @@
             loadSavings();
             alert('✅ پس‌انداز ثبت شد!');
         }
+
         async function setMonthlyGoal() {
             const amount = prompt('🎯 هدف پس‌انداز این ماه (ریال):');
             if (!amount) return;
@@ -609,7 +788,9 @@
             alert('✅ هدف ثبت شد!');
         }
 
-        // ========== خرید ==========
+        // ============================================================
+        //  خرید با پس‌انداز
+        // ============================================================
         async function loadPurchases() {
             const purchases = await getAllData('purchases');
             const list = document.getElementById('purchasesList');
@@ -621,12 +802,17 @@
             purchases.slice(-5).reverse().forEach(p => {
                 const div = document.createElement('div');
                 div.className = 'savings-item';
-                div.innerHTML = '<span>🛍 ' + p.item + '</span><span class="amount" style="color:#00e676;font-weight:bold;">' + p.amount.toLocaleString() + ' ریال</span><span class="date" style="opacity:0.6;font-size:10px;">' + (p.date ? toPersianDate(p.date) : getTodayPersian()) + '</span>';
+                div.innerHTML = '<span>🛍 ' + p.item + '</span><span class="amount" style="color:#00e676;font-weight:bold;">' +
+                    p.amount.toLocaleString() + ' ریال</span><span class="date" style="opacity:0.6;font-size:10px;">' +
+                    (p.date ? toPersianDate(p.date) : getTodayPersian()) + '</span>';
                 list.appendChild(div);
             });
         }
+
         function showPurchaseModal() { document.getElementById('purchaseModal').style.display = 'flex'; }
+
         function closePurchaseModal() { document.getElementById('purchaseModal').style.display = 'none'; }
+
         async function savePurchase() {
             const item = document.getElementById('purchaseItem').value.trim();
             const amount = parseInt(document.getElementById('purchaseAmount').value);
@@ -642,7 +828,9 @@
             alert('✅ خرید ثبت شد!');
         }
 
-        // ========== گزارشات ==========
+        // ============================================================
+        //  گزارشات
+        // ============================================================
         async function showReport(type) {
             const transactions = await getAllData('transactions');
             const savings = await getAllData('savings');
@@ -661,11 +849,13 @@
             const total = filtered.reduce((s, t) => s + t.amount, 0);
             const cats = {};
             filtered.forEach(t => { cats[t.category] = (cats[t.category] || 0) + t.amount; });
-            let html = '<p style="font-weight:bold;">' + title + '</p><p>مجموع هزینه: ' + total.toLocaleString() + ' ریال</p><p style="font-size:12px;opacity:0.7;">تعداد: ' + filtered.length + ' تراکنش</p>';
+            let html = '<p style="font-weight:bold;">' + title + '</p><p>مجموع هزینه: ' + total.toLocaleString() +
+                ' ریال</p><p style="font-size:12px;opacity:0.7;">تعداد: ' + filtered.length + ' تراکنش</p>';
             if (Object.keys(cats).length > 0) {
                 html += '<div style="margin-top:8px;">';
                 for (const [cat, amt] of Object.entries(cats)) {
-                    html += '<div class="report-item"><span class="cat">' + cat + '</span><span class="amt">' + amt.toLocaleString() + ' ریال</span></div>';
+                    html += '<div class="report-item"><span class="cat">' + cat + '</span><span class="amt">' + amt
+                        .toLocaleString() + ' ریال</span></div>';
                 }
                 html += '</div>';
             } else {
@@ -674,7 +864,8 @@
             const now = new Date();
             const monthSavings = savings.filter(s => {
                 const d = new Date(s.date);
-                if (type === 'monthly') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                if (type === 'monthly') return d.getMonth() === now.getMonth() && d.getFullYear() === now
+                .getFullYear();
                 else return d.getFullYear() === now.getFullYear();
             });
             const totalSave = monthSavings.reduce((s, i) => s + i.amount, 0);
@@ -682,7 +873,9 @@
             content.innerHTML = html;
         }
 
-        // ========== آمار امروز ==========
+        // ============================================================
+        //  آمار امروز
+        // ============================================================
         async function updateTodayStats() {
             const transactions = await getAllData('transactions');
             const today = getTodayPersian();
@@ -692,23 +885,25 @@
             document.getElementById('todayCount').textContent = todayTxs.length;
         }
 
-        // ========== مودال اجبار (اصلاح‌شده) ==========
+        // ============================================================
+        //  مودال
+        // ============================================================
         function showForceModal(msg) {
             document.getElementById('forceMessage').textContent = msg || 'برای ادامه، اقدام مورد نیاز رو انجام بدید.';
             document.getElementById('forceModal').style.display = 'flex';
         }
-        
+
         function hideForceModal() {
             document.getElementById('forceModal').style.display = 'none';
         }
 
-        // ✅ اصلاح اینجا: وقتی دکمه "باشه" رو میزنه، فقط مودال رو میبنده
         function closeModal() {
             hideForceModal();
-            // دیگه کاری نمیکنه، کاربر خودش کارها رو تیک میزنه
         }
 
-        // ========== شروع ==========
+        // ============================================================
+        //  شروع برنامه
+        // ============================================================
         async function init() {
             await openDB();
             document.getElementById('todayDate').textContent = getTodayPersian();
@@ -726,4 +921,4 @@
         setInterval(updateTodayStats, 60000);
     </script>
 </body>
-</html>
+   </html>

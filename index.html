@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -348,6 +348,16 @@
             padding: 2px 10px;
             cursor: pointer;
             font-size: 12px;
+            margin-left: 5px;
+        }
+        .item-row .edit-btn {
+            background: #ffd700;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 2px 10px;
+            cursor: pointer;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -408,9 +418,9 @@
                 <button class="btn btn-primary" onclick="saveTransaction()" style="width:100%;margin-top:8px;">✅ Save</button>
             </div>
 
-            <!-- ====== Income / Expense by Month ====== -->
+            <!-- ====== Income / Expense ====== -->
             <div class="card">
-                <div class="card-title">💰 Income / Expense by Month</div>
+                <div class="card-title">💰 Income / Expense</div>
                 <div id="incomeExpenseContainer"></div>
                 <div style="display:flex;gap:5px;margin-top:10px;">
                     <input type="number" id="amountInput" placeholder="Amount (IRR)" style="flex:1;">
@@ -422,7 +432,7 @@
                 </div>
             </div>
 
-            <!-- ====== Specific Expenses (Rent, Faezeh, Personal) ====== -->
+            <!-- ====== Rent, Faezeh, Personal ====== -->
             <div class="card">
                 <div class="card-title">🏠 Specific Expenses</div>
                 <div id="specificExpensesContainer"></div>
@@ -687,7 +697,7 @@
         }
 
         // ============================================================
-        //  Income / Expense by Month (with Edit & Delete)
+        //  Income / Expense by Month
         // ============================================================
         async function renderIncomeExpense() {
             const transactions = await getAllData('transactions');
@@ -721,7 +731,7 @@
                     row.innerHTML = `
                             <span>${typeLabel} - ${t.amount.toLocaleString()} IRR (${t.description || ''})</span>
                             <div>
-                                <button class="del-btn" onclick="editTransaction(${t.id})">✏️</button>
+                                <button class="edit-btn" onclick="editTransaction(${t.id})">✏️</button>
                                 <button class="del-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
                             </div>
                         `;
@@ -795,7 +805,7 @@
         }
 
         // ============================================================
-        //  Specific Expenses (Rent, Faezeh, Personal) with Delete
+        //  Rent, Faezeh, Personal
         // ============================================================
         async function renderSpecificExpenses() {
             const transactions = await getAllData('transactions');
@@ -829,7 +839,7 @@
                     row.innerHTML = `
                             <span>${t.amount.toLocaleString()} IRR - ${t.description || ''}</span>
                             <div>
-                                <button class="del-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
+                                <button class="edit-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
                                 <button class="del-btn" onclick="deleteSpecificExpense(${t.id})">🗑️</button>
                             </div>
                         `;

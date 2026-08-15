@@ -6,6 +6,7 @@
     <meta name="application-name" content="مدیریت مالی هوشمند">
     <meta name="apple-mobile-web-app-title" content="مدیریت مالی">
     <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="/manifest.json">
     <title>💰 مدیریت مالی هوشمند</title>
     <style>
         /* ====== ظاهر کلی ====== */
@@ -426,17 +427,17 @@
                 req.onupgradeneeded = (e) => {
                     const db = e.target.result;
                     if (!db.objectStoreNames.contains('transactions')) db.createObjectStore('transactions', { keyPath: 'id',
-                        autoIncrement: true });
+                            autoIncrement: true });
                     if (!db.objectStoreNames.contains('tasks')) db.createObjectStore('tasks', { keyPath: 'id',
-                        autoIncrement: true });
+                            autoIncrement: true });
                     if (!db.objectStoreNames.contains('loans')) db.createObjectStore('loans', { keyPath: 'id',
-                        autoIncrement: true });
+                            autoIncrement: true });
                     if (!db.objectStoreNames.contains('savings')) db.createObjectStore('savings', { keyPath: 'id',
-                        autoIncrement: true });
+                            autoIncrement: true });
                     if (!db.objectStoreNames.contains('goals')) db.createObjectStore('goals', { keyPath: 'id',
-                        autoIncrement: true });
+                            autoIncrement: true });
                     if (!db.objectStoreNames.contains('purchases')) db.createObjectStore('purchases', { keyPath: 'id',
-                        autoIncrement: true });
+                            autoIncrement: true });
                 };
                 req.onsuccess = () => { db = req.result;
                     resolve(); };
@@ -921,4 +922,4 @@
         setInterval(updateTodayStats, 60000);
     </script>
 </body>
-   </html>
+                            </html>

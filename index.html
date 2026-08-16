@@ -1,146 +1,680 @@
-function showReportInApp() {
-    try {
-        const transactions = getData('transactions');
-        const rents = getData('rents');
-        const faezeh = getData('faezeh');
-        const personal = getData('personal');
-        const loans = getData('loanItems');
-        const savings = getData('savings');
-        const tasks = getData('tasks');
-        const invest = getData('invest');
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مدیریت مرکز</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Vazir', Tahoma, sans-serif;
+            background: #f0f4f8;
+            padding: 12px;
+            color: #1e293b;
+            direction: rtl;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .card-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .btn-success {
+            background: #10b981;
+            color: #fff;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .btn-warning {
+            background: #f59e0b;
+            color: #fff;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #cbd5e1;
+        }
+        .btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .btn-group .btn {
+            flex: 1;
+            min-width: 50px;
+            text-align: center;
+        }
+        input,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            background: #f8fafc;
+            font-size: 13px;
+            margin: 4px 0;
+        }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #fff;
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 12px;
+            margin: 4px 0;
+            font-size: 13px;
+            border: 1px solid #e2e8f0;
+        }
+        .item-row .del-btn {
+            background: #fee2e2;
+            border: none;
+            color: #dc2626;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .item-row .edit-btn {
+            background: #dbeafe;
+            border: none;
+            color: #2563eb;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            background: #fff;
+            padding: 6px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+        .tab-bar .btn {
+            flex: 1;
+            font-size: 10px;
+            padding: 8px 4px;
+            background: transparent;
+            border-radius: 16px;
+            color: #64748b;
+            min-width: 55px;
+            white-space: nowrap;
+        }
+        .tab-bar .btn.active {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+        .info-grid .label {
+            color: #64748b;
+        }
+        .info-grid .value {
+            font-weight: 600;
+        }
+        .patient-card {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .patient-card .name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #0f172a;
+        }
+        .patient-card .detail {
+            font-size: 12px;
+            color: #475569;
+            margin-top: 2px;
+        }
+        .badge-warning {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-danger {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .summary-box {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 8px;
+        }
+        .summary-box .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .summary-box .row:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center;color:#0f172a;margin-bottom:12px;">🏥 مدیریت مرکز</h2>
 
-        let txt = '═══════════════════════════════════════════════════\n';
-        txt += '        📊 گزارش کامل مه‌دیار\n';
-        txt += '═══════════════════════════════════════════════════\n\n';
+        <!-- ====== تب‌ها ====== -->
+        <div class="tab-bar">
+            <button class="btn active" onclick="showTab('patients')">👤 بیماران</button>
+            <button class="btn" onclick="showTab('sales')">💰 فروش</button>
+            <button class="btn" onclick="showTab('followup')">🔔 پیگیری</button>
+            <button class="btn" onclick="showTab('expenses')">💸 مخارج</button>
+            <button class="btn" onclick="showTab('invoice')">📊 فاکتور</button>
+        </div>
 
-        // ====== تراکنش‌ها ======
-        txt += '💰 تراکنش‌ها:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (transactions.length === 0) {
-            txt += 'هیچ تراکنشی ثبت نشده\n';
-        } else {
-            transactions.forEach(t => {
-                txt += `📅 ${t.persianDate || 'نامشخص'} | ${t.type === 'income' ? '➕ درآمد' : '➖ خرج'} | ${t.amount.toLocaleString()} ریال | ${t.description || ''}\n`;
+        <!-- ====== ۱. بیماران ====== -->
+        <div id="tab-patients">
+            <div class="card">
+                <div class="card-title">👤 ثبت بیمار جدید</div>
+                <input type="text" id="pCode" placeholder="کد بیمار">
+                <input type="text" id="pName" placeholder="نام و نام خانوادگی">
+                <input type="text" id="pNational" placeholder="کد ملی">
+                <input type="text" id="pPhone" placeholder="شماره تماس">
+                <input type="text" id="pAddress" placeholder="آدرس">
+                <input type="text" id="pJob" placeholder="شغل">
+                <select id="pMarital">
+                    <option value="مجرد">مجرد</option>
+                    <option value="متاهل">متاهل</option>
+                </select>
+                <input type="text" id="pTreatment" placeholder="نوع درمان">
+                <input type="text" id="pDosage" placeholder="دوز مصرفی">
+                <button class="btn btn-primary" onclick="addPatient()" style="width:100%;margin-top:6px;">➕ ثبت بیمار</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📋 لیست بیماران</div>
+                <div id="patientList"></div>
+            </div>
+        </div>
+
+        <!-- ====== ۲. فروش روزانه ====== -->
+        <div id="tab-sales" class="hidden">
+            <div class="card">
+                <div class="card-title">💰 ثبت فروش روزانه</div>
+                <input type="date" id="sDate">
+                <input type="text" id="sPatientCode" placeholder="کد بیمار">
+                <input type="text" id="sPatientName" placeholder="نام بیمار">
+                <select id="sDrug">
+                    <option value="بیست">بیست</option>
+                    <option value="چهل">چهل</option>
+                    <option value="شربت">شربت</option>
+                    <option value="بیدو">بیدو</option>
+                    <option value="اپیوم">اپیوم</option>
+                </select>
+                <input type="number" id="sQuantity" placeholder="تعداد">
+                <input type="number" id="sAmount" placeholder="مبلغ دریافتی">
+                <select id="sPayment">
+                    <option value="نقدی">نقدی</option>
+                    <option value="کارت">کارت</option>
+                </select>
+                <button class="btn btn-success" onclick="addSale()" style="width:100%;margin-top:6px;">➕ ثبت فروش</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📋 لیست فروش</div>
+                <div id="salesList"></div>
+            </div>
+        </div>
+
+        <!-- ====== ۳. پیگیری بیماران ====== -->
+        <div id="tab-followup" class="hidden">
+            <div class="card">
+                <div class="card-title">🔔 بیماران غایب (بیش از ۷ روز)</div>
+                <div id="followupList"></div>
+            </div>
+        </div>
+
+        <!-- ====== ۴. مخارج مرکز ====== -->
+        <div id="tab-expenses" class="hidden">
+            <div class="card">
+                <div class="card-title">💸 ثبت مخارج</div>
+                <input type="text" id="eType" placeholder="نوع خرج (حقوق/روزانه/کرایه)">
+                <input type="number" id="eAmount" placeholder="مبلغ">
+                <input type="date" id="eDate">
+                <button class="btn btn-primary" onclick="addExpense()" style="width:100%;margin-top:6px;">➕ ثبت خرج</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📋 لیست مخارج</div>
+                <div id="expenseList"></div>
+                <div class="summary-box" id="expenseSummary"></div>
+            </div>
+        </div>
+
+        <!-- ====== ۵. فاکتور دارو ====== -->
+        <div id="tab-invoice" class="hidden">
+            <div class="card">
+                <div class="card-title">📊 فاکتور فروش دارو</div>
+                <div id="invoiceContent"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ========== ذخیره‌سازی ==========
+        function getData(key) {
+            try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; }
+        }
+
+        function setData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function getToday() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function toPersianDate(date) {
+            if (!date) return 'نامشخص';
+            try {
+                return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(
+                    date));
+            } catch { return date; }
+        }
+
+        // ========== تب‌ها ==========
+        function showTab(tab) {
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tab).classList.remove('hidden');
+            document.querySelectorAll('.tab-bar .btn').forEach(el => el.classList.remove('active'));
+            document.querySelector('.tab-bar .btn[onclick*="' + tab + '"]').classList.add('active');
+            renderAll();
+        }
+
+        // ========== ۱. بیماران ==========
+        function addPatient() {
+            const code = document.getElementById('pCode').value.trim();
+            const name = document.getElementById('pName').value.trim();
+            if (!code || !name) { alert('کد و نام بیمار الزامی است!'); return; }
+            const patients = getData('patients');
+            patients.push({
+                id: Date.now(),
+                code: code,
+                name: name,
+                national: document.getElementById('pNational').value.trim(),
+                phone: document.getElementById('pPhone').value.trim(),
+                address: document.getElementById('pAddress').value.trim(),
+                job: document.getElementById('pJob').value.trim(),
+                marital: document.getElementById('pMarital').value,
+                treatment: document.getElementById('pTreatment').value.trim(),
+                dosage: document.getElementById('pDosage').value.trim(),
+                registerDate: getToday(),
+                lastVisit: getToday()
+            });
+            setData('patients', patients);
+            document.getElementById('pCode').value = '';
+            document.getElementById('pName').value = '';
+            document.getElementById('pNational').value = '';
+            document.getElementById('pPhone').value = '';
+            document.getElementById('pAddress').value = '';
+            document.getElementById('pJob').value = '';
+            document.getElementById('pTreatment').value = '';
+            document.getElementById('pDosage').value = '';
+            renderAll();
+            alert('✅ بیمار ثبت شد!');
+        }
+
+        function deletePatient(id) {
+            if (!confirm('حذف شود؟')) return;
+            let patients = getData('patients');
+            patients = patients.filter(p => p.id !== id);
+            setData('patients', patients);
+            renderAll();
+        }
+
+        function renderPatients() {
+            const patients = getData('patients');
+            const container = document.getElementById('patientList');
+            container.innerHTML = '';
+            if (patients.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;">هیچ بیماری ثبت نشده</p>';
+                return;
+            }
+            patients.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'patient-card';
+                div.innerHTML = `
+                    <div class="name">${p.name} <span style="font-weight:400;font-size:13px;color:#64748b;">کد: ${p.code}</span></div>
+                    <div class="detail">📅 ثبت: ${toPersianDate(p.registerDate)} | آخرین مراجعه: ${toPersianDate(p.lastVisit)}</div>
+                    <div class="detail">📞 ${p.phone || '---'} | 💊 ${p.treatment || '---'} | دوز: ${p.dosage || '---'}</div>
+                    <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;">
+                        <button class="btn btn-warning" onclick="editPatient(${p.id})" style="padding:4px 12px;font-size:12px;">✏️</button>
+                        <button class="btn btn-danger" onclick="deletePatient(${p.id})" style="padding:4px 12px;font-size:12px;">🗑️</button>
+                        <button class="btn btn-primary" onclick="updateVisit(${p.id})" style="padding:4px 12px;font-size:12px;">📅 مراجعه</button>
+                    </div>
+                `;
+                container.appendChild(div);
             });
         }
-        txt += '\n';
 
-        // ====== اجاره ======
-        txt += '🏠 اجاره:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (rents.length === 0) {
-            txt += 'هیچ اجاره‌ای ثبت نشده\n';
-        } else {
-            rents.forEach(r => {
-                txt += `📅 ${r.month || 'نامشخص'} | ${r.amount.toLocaleString()} ریال | ${r.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}\n`;
+        function editPatient(id) {
+            const patients = getData('patients');
+            const p = patients.find(p => p.id === id);
+            if (!p) return;
+            document.getElementById('pCode').value = p.code || '';
+            document.getElementById('pName').value = p.name || '';
+            document.getElementById('pNational').value = p.national || '';
+            document.getElementById('pPhone').value = p.phone || '';
+            document.getElementById('pAddress').value = p.address || '';
+            document.getElementById('pJob').value = p.job || '';
+            document.getElementById('pMarital').value = p.marital || 'مجرد';
+            document.getElementById('pTreatment').value = p.treatment || '';
+            document.getElementById('pDosage').value = p.dosage || '';
+            deletePatient(id);
+            showTab('patients');
+        }
+
+        function updateVisit(id) {
+            const patients = getData('patients');
+            const p = patients.find(p => p.id === id);
+            if (p) {
+                p.lastVisit = getToday();
+                setData('patients', patients);
+                renderAll();
+                alert('✅ تاریخ مراجعه به‌روز شد!');
+            }
+        }
+
+        // ========== ۲. فروش روزانه ==========
+        function addSale() {
+            const date = document.getElementById('sDate').value || getToday();
+            const patientCode = document.getElementById('sPatientCode').value.trim();
+            const patientName = document.getElementById('sPatientName').value.trim();
+            const drug = document.getElementById('sDrug').value;
+            const quantity = parseInt(document.getElementById('sQuantity').value);
+            const amount = parseInt(document.getElementById('sAmount').value);
+            const payment = document.getElementById('sPayment').value;
+
+            if (!patientCode || !patientName || !quantity || !amount) {
+                alert('تمامی فیلدها را پر کنید!');
+                return;
+            }
+
+            const sales = getData('sales');
+            sales.push({
+                id: Date.now(),
+                date: date,
+                patientCode: patientCode,
+                patientName: patientName,
+                drug: drug,
+                quantity: quantity,
+                amount: amount,
+                payment: payment
+            });
+            setData('sales', sales);
+
+            // به‌روزرسانی آخرین مراجعه بیمار
+            const patients = getData('patients');
+            const patient = patients.find(p => p.code === patientCode);
+            if (patient) {
+                patient.lastVisit = date;
+                setData('patients', patients);
+            }
+
+            document.getElementById('sDate').value = '';
+            document.getElementById('sPatientCode').value = '';
+            document.getElementById('sPatientName').value = '';
+            document.getElementById('sQuantity').value = '';
+            document.getElementById('sAmount').value = '';
+            renderAll();
+            alert('✅ فروش ثبت شد!');
+        }
+
+        function deleteSale(id) {
+            if (!confirm('حذف شود؟')) return;
+            let sales = getData('sales');
+            sales = sales.filter(s => s.id !== id);
+            setData('sales', sales);
+            renderAll();
+        }
+
+        function renderSales() {
+            const sales = getData('sales');
+            const container = document.getElementById('salesList');
+            container.innerHTML = '';
+            if (sales.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;">هیچ فروشی ثبت نشده</p>';
+                return;
+            }
+            sales.slice().reverse().forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'item-row';
+                div.innerHTML = `
+                    <span>📅 ${toPersianDate(s.date)} | ${s.patientName} (${s.patientCode}) | ${s.drug} × ${s.quantity} | ${s.amount.toLocaleString()} ریال (${s.payment})</span>
+                    <button class="del-btn" onclick="deleteSale(${s.id})">🗑️</button>
+                `;
+                container.appendChild(div);
             });
         }
-        txt += '\n';
 
-        // ====== فائزه ======
-        txt += '👩 فائزه:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (faezeh.length === 0) {
-            txt += 'هیچ موردی ثبت نشده\n';
-        } else {
-            faezeh.forEach(f => {
-                txt += `📅 ${f.month || 'نامشخص'} | ${f.amount.toLocaleString()} ریال\n`;
+        // ========== ۳. پیگیری بیماران ==========
+        function renderFollowup() {
+            const patients = getData('patients');
+            const container = document.getElementById('followupList');
+            container.innerHTML = '';
+            const today = new Date();
+            const sevenDaysAgo = new Date(today);
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+            const absent = patients.filter(p => {
+                if (!p.lastVisit) return true;
+                const lastVisit = new Date(p.lastVisit);
+                return lastVisit < sevenDaysAgo;
+            });
+
+            if (absent.length === 0) {
+                container.innerHTML = '<p style="color:#10b981;">✅ همه بیماران در ۷ روز اخیر مراجعه داشته‌اند.</p>';
+                return;
+            }
+
+            absent.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'patient-card';
+                const days = Math.floor((new Date() - new Date(p.lastVisit)) / (1000 * 60 * 60 * 24));
+                div.innerHTML = `
+                    <div class="name">${p.name} <span class="badge-danger">${days} روز</span></div>
+                    <div class="detail">📞 ${p.phone || '---'} | آخرین مراجعه: ${toPersianDate(p.lastVisit)}</div>
+                    <div class="detail">💊 ${p.treatment || '---'} | دوز: ${p.dosage || '---'}</div>
+                    <button class="btn btn-primary" onclick="updateVisit(${p.id})" style="padding:4px 12px;font-size:12px;margin-top:4px;">📅 ثبت مراجعه</button>
+                `;
+                container.appendChild(div);
             });
         }
-        txt += '\n';
 
-        // ====== شخصی ======
-        txt += '🧑 مخارج شخصی:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (personal.length === 0) {
-            txt += 'هیچ موردی ثبت نشده\n';
-        } else {
-            personal.forEach(p => {
-                const emoji = { 'خوراک': '🍔', 'پوشاک': '👕', 'تفریح': '🎮', 'بهداشت': '🧴', 'سایر': '📦' };
-                txt += `📅 ${p.month || 'نامشخص'} | ${p.amount.toLocaleString()} ریال | ${emoji[p.type] || '📦'} ${p.type || 'سایر'}\n`;
-            });
+        // ========== ۴. مخارج مرکز ==========
+        function addExpense() {
+            const type = document.getElementById('eType').value.trim();
+            const amount = parseInt(document.getElementById('eAmount').value);
+            const date = document.getElementById('eDate').value || getToday();
+            if (!type || !amount) { alert('نوع و مبلغ را وارد کنید!'); return; }
+            const expenses = getData('expenses');
+            expenses.push({ id: Date.now(), type: type, amount: amount, date: date });
+            setData('expenses', expenses);
+            document.getElementById('eType').value = '';
+            document.getElementById('eAmount').value = '';
+            document.getElementById('eDate').value = '';
+            renderAll();
+            alert('✅ خرج ثبت شد!');
         }
-        txt += '\n';
 
-        // ====== اقساط ======
-        txt += '💰 اقساط:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (loans.length === 0) {
-            txt += 'هیچ قسطی ثبت نشده\n';
-        } else {
-            loans.forEach(l => {
-                txt += `📅 ${l.month || 'نامشخص'} | ${l.name || ''} | ${l.amount.toLocaleString()} ریال | ${l.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}\n`;
-            });
+        function deleteExpense(id) {
+            if (!confirm('حذف شود؟')) return;
+            let expenses = getData('expenses');
+            expenses = expenses.filter(e => e.id !== id);
+            setData('expenses', expenses);
+            renderAll();
         }
-        txt += '\n';
 
-        // ====== پس‌انداز ======
-        txt += '🏦 پس‌انداز:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (savings.length === 0) {
-            txt += 'هیچ پس‌اندازی ثبت نشده\n';
-        } else {
-            savings.forEach(s => {
-                txt += `📅 ${toPersianDate(s.date)} | +${s.amount.toLocaleString()} ریال\n`;
-            });
+        function renderExpenses() {
+            const expenses = getData('expenses');
+            const container = document.getElementById('expenseList');
+            container.innerHTML = '';
+            if (expenses.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;">هیچ خرجی ثبت نشده</p>';
+            } else {
+                expenses.slice().reverse().forEach(e => {
+                    const div = document.createElement('div');
+                    div.className = 'item-row';
+                    div.innerHTML = `
+                        <span>📅 ${toPersianDate(e.date)} | ${e.type} | ${e.amount.toLocaleString()} ریال</span>
+                        <button class="del-btn" onclick="deleteExpense(${e.id})">🗑️</button>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+
+            // خلاصه
+            const summary = document.getElementById('expenseSummary');
+            const total = expenses.reduce((s, e) => s + e.amount, 0);
+            const byType = {};
+            expenses.forEach(e => { byType[e.type] = (byType[e.type] || 0) + e.amount; });
+            let html = '<div style="font-weight:600;margin-bottom:4px;">📊 خلاصه مخارج:</div>';
+            for (const [type, amount] of Object.entries(byType)) {
+                html += `<div class="row"><span>${type}</span><span>${amount.toLocaleString()} ریال</span></div>`;
+            }
+            html += `<div class="row" style="font-weight:700;border-top:2px solid #cbd5e1;padding-top:4px;"><span>مجموع</span><span>${total.toLocaleString()} ریال</span></div>`;
+            summary.innerHTML = html;
         }
-        txt += '\n';
 
-        // ====== کارها ======
-        txt += '✅ کارها:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (tasks.length === 0) {
-            txt += 'هیچ کاری ثبت نشده\n';
-        } else {
-            tasks.forEach(t => {
-                txt += `📅 ${t.date || 'نامشخص'} | ${t.text || ''} | ${t.done ? '✅ انجام شده' : '❌ انجام نشده'}\n`;
+        // ========== ۵. فاکتور دارو ==========
+        function renderInvoice() {
+            const sales = getData('sales');
+            const container = document.getElementById('invoiceContent');
+            const drugMap = {};
+            sales.forEach(s => {
+                drugMap[s.drug] = (drugMap[s.drug] || 0) + s.quantity;
             });
+
+            const totalSales = sales.reduce((s, sale) => s + sale.amount, 0);
+            const totalItems = sales.reduce((s, sale) => s + sale.quantity, 0);
+
+            let html = `
+                <div class="summary-box">
+                    <div class="row"><span>💰 کل فروش</span><span>${totalSales.toLocaleString()} ریال</span></div>
+                    <div class="row"><span>📦 کل تعداد دارو</span><span>${totalItems} عدد</span></div>
+                    <div class="row"><span>📋 تعداد تراکنش</span><span>${sales.length}</span></div>
+                </div>
+                <div style="margin-top:12px;">
+                    <div style="font-weight:600;margin-bottom:6px;">📊 فروش به تفکیک دارو:</div>
+            `;
+
+            const drugNames = {
+                'بیست': 'بیست',
+                'چهل': 'چهل',
+                'شربت': 'شربت',
+                'بیدو': 'بیدو',
+                'اپیوم': 'اپیوم'
+            };
+
+            for (const [drug, qty] of Object.entries(drugMap)) {
+                const percent = totalItems > 0 ? ((qty / totalItems) * 100).toFixed(1) : 0;
+                html += `
+                    <div class="item-row" style="background:#fff;">
+                        <span>💊 ${drugNames[drug] || drug}</span>
+                        <span>${qty} عدد (${percent}%)</span>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
         }
-        txt += '\n';
 
-        // ====== سرمایه‌گذاری ======
-        txt += '📈 سرمایه‌گذاری:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        if (invest.length === 0) {
-            txt += 'هیچ سرمایه‌گذاری ثبت نشده\n';
-        } else {
-            invest.forEach(i => {
-                const emoji = i.category === 'طلا' ? '🥇' : i.category === 'نقره' ? '🥈' : '₿';
-                txt += `📅 ${i.persianDate || 'نامشخص'} | ${emoji} ${i.category || ''} | ${i.amount.toLocaleString()} ریال | ${i.description || ''}\n`;
-            });
+        // ========== رندر همه ==========
+        function renderAll() {
+            renderPatients();
+            renderSales();
+            renderFollowup();
+            renderExpenses();
+            renderInvoice();
         }
-        txt += '\n';
 
-        // ====== خلاصه مالی ======
-        const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
-        const totalExpense = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-        const totalRentPaid = rents.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
-        const totalFaezeh = faezeh.reduce((s, f) => s + f.amount, 0);
-        const totalPersonal = personal.reduce((s, p) => s + p.amount, 0);
-        const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
-        const totalInvest = invest.reduce((s, i) => s + i.amount, 0);
-        const totalSavings = savings.reduce((s, i) => s + i.amount, 0);
-
-        const totalExpenses = totalExpense + totalRentPaid + totalFaezeh + totalPersonal + totalLoanPaid;
-        const balance = totalIncome - totalExpenses - totalInvest;
-
-        txt += '═══════════════════════════════════════════════════\n';
-        txt += '📊 خلاصه مالی:\n';
-        txt += '─────────────────────────────────────────────────\n';
-        txt += `💰 کل درآمدها: ${totalIncome.toLocaleString()} ریال\n`;
-        txt += `💸 کل مخارج: ${totalExpenses.toLocaleString()} ریال\n`;
-        txt += `📈 کل سرمایه‌گذاری: ${totalInvest.toLocaleString()} ریال\n`;
-        txt += `🏦 کل پس‌انداز: ${totalSavings.toLocaleString()} ریال\n`;
-        txt += `⚖️ تراز نهایی: ${balance >= 0 ? '+' : ''}${balance.toLocaleString()} ریال\n`;
-        txt += '═══════════════════════════════════════════════════\n';
-
-        // نمایش در صفحه
-        const display = document.getElementById('reportDisplay');
-        display.textContent = txt;
-        display.style.display = 'block';
-        display.scrollTop = 0;
-
-    } catch (error) {
-        alert('❌ خطا: ' + error.message);
-    }
-}
+        // ========== شروع ==========
+        renderAll();
+        setInterval(renderAll, 30000);
+    </script>
+</body>
+</html>

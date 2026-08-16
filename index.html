@@ -519,8 +519,8 @@
                 <div id="investContainer"></div>
 
                 <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                    <input type="number" id="investGoldWeight" placeholder="وزن طلا (گرم)" style="flex:1; min-width:120px;">
-                    <input type="number" id="investSilverWeight" placeholder="وزن نقره (گرم)" style="flex:1; min-width:120px;">
+                    <input type="number" id="investGoldWeight" placeholder="وزن طلا (گرم)" style="flex:1; min-width:120px;" step="0.01">
+                    <input type="number" id="investSilverWeight" placeholder="وزن نقره (گرم)" style="flex:1; min-width:120px;" step="0.01">
                     <input type="number" id="investCryptoAmount" placeholder="مبلغ کریپتو (ریال)" style="flex:1; min-width:120px;">
                 </div>
                 <input type="text" id="investDesc" placeholder="توضیح (اختیاری)">
@@ -1367,7 +1367,7 @@
                 }
                 txt += '\n';
 
-                // ====== سرمایه‌گذاری (وزنی) ======
+                // ====== سرمایه‌گذاری ======
                 txt += '📈 سرمایه‌گذاری:\n';
                 txt += '─────────────────────────────────────────────────\n';
                 if (invest.length === 0) {
@@ -1376,7 +1376,8 @@
                     invest.forEach(i => {
                         const emoji = i.type === 'gold' ? '🥇' : i.type === 'silver' ? '🥈' : '₿';
                         const unit = i.type === 'gold' || i.type === 'silver' ? 'گرم' : 'ریال';
-                        txt += `📅 ${i.persianDate || 'نامشخص'} | ${emoji} ${i.type === 'gold' ? 'طلا' : i.type === 'silver' ? 'نقره' : 'کریپتو'} | ${i.amount.toLocaleString()} ${unit} | ${i.description || ''}\n`;
+                        const label = i.type === 'gold' ? 'طلا' : i.type === 'silver' ? 'نقره' : 'کریپتو';
+                        txt += `📅 ${i.persianDate || 'نامشخص'} | ${emoji} ${label} | ${i.amount.toLocaleString()} ${unit} | ${i.description || ''}\n`;
                     });
                 }
                 txt += '\n';

@@ -181,6 +181,11 @@
             margin: 6px 0;
             font-size: 13px;
             font-weight: 600;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .invest-summary span {
+            color: #0f172a;
         }
         .total-balance {
             background: #f8fafc;
@@ -507,24 +512,30 @@
             </div>
         </div>
 
-        <!-- ====== سرمایه‌گذاری ====== -->
+        <!-- ====== سرمایه‌گذاری با وزن (طلا و نقره) ====== -->
         <div id="tab-invest" class="hidden">
             <div class="card">
                 <div class="card-title">📈 سرمایه‌گذاری (طلا، نقره، کریپتو)</div>
                 <div id="investContainer"></div>
-                <input type="number" id="investAmount" placeholder="مبلغ">
-                <input type="text" id="investDesc" placeholder="توضیح">
-                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
-                    <button class="btn" style="background:#f59e0b;color:#fff;flex:1;" onclick="addInvest('طلا')">🥇 طلا</button>
-                    <button class="btn" style="background:#94a3b8;color:#fff;flex:1;" onclick="addInvest('نقره')">🥈 نقره</button>
-                    <button class="btn" style="background:#8b5cf6;color:#fff;flex:1;" onclick="addInvest('کریپتو')">₿ کریپتو</button>
+
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <input type="number" id="investGoldWeight" placeholder="وزن طلا (گرم)" style="flex:1; min-width:120px;">
+                    <input type="number" id="investSilverWeight" placeholder="وزن نقره (گرم)" style="flex:1; min-width:120px;">
+                    <input type="number" id="investCryptoAmount" placeholder="مبلغ کریپتو (ریال)" style="flex:1; min-width:120px;">
                 </div>
+                <input type="text" id="investDesc" placeholder="توضیح (اختیاری)">
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+                    <button class="btn" style="background:#f59e0b;color:#fff;flex:1;" onclick="addInvestGold()">🥇 ثبت طلا</button>
+                    <button class="btn" style="background:#94a3b8;color:#fff;flex:1;" onclick="addInvestSilver()">🥈 ثبت نقره</button>
+                    <button class="btn" style="background:#8b5cf6;color:#fff;flex:1;" onclick="addInvestCrypto()">₿ ثبت کریپتو</button>
+                </div>
+
                 <div style="background:#f8fafc;padding:12px;border-radius:16px;margin-top:8px;border:1px solid #e9edf2;">
-                    <div style="font-weight:600;color:#334155;margin-bottom:6px;">📊 خلاصه</div>
+                    <div style="font-weight:600;color:#334155;margin-bottom:6px;">📊 خلاصه سرمایه‌گذاری</div>
                     <div class="invest-summary" id="investSummary">
-                        <span>🥇 طلا: <strong id="sumGold">0</strong></span>
-                        <span>🥈 نقره: <strong id="sumSilver">0</strong></span>
-                        <span>₿ کریپتو: <strong id="sumCrypto">0</strong></span>
+                        <span>🥇 طلا: <strong id="sumGold">0</strong> گرم</span>
+                        <span>🥈 نقره: <strong id="sumSilver">0</strong> گرم</span>
+                        <span>₿ کریپتو: <strong id="sumCrypto">0</strong> ریال</span>
                     </div>
                 </div>
             </div>
@@ -964,18 +975,44 @@
             });
         }
 
-        // ========== سرمایه‌گذاری ==========
-        function addInvest(category) {
-            const amount = document.getElementById('investAmount').value;
-            const desc = document.getElementById('investDesc').value || category;
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
+        // ========== سرمایه‌گذاری (وزنی) ==========
+        function addInvestGold() {
+            const weight = parseFloat(document.getElementById('investGoldWeight').value);
+            const desc = document.getElementById('investDesc').value.trim() || 'طلا';
+            if (!weight || weight <= 0) { alert('وزن طلا را به گرم وارد کنید!'); return; }
             const invest = getData('invest');
-            invest.push({ id: Date.now(), amount: parseInt(amount), description: desc, category: category, persianDate: getTodayPersian() });
+            invest.push({ id: Date.now(), type: 'gold', amount: weight, description: desc, persianDate: getTodayPersian() });
             setData('invest', invest);
-            document.getElementById('investAmount').value = '';
+            document.getElementById('investGoldWeight').value = '';
             document.getElementById('investDesc').value = '';
             renderAll();
-            alert('✅ ' + category + ' ثبت شد!');
+            alert('✅ طلا ثبت شد!');
+        }
+
+        function addInvestSilver() {
+            const weight = parseFloat(document.getElementById('investSilverWeight').value);
+            const desc = document.getElementById('investDesc').value.trim() || 'نقره';
+            if (!weight || weight <= 0) { alert('وزن نقره را به گرم وارد کنید!'); return; }
+            const invest = getData('invest');
+            invest.push({ id: Date.now(), type: 'silver', amount: weight, description: desc, persianDate: getTodayPersian() });
+            setData('invest', invest);
+            document.getElementById('investSilverWeight').value = '';
+            document.getElementById('investDesc').value = '';
+            renderAll();
+            alert('✅ نقره ثبت شد!');
+        }
+
+        function addInvestCrypto() {
+            const amount = parseInt(document.getElementById('investCryptoAmount').value);
+            const desc = document.getElementById('investDesc').value.trim() || 'کریپتو';
+            if (!amount || amount <= 0) { alert('مبلغ کریپتو را وارد کنید!'); return; }
+            const invest = getData('invest');
+            invest.push({ id: Date.now(), type: 'crypto', amount: amount, description: desc, persianDate: getTodayPersian() });
+            setData('invest', invest);
+            document.getElementById('investCryptoAmount').value = '';
+            document.getElementById('investDesc').value = '';
+            renderAll();
+            alert('✅ کریپتو ثبت شد!');
         }
 
         function deleteInvest(id) {
@@ -990,32 +1027,37 @@
             const invest = getData('invest');
             const container = document.getElementById('investContainer');
             container.innerHTML = '';
-            if (invest.length === 0) { container.innerHTML = '<p style="color:#94a3b8;">📈 هنوز سرمایه‌گذاری ثبت نشده</p>'; updateInvestSummary([]); return; }
+            if (invest.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;">📈 هنوز سرمایه‌گذاری ثبت نشده</p>';
+                updateInvestSummary([]);
+                return;
+            }
 
             const grouped = {};
             invest.forEach(item => {
-                const key = item.category + '_' + item.persianDate.slice(0, 7);
+                const key = item.type + '_' + item.persianDate.slice(0, 7);
                 if (!grouped[key]) grouped[key] = [];
                 grouped[key].push(item);
             });
 
+            const typeEmoji = { gold: '🥇', silver: '🥈', crypto: '₿' };
+            const typeLabel = { gold: 'طلا', silver: 'نقره', crypto: 'کریپتو' };
+            const typeUnit = { gold: 'گرم', silver: 'گرم', crypto: 'ریال' };
+
             Object.keys(grouped).sort().reverse().forEach(key => {
-                const [cat, month] = key.split('_');
+                const [type, month] = key.split('_');
                 const box = document.createElement('div');
-                box.style.cssText = 'background:#f8fafc;padding:10px;border-radius:12px;margin-bottom:8px;border:1px solid #e9edf2;';
+                box.className = 'month-box';
                 const total = grouped[key].reduce((s, item) => s + item.amount, 0);
-                const emoji = cat === 'طلا' ? '🥇' : cat === 'نقره' ? '🥈' : '₿';
+                const unit = typeUnit[type] || '';
                 box.innerHTML = `
-                    <div style="display:flex;justify-content:space-between;font-weight:600;font-size:14px;border-bottom:1px dashed #e2e8f0;padding-bottom:4px;">
-                        <span>${emoji} ${cat} - ${month}</span>
-                        <span style="font-weight:400;font-size:12px;color:#475569;">مجموع: ${total.toLocaleString()}</span>
-                    </div>
+                    <div class="month-title">${typeEmoji[type]} ${typeLabel[type]} - ${month} <span>مجموع: ${total.toLocaleString()} ${unit}</span></div>
                 `;
                 grouped[key].forEach(item => {
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     row.innerHTML = `
-                        <span>${item.amount.toLocaleString()} ریال <span style="background:#f1f5f9;padding:0 8px;border-radius:30px;font-size:11px;">${item.description || ''}</span></span>
+                        <span>${item.amount.toLocaleString()} ${unit} <span style="background:#f1f5f9;padding:0 8px;border-radius:30px;font-size:11px;">${item.description || ''}</span></span>
                         <button class="del-btn" onclick="deleteInvest(${item.id})">🗑️</button>
                     `;
                     box.appendChild(row);
@@ -1026,9 +1068,9 @@
         }
 
         function updateInvestSummary(invest) {
-            const gold = invest.filter(i => i.category === 'طلا').reduce((s, i) => s + i.amount, 0);
-            const silver = invest.filter(i => i.category === 'نقره').reduce((s, i) => s + i.amount, 0);
-            const crypto = invest.filter(i => i.category === 'کریپتو').reduce((s, i) => s + i.amount, 0);
+            const gold = invest.filter(i => i.type === 'gold').reduce((s, i) => s + i.amount, 0);
+            const silver = invest.filter(i => i.type === 'silver').reduce((s, i) => s + i.amount, 0);
+            const crypto = invest.filter(i => i.type === 'crypto').reduce((s, i) => s + i.amount, 0);
             document.getElementById('sumGold').textContent = gold.toLocaleString();
             document.getElementById('sumSilver').textContent = silver.toLocaleString();
             document.getElementById('sumCrypto').textContent = crypto.toLocaleString();
@@ -1052,14 +1094,15 @@
             const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
             const totalExpense = totalExpenseFromTx + totalRentPaid + totalFaezeh + totalPersonal + totalLoanPaid;
 
-            const totalInvest = invest.reduce((s, t) => s + t.amount, 0);
+            // محاسبه ارزش کل سرمایه‌گذاری (طلا و نقره به گرم، کریپتو به ریال)
+            const totalInvest = invest.reduce((s, i) => s + i.amount, 0);
             const totalLoans = loans.filter(l => !l.paid).reduce((s, l) => s + l.amount, 0);
             const totalSavings = savings.reduce((s, t) => s + t.amount, 0);
             const finalBalance = totalIncome - totalExpense - totalInvest - totalLoans;
 
             document.getElementById('balTotalIncome').textContent = totalIncome.toLocaleString() + ' ریال';
             document.getElementById('balTotalExpense').textContent = totalExpense.toLocaleString() + ' ریال';
-            document.getElementById('balTotalInvest').textContent = totalInvest.toLocaleString() + ' ریال';
+            document.getElementById('balTotalInvest').textContent = totalInvest.toLocaleString() + ' (گرم/ریال)';
             document.getElementById('balTotalLoans').textContent = totalLoans.toLocaleString() + ' ریال';
             document.getElementById('balTotalSavings').textContent = totalSavings.toLocaleString() + ' ریال';
 
@@ -1324,15 +1367,16 @@
                 }
                 txt += '\n';
 
-                // ====== سرمایه‌گذاری ======
+                // ====== سرمایه‌گذاری (وزنی) ======
                 txt += '📈 سرمایه‌گذاری:\n';
                 txt += '─────────────────────────────────────────────────\n';
                 if (invest.length === 0) {
                     txt += 'هیچ سرمایه‌گذاری ثبت نشده\n';
                 } else {
                     invest.forEach(i => {
-                        const emoji = i.category === 'طلا' ? '🥇' : i.category === 'نقره' ? '🥈' : '₿';
-                        txt += `📅 ${i.persianDate || 'نامشخص'} | ${emoji} ${i.category || ''} | ${i.amount.toLocaleString()} ریال | ${i.description || ''}\n`;
+                        const emoji = i.type === 'gold' ? '🥇' : i.type === 'silver' ? '🥈' : '₿';
+                        const unit = i.type === 'gold' || i.type === 'silver' ? 'گرم' : 'ریال';
+                        txt += `📅 ${i.persianDate || 'نامشخص'} | ${emoji} ${i.type === 'gold' ? 'طلا' : i.type === 'silver' ? 'نقره' : 'کریپتو'} | ${i.amount.toLocaleString()} ${unit} | ${i.description || ''}\n`;
                     });
                 }
                 txt += '\n';
@@ -1355,7 +1399,7 @@
                 txt += '─────────────────────────────────────────────────\n';
                 txt += `💰 کل درآمدها: ${totalIncome.toLocaleString()} ریال\n`;
                 txt += `💸 کل مخارج: ${totalExpenses.toLocaleString()} ریال\n`;
-                txt += `📈 کل سرمایه‌گذاری: ${totalInvest.toLocaleString()} ریال\n`;
+                txt += `📈 کل سرمایه‌گذاری: ${totalInvest.toLocaleString()} (گرم/ریال)\n`;
                 txt += `🏦 کل پس‌انداز: ${totalSavings.toLocaleString()} ریال\n`;
                 txt += `⚖️ تراز نهایی: ${balance >= 0 ? '+' : ''}${balance.toLocaleString()} ریال\n`;
                 txt += '═══════════════════════════════════════════════════\n';

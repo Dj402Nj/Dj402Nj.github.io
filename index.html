@@ -6,461 +6,86 @@
     <title>Mehdiar</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f0f2f5;
-            padding: 16px;
-            color: #1e293b;
-        }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        .card-title {
-            font-weight: 700;
-            font-size: 16px;
-            color: #0f172a;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .card-title span {
-            background: #e2e8f0;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-size: 12px;
-            color: #334155;
-        }
-        .btn {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            background: #e2e8f0;
-            color: #1e293b;
-            transition: 0.2s;
-        }
-        .btn:hover {
-            transform: scale(0.97);
-        }
-        .btn-success {
-            background: #10b981;
-            color: #fff;
-        }
-        .btn-danger {
-            background: #ef4444;
-            color: #fff;
-        }
-        .btn-primary {
-            background: #3b82f6;
-            color: #fff;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #cbd5e1;
-        }
-        .btn-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .btn-group .btn {
-            flex: 1;
-            min-width: 60px;
-            text-align: center;
-        }
-        input,
-        select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 12px;
-            background: #f8fafc;
-            font-size: 13px;
-            margin: 4px 0;
-            transition: 0.2s;
-        }
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background: #fff;
-        }
-        .month-box {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-            margin-bottom: 10px;
-        }
-        .month-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: #0f172a;
-            margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #e2e8f0;
-            padding-bottom: 4px;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        .month-title span {
-            font-weight: 400;
-            font-size: 12px;
-            color: #475569;
-        }
-        .balance-row {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            margin: 4px 0;
-            padding: 4px 0;
-            font-size: 14px;
-        }
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-            padding: 6px 12px;
-            border-radius: 12px;
-            margin: 4px 0;
-            font-size: 13px;
-            border: 1px solid #f1f5f9;
-        }
-        .item-row .badge {
-            background: #e2e8f0;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-size: 11px;
-        }
-        .item-row .del-btn {
-            background: #fee2e2;
-            border: none;
-            color: #dc2626;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-size: 12px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .item-row .edit-btn {
-            background: #dbeafe;
-            border: none;
-            color: #2563eb;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-size: 12px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .stat {
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-        }
-        .stat-item {
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 20px;
-            font-weight: 700;
-        }
-        .stat-number.red {
-            color: #ef4444;
-        }
-        .stat-number.green {
-            color: #10b981;
-        }
-        .stat-number.blue {
-            color: #3b82f6;
-        }
-        .stat-label {
-            font-size: 11px;
-            color: #64748b;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-        }
-        .info-item {
-            text-align: center;
-        }
-        .info-number {
-            font-weight: 700;
-            font-size: 20px;
-            color: #0f172a;
-        }
-        .info-label {
-            font-size: 11px;
-            color: #64748b;
-        }
-        .motivation {
-            text-align: center;
-            font-weight: 600;
-            color: #3b82f6;
-            padding: 8px;
-            background: #eff6ff;
-            border-radius: 16px;
-            margin-top: 8px;
-            font-size: 14px;
-        }
-        .tab-bar {
-            display: flex;
-            gap: 4px;
-            background: #fff;
-            padding: 6px;
-            border-radius: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        }
-        .tab-bar .btn {
-            flex: 1;
-            font-size: 11px;
-            padding: 8px 4px;
-            background: transparent;
-            border-radius: 16px;
-            color: #64748b;
-        }
-        .tab-bar .btn.active {
-            background: #3b82f6;
-            color: #fff;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .task-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 8px;
-            background: #f8fafc;
-            border-radius: 12px;
-            margin: 4px 0;
-            font-size: 13px;
-        }
-        .task-item.done label {
-            text-decoration: line-through;
-            color: #94a3b8;
-        }
-        .task-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #3b82f6;
-        }
-        .task-item label {
-            flex: 1;
-        }
-        .loan-item {
-            border-right: 4px solid #ef4444;
-            padding: 8px 12px;
-            background: #f8fafc;
-            border-radius: 12px;
-            margin: 4px 0;
-        }
-        .loan-item.paid {
-            border-right-color: #10b981;
-        }
-        .loan-detail {
-            font-size: 12px;
-            color: #475569;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            margin: 4px 0;
-        }
-        .progress-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: #3b82f6;
-            transition: 0.3s;
-        }
-        .progress-fill.green {
-            background: #10b981;
-        }
-        .savings-item,
-        .purchase-item,
-        .invest-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 13px;
-        }
-        .quote {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-            text-align: center;
-            font-style: italic;
-            color: #475569;
-            margin-bottom: 16px;
-            border-right: 4px solid #3b82f6;
-        }
-        .export-btn {
-            background: #0f172a;
-            color: #fff;
-            padding: 12px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            width: 100%;
-            margin-top: 8px;
-            cursor: pointer;
-        }
-        .export-btn.gold {
-            background: #f59e0b;
-        }
-        .export-btn.blue {
-            background: #3b82f6;
-        }
-        .export-btn.red {
-            background: #ef4444;
-        }
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .modal-content {
-            background: #fff;
-            padding: 24px;
-            border-radius: 28px;
-            max-width: 380px;
-            width: 90%;
-            text-align: center;
-            color: #0f172a;
-        }
-        .modal-content h2 {
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        .modal-content input {
-            margin: 6px 0;
-        }
-        .sms-box {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-            border-right: 4px solid #10b981;
-        }
-        .report-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 13px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .date-badge {
-            background: #e2e8f0;
-            padding: 2px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-            color: #475569;
-        }
-        .sub-card {
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 12px;
-            margin-top: 8px;
-        }
-        .sub-card .sub-title {
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 6px;
-            font-size: 13px;
-        }
-        .invest-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 4px;
-        }
-        .invest-group .btn {
-            flex: 1;
-            min-width: 50px;
-            font-size: 12px;
-        }
-        .invest-summary {
-            display: flex;
-            justify-content: space-around;
-            background: #e2e8f0;
-            padding: 6px;
-            border-radius: 14px;
-            margin: 6px 0;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .invest-summary span {
-            color: #0f172a;
-        }
-        .balance-positive {
-            color: #10b981;
-        }
-        .balance-negative {
-            color: #ef4444;
-        }
-        .big-number {
-            font-size: 22px;
-            font-weight: 700;
-        }
-        .total-balance {
-            background: #f1f5f9;
-            padding: 12px;
-            border-radius: 16px;
-            margin-top: 6px;
-        }
-        .total-balance .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            font-size: 14px;
-        }
-        .total-balance .final {
-            font-size: 18px;
-            font-weight: 700;
-            border-top: 2px solid #e2e8f0;
-            padding-top: 6px;
-            margin-top: 4px;
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f2f5;padding:16px;color:#1e293b}
+        .container{max-width:500px;margin:0 auto}
+        .card{background:#fff;border-radius:20px;padding:16px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+        .card-title{font-weight:700;font-size:16px;color:#0f172a;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .btn{padding:8px 14px;border:none;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;background:#e2e8f0;color:#1e293b;transition:0.2s}
+        .btn:hover{transform:scale(0.97)}
+        .btn-success{background:#10b981;color:#fff}
+        .btn-danger{background:#ef4444;color:#fff}
+        .btn-primary{background:#3b82f6;color:#fff}
+        .btn-outline{background:transparent;border:1.5px solid #cbd5e1}
+        .btn-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+        .btn-group .btn{flex:1;min-width:60px;text-align:center}
+        input,select{width:100%;padding:10px 12px;border:1.5px solid #e2e8f0;border-radius:12px;background:#f8fafc;font-size:13px;margin:4px 0}
+        input:focus,select:focus{outline:none;border-color:#3b82f6;background:#fff}
+        .month-box{background:#f8fafc;padding:12px;border-radius:16px;margin-bottom:10px}
+        .month-title{font-weight:600;font-size:14px;color:#0f172a;display:flex;justify-content:space-between;border-bottom:1px dashed #e2e8f0;padding-bottom:4px;flex-wrap:wrap;gap:4px}
+        .month-title span{font-weight:400;font-size:12px;color:#475569}
+        .balance-row{display:flex;justify-content:space-between;font-weight:600;margin:4px 0;padding:4px 0;font-size:14px}
+        .item-row{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:6px 12px;border-radius:12px;margin:4px 0;font-size:13px;border:1px solid #f1f5f9}
+        .item-row .badge{background:#e2e8f0;padding:2px 10px;border-radius:30px;font-size:11px}
+        .item-row .del-btn{background:#fee2e2;border:none;color:#dc2626;padding:2px 10px;border-radius:30px;font-size:12px;cursor:pointer;font-weight:600}
+        .item-row .edit-btn{background:#dbeafe;border:none;color:#2563eb;padding:2px 10px;border-radius:30px;font-size:12px;cursor:pointer;font-weight:600}
+        .stat{display:flex;justify-content:space-around;padding:8px 0}
+        .stat-item{text-align:center}
+        .stat-number{font-size:20px;font-weight:700}
+        .stat-number.red{color:#ef4444}
+        .stat-number.green{color:#10b981}
+        .stat-number.blue{color:#3b82f6}
+        .stat-label{font-size:11px;color:#64748b}
+        .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f8fafc;padding:12px;border-radius:16px}
+        .info-item{text-align:center}
+        .info-number{font-weight:700;font-size:20px;color:#0f172a}
+        .info-label{font-size:11px;color:#64748b}
+        .motivation{text-align:center;font-weight:600;color:#3b82f6;padding:8px;background:#eff6ff;border-radius:16px;margin-top:8px;font-size:14px}
+        .tab-bar{display:flex;gap:4px;background:#fff;padding:6px;border-radius:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        .tab-bar .btn{flex:1;font-size:11px;padding:8px 4px;background:transparent;border-radius:16px;color:#64748b}
+        .tab-bar .btn.active{background:#3b82f6;color:#fff}
+        .hidden{display:none!important}
+        .task-item{display:flex;align-items:center;gap:8px;padding:6px 8px;background:#f8fafc;border-radius:12px;margin:4px 0;font-size:13px}
+        .task-item.done label{text-decoration:line-through;color:#94a3b8}
+        .task-item input[type="checkbox"]{width:18px;height:18px;accent-color:#3b82f6}
+        .task-item label{flex:1}
+        .loan-item{border-right:4px solid #ef4444;padding:8px 12px;background:#f8fafc;border-radius:12px;margin:4px 0}
+        .loan-item.paid{border-right-color:#10b981}
+        .loan-detail{font-size:12px;color:#475569}
+        .progress-bar{width:100%;height:6px;background:#e2e8f0;border-radius:10px;margin:4px 0}
+        .progress-fill{height:100%;border-radius:10px;background:#3b82f6;transition:0.3s}
+        .progress-fill.green{background:#10b981}
+        .savings-item,.purchase-item{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+        .quote{background:#f8fafc;padding:12px;border-radius:16px;text-align:center;font-style:italic;color:#475569;margin-bottom:16px;border-right:4px solid #3b82f6}
+        .export-btn{background:#0f172a;color:#fff;padding:12px;border:none;border-radius:14px;font-weight:700;width:100%;margin-top:8px;cursor:pointer}
+        .export-btn.gold{background:#f59e0b}
+        .export-btn.blue{background:#3b82f6}
+        .export-btn.red{background:#ef4444}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:999}
+        .modal-content{background:#fff;padding:24px;border-radius:28px;max-width:380px;width:90%;text-align:center;color:#0f172a}
+        .modal-content h2{margin-bottom:12px;font-size:18px}
+        .modal-content input{margin:6px 0}
+        .sms-box{background:#f8fafc;padding:12px;border-radius:16px;border-right:4px solid #10b981}
+        .report-item{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid #f1f5f9}
+        .date-badge{background:#e2e8f0;padding:2px 12px;border-radius:30px;font-size:11px;color:#475569}
+        .sub-card{background:#f8fafc;border-radius:16px;padding:12px;margin-top:8px}
+        .sub-card .sub-title{font-weight:600;color:#334155;margin-bottom:6px;font-size:13px}
+        .invest-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+        .invest-group .btn{flex:1;min-width:50px;font-size:12px}
+        .invest-summary{display:flex;justify-content:space-around;background:#e2e8f0;padding:6px;border-radius:14px;margin:6px 0;font-size:13px;font-weight:600}
+        .invest-summary span{color:#0f172a}
+        .total-balance{background:#f8fafc;padding:16px;border-radius:16px}
+        .total-balance .row{display:flex;justify-content:space-between;padding:4px 0;font-size:14px;border-bottom:1px solid #e2e8f0}
+        .total-balance .final{font-size:18px;font-weight:700;padding-top:8px;margin-top:4px;display:flex;justify-content:space-between;border-top:2px solid #cbd5e1}
+        .total-balance .final .amount{color:#10b981}
+        .total-balance .final .amount.negative{color:#ef4444}
     </style>
 </head>
 <body>
     <div class="container">
         <div class="quote" id="quote">🌙 Welcome to Mehdiar</div>
 
-        <!-- ====== Today Info ====== -->
+        <!-- Today Info -->
         <div class="card">
             <div class="card-title">📅 Today</div>
             <div class="info-grid" id="dateInfo">
@@ -472,18 +97,17 @@
             <div class="motivation" id="motivationMessage">🔥 Get up and go after your goal!</div>
         </div>
 
-        <!-- ====== Tab Bar ====== -->
+        <!-- Tab Bar -->
         <div class="tab-bar">
             <button class="btn active" onclick="showTab('dashboard')">📊 Home</button>
             <button class="btn" onclick="showTab('invest')">📈 Invest</button>
-            <button class="btn" onclick="showTab('balance')">📊 Balance</button>
+            <button class="btn" onclick="showTab('balance')">⚖️ Balance</button>
             <button class="btn" onclick="showTab('reports')">📋 Report</button>
             <button class="btn" onclick="showTab('export')">📤 Export</button>
         </div>
 
-        <!-- ====== Dashboard ====== -->
+        <!-- Dashboard -->
         <div id="tab-dashboard">
-            <!-- SMS -->
             <div id="smsSection" style="display:none;" class="card">
                 <div class="card-title">📩 New SMS</div>
                 <div class="sms-box">
@@ -491,7 +115,7 @@
                     <p>🏦 Bank: <strong id="smsBank"></strong></p>
                     <p>📅 Date: <strong id="smsDate"></strong></p>
                 </div>
-                <div class="card-title" style="margin-top:8px;">❓ For what?</div>
+                <div class="card-title">❓ For what?</div>
                 <div class="btn-group">
                     <button class="btn" onclick="setCategory('Food')">🍔 Food</button>
                     <button class="btn" onclick="setCategory('Bill')">💡 Bill</button>
@@ -503,7 +127,6 @@
                 <button class="btn btn-primary" onclick="saveTransaction()" style="width:100%;margin-top:8px;">✅ Save</button>
             </div>
 
-            <!-- Income / Expense -->
             <div class="card">
                 <div class="card-title">💰 Income / Expense</div>
                 <div id="incomeExpenseContainer"></div>
@@ -517,7 +140,6 @@
                 </div>
             </div>
 
-            <!-- Rent / Faezeh / Personal -->
             <div class="card">
                 <div class="card-title">🏠 Specific Expenses</div>
                 <div id="specificExpensesContainer"></div>
@@ -532,7 +154,6 @@
                 </div>
             </div>
 
-            <!-- Tasks -->
             <div class="card">
                 <div class="card-title">✅ Today's Tasks</div>
                 <div id="taskList"></div>
@@ -540,7 +161,6 @@
                 <button class="btn btn-primary" onclick="addTask()" style="width:100%;margin-top:6px;">➕ Add Task</button>
             </div>
 
-            <!-- Today Stats -->
             <div class="card">
                 <div class="card-title">📊 Today</div>
                 <div class="stat">
@@ -550,7 +170,6 @@
                 </div>
             </div>
 
-            <!-- Savings -->
             <div class="card">
                 <div class="card-title">🏦 Monthly Savings</div>
                 <div id="savingsDisplay">
@@ -568,7 +187,6 @@
                 </div>
             </div>
 
-            <!-- Loans -->
             <div class="card">
                 <div class="card-title">💰 Loans</div>
                 <div id="loanList"></div>
@@ -580,12 +198,11 @@
             </div>
         </div>
 
-        <!-- ====== Invest Tab ====== -->
+        <!-- Invest Tab -->
         <div id="tab-invest" class="hidden">
             <div class="card">
                 <div class="card-title">📈 Investments (Gold / Silver / Crypto)</div>
                 <div id="investContainer"></div>
-
                 <div style="display:flex;gap:6px;margin-top:8px;">
                     <input type="number" id="investAmount" placeholder="Amount" style="flex:1;">
                     <input type="text" id="investDesc" placeholder="Desc" style="flex:1;">
@@ -595,8 +212,7 @@
                     <button class="btn" style="background:#94a3b8;color:#fff;" onclick="addInvest('Silver')">🥈 Silver</button>
                     <button class="btn" style="background:#8b5cf6;color:#fff;" onclick="addInvest('Crypto')">₿ Crypto</button>
                 </div>
-
-                <div class="sub-card" style="margin-top:12px;">
+                <div class="sub-card">
                     <div class="sub-title">📊 Summary</div>
                     <div class="invest-summary" id="investSummary">
                         <span>🥇 Gold: <strong id="sumGold">0</strong></span>
@@ -607,25 +223,25 @@
             </div>
         </div>
 
-        <!-- ====== Balance Tab ====== -->
+        <!-- Balance Tab -->
         <div id="tab-balance" class="hidden">
             <div class="card">
-                <div class="card-title">📊 Total Balance</div>
+                <div class="card-title">⚖️ Total Balance</div>
                 <div class="total-balance" id="totalBalanceContainer">
                     <div class="row"><span>💰 Total Income:</span> <strong id="balTotalIncome">0</strong></div>
                     <div class="row"><span>💸 Total Expense:</span> <strong id="balTotalExpense">0</strong></div>
                     <div class="row"><span>📈 Total Investments:</span> <strong id="balTotalInvest">0</strong></div>
                     <div class="row"><span>💳 Total Loans (Remaining):</span> <strong id="balTotalLoans">0</strong></div>
                     <div class="row"><span>🏦 Total Savings:</span> <strong id="balTotalSavings">0</strong></div>
-                    <div class="final" id="balFinal">
+                    <div class="final">
                         <span>⚖️ Final Balance:</span>
-                        <span id="balFinalAmount">0</span>
+                        <span class="amount" id="balFinalAmount">0</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ====== Reports ====== -->
+        <!-- Reports -->
         <div id="tab-reports" class="hidden">
             <div class="card">
                 <div class="card-title">📋 Reports</div>
@@ -637,7 +253,7 @@
             </div>
         </div>
 
-        <!-- ====== Export ====== -->
+        <!-- Export -->
         <div id="tab-export" class="hidden">
             <div class="card">
                 <div class="card-title">📤 Export to Excel</div>
@@ -650,7 +266,7 @@
         </div>
     </div>
 
-    <!-- ====== Modals ====== -->
+    <!-- Modals -->
     <div class="modal" id="forceModal">
         <div class="modal-content">
             <h2>⏳ Please respond!</h2>
@@ -673,7 +289,7 @@
 
     <script>
         // ============================================================
-        //  Database
+        //  DATABASE
         // ============================================================
         let db;
         const DB_NAME = 'MehdiarDB';
@@ -732,7 +348,7 @@
         }
 
         // ============================================================
-        //  Persian Date
+        //  PERSIAN DATE
         // ============================================================
         function toPersianDate(date) {
             return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(
@@ -761,16 +377,20 @@
             document.getElementById('weeksRemaining').textContent = weeksRemaining;
 
             const msgs = [
-                '🔥 Get up and go after your goal!', '💪 Every day is a new chance!',
-                '🚀 Start now, don\'t wait!', '🌟 Your future self will thank you!',
-                '🏆 Small steps lead to big wins!', '⚡ Time is now, don\'t waste it!',
-                '📈 Progress, not perfection!', '🎯 Stay focused, stay strong!'
+                '🔥 Get up and go after your goal!',
+                '💪 Every day is a new chance!',
+                '🚀 Start now, don\'t wait!',
+                '🌟 Your future self will thank you!',
+                '🏆 Small steps lead to big wins!',
+                '⚡ Time is now, don\'t waste it!',
+                '📈 Progress, not perfection!',
+                '🎯 Stay focused, stay strong!'
             ];
             document.getElementById('motivationMessage').textContent = msgs[daysPassed % msgs.length];
         }
 
         // ============================================================
-        //  Tabs
+        //  TABS
         // ============================================================
         function showTab(tab) {
             document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
@@ -778,12 +398,12 @@
             document.querySelectorAll('.tab-bar .btn').forEach(el => el.classList.remove('active'));
             document.querySelector('.tab-bar .btn[onclick*="' + tab + '"]').classList.add('active');
             if (tab === 'invest') renderInvest();
-            if (tab === 'reports') showReport('monthly');
             if (tab === 'balance') updateTotalBalance();
+            if (tab === 'reports') showReport('monthly');
         }
 
         // ============================================================
-        //  Quote
+        //  QUOTE
         // ============================================================
         async function fetchQuote() {
             try {
@@ -798,7 +418,7 @@
         }
 
         // ============================================================
-        //  Income / Expense with Balance
+        //  INCOME / EXPENSE
         // ============================================================
         async function renderIncomeExpense() {
             const transactions = await getAllData('transactions');
@@ -828,24 +448,24 @@
                 const balanceSign = balance >= 0 ? '+' : '';
 
                 box.innerHTML = `
-                        <div class="month-title">📅 ${month} <span>Income: ${totalIncome.toLocaleString()} | Expense: ${totalExpense.toLocaleString()}</span></div>
-                        <div class="balance-row" style="color:${balanceColor};">
-                            <span>💰 Balance:</span>
-                            <span>${balanceSign}${balance.toLocaleString()} IRR</span>
-                        </div>
-                    `;
+                    <div class="month-title">📅 ${month} <span>Income: ${totalIncome.toLocaleString()} | Expense: ${totalExpense.toLocaleString()}</span></div>
+                    <div class="balance-row" style="color:${balanceColor};">
+                        <span>💰 Balance:</span>
+                        <span>${balanceSign}${balance.toLocaleString()} IRR</span>
+                    </div>
+                `;
 
                 months[month].forEach(t => {
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     const typeLabel = t.type === 'income' ? '💰 Income' : '💸 Expense';
                     row.innerHTML = `
-                            <span>${typeLabel} - ${t.amount.toLocaleString()} IRR <span class="badge">${t.description || ''}</span></span>
-                            <div>
-                                <button class="edit-btn" onclick="editTransaction(${t.id})">✏️</button>
-                                <button class="del-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
-                            </div>
-                        `;
+                        <span>${typeLabel} - ${t.amount.toLocaleString()} IRR <span class="badge">${t.description || ''}</span></span>
+                        <div>
+                            <button class="edit-btn" onclick="editTransaction(${t.id})">✏️</button>
+                            <button class="del-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
+                        </div>
+                    `;
                     box.appendChild(row);
                 });
                 container.appendChild(box);
@@ -920,7 +540,7 @@
         }
 
         // ============================================================
-        //  Specific Expenses
+        //  SPECIFIC EXPENSES
         // ============================================================
         async function renderSpecificExpenses() {
             const transactions = await getAllData('transactions');
@@ -949,12 +569,12 @@
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     row.innerHTML = `
-                            <span>${t.amount.toLocaleString()} IRR <span class="badge">${t.description || ''}</span></span>
-                            <div>
-                                <button class="edit-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
-                                <button class="del-btn" onclick="deleteSpecificExpense(${t.id})">🗑️</button>
-                            </div>
-                        `;
+                        <span>${t.amount.toLocaleString()} IRR <span class="badge">${t.description || ''}</span></span>
+                        <div>
+                            <button class="edit-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
+                            <button class="del-btn" onclick="deleteSpecificExpense(${t.id})">🗑️</button>
+                        </div>
+                    `;
                     box.appendChild(row);
                 });
                 container.appendChild(box);
@@ -1073,7 +693,7 @@
         }
 
         // ============================================================
-        //  Tasks
+        //  TASKS
         // ============================================================
         async function loadTasks() {
             const tasks = await getAllData('tasks');
@@ -1089,11 +709,11 @@
                 const div = document.createElement('div');
                 div.className = 'task-item' + (task.done ? ' done' : '');
                 div.innerHTML = `
-                        <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id}, this.checked)">
-                        <label>${task.text}</label>
-                        <span class="date-badge">${task.date}</span>
-                        <button onclick="deleteTask(${task.id})" style="background:transparent;border:none;color:#ef4444;font-size:16px;cursor:pointer;">✕</button>
-                    `;
+                    <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id}, this.checked)">
+                    <label>${task.text}</label>
+                    <span class="date-badge">${task.date}</span>
+                    <button onclick="deleteTask(${task.id})" style="background:transparent;border:none;color:#ef4444;font-size:16px;cursor:pointer;">✕</button>
+                `;
                 list.appendChild(div);
             });
             if (todayTasks.some(t => !t.done)) showForceModal('Complete your tasks!');
@@ -1127,7 +747,7 @@
         }
 
         // ============================================================
-        //  Loans
+        //  LOANS
         // ============================================================
         async function loadLoans() {
             const loans = await getAllData('loans');
@@ -1143,16 +763,16 @@
                 const div = document.createElement('div');
                 div.className = 'loan-item' + (rem === 0 ? ' paid' : '');
                 div.innerHTML = `
-                        <strong>${loan.name}</strong>
-                        <div class="loan-detail">Total: ${loan.total.toLocaleString()} | Paid: ${loan.paid.toLocaleString()} | Remaining: <strong style="color:${rem===0?'#10b981':'#ef4444'}">${rem.toLocaleString()}</strong></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(prog,100)}%"></div></div>
-                        <div class="loan-detail">📅 Registered: ${loan.createdAt ? toPersianDate(loan.createdAt) : 'Unknown'} ${loan.nextDue && loan.nextDue !== 'Unknown' ? '| Next due: ' + loan.nextDue : ''}</div>
-                        <div style="display:flex;gap:4px;margin-top:4px;">
-                            <input type="number" id="payment_${loan.id}" placeholder="Amount" style="flex:1;">
-                            <button class="btn btn-success" onclick="payLoan(${loan.id})" style="padding:4px 12px;">💳 Pay</button>
-                            <button class="btn" onclick="deleteLoan(${loan.id})" style="padding:4px 12px;background:#fee2e2;color:#dc2626;">🗑️</button>
-                        </div>
-                    `;
+                    <strong>${loan.name}</strong>
+                    <div class="loan-detail">Total: ${loan.total.toLocaleString()} | Paid: ${loan.paid.toLocaleString()} | Remaining: <strong style="color:${rem===0?'#10b981':'#ef4444'}">${rem.toLocaleString()}</strong></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(prog,100)}%"></div></div>
+                    <div class="loan-detail">📅 Registered: ${loan.createdAt ? toPersianDate(loan.createdAt) : 'Unknown'} ${loan.nextDue && loan.nextDue !== 'Unknown' ? '| Next due: ' + loan.nextDue : ''}</div>
+                    <div style="display:flex;gap:4px;margin-top:4px;">
+                        <input type="number" id="payment_${loan.id}" placeholder="Amount" style="flex:1;">
+                        <button class="btn btn-success" onclick="payLoan(${loan.id})" style="padding:4px 12px;">💳 Pay</button>
+                        <button class="btn" onclick="deleteLoan(${loan.id})" style="padding:4px 12px;background:#fee2e2;color:#dc2626;">🗑️</button>
+                    </div>
+                `;
                 list.appendChild(div);
             });
             checkLoanReminders(loans);
@@ -1212,7 +832,7 @@
         }
 
         // ============================================================
-        //  Savings
+        //  SAVINGS
         // ============================================================
         async function loadSavings() {
             const savings = await getAllData('savings');
@@ -1235,11 +855,12 @@
             const history = document.getElementById('savingsHistory');
             history.innerHTML = '';
             if (thisMonth.length === 0) history.innerHTML =
-            '<p style="color:#94a3b8;font-size:13px;">⏳ No savings recorded</p>';
+                '<p style="color:#94a3b8;font-size:13px;">⏳ No savings recorded</p>';
             else thisMonth.slice(-5).reverse().forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'savings-item';
-                div.innerHTML = `<span>📅 ${toPersianDate(s.date)}</span><span style="color:#10b981;font-weight:600;">+${s.amount.toLocaleString()} IRR</span>`;
+                div.innerHTML =
+                    `<span>📅 ${toPersianDate(s.date)}</span><span style="color:#10b981;font-weight:600;">+${s.amount.toLocaleString()} IRR</span>`;
                 history.appendChild(div);
             });
         }
@@ -1270,7 +891,7 @@
         }
 
         // ============================================================
-        //  Purchases
+        //  PURCHASES
         // ============================================================
         async function loadPurchases() {
             const purchases = await getAllData('purchases');
@@ -1306,7 +927,7 @@
         }
 
         // ============================================================
-        //  INVEST (Gold, Silver, Crypto)
+        //  INVEST
         // ============================================================
         async function renderInvest() {
             const invest = await getAllData('invest');
@@ -1338,12 +959,12 @@
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     row.innerHTML = `
-                            <span>${item.amount.toLocaleString()} IRR <span class="badge">${item.description || ''}</span></span>
-                            <div>
-                                <button class="edit-btn" onclick="editInvest(${item.id})">✏️</button>
-                                <button class="del-btn" onclick="deleteInvest(${item.id})">🗑️</button>
-                            </div>
-                        `;
+                        <span>${item.amount.toLocaleString()} IRR <span class="badge">${item.description || ''}</span></span>
+                        <div>
+                            <button class="edit-btn" onclick="editInvest(${item.id})">✏️</button>
+                            <button class="del-btn" onclick="deleteInvest(${item.id})">🗑️</button>
+                        </div>
+                    `;
                     box.appendChild(row);
                 });
                 container.appendChild(box);
@@ -1429,11 +1050,11 @@
 
             const finalEl = document.getElementById('balFinalAmount');
             finalEl.textContent = finalBalance.toLocaleString() + ' IRR';
-            finalEl.style.color = finalBalance >= 0 ? '#10b981' : '#ef4444';
+            finalEl.className = 'amount' + (finalBalance < 0 ? ' negative' : '');
         }
 
         // ============================================================
-        //  Reports
+        //  REPORTS
         // ============================================================
         async function showReport(type) {
             const transactions = await getAllData('transactions');
@@ -1477,7 +1098,7 @@
         }
 
         // ============================================================
-        //  Today Stats
+        //  TODAY STATS
         // ============================================================
         async function updateTodayStats() {
             const transactions = await getAllData('transactions');
@@ -1491,7 +1112,7 @@
         }
 
         // ============================================================
-        //  Modal
+        //  MODAL
         // ============================================================
         function showForceModal(msg) {
             document.getElementById('forceMessage').textContent = msg || 'Complete the required action to continue.';
@@ -1503,7 +1124,7 @@
         function closeModal() { hideForceModal(); }
 
         // ============================================================
-        //  Export
+        //  EXPORT
         // ============================================================
         async function exportAllData() {
             const transactions = await getAllData('transactions');
@@ -1589,7 +1210,7 @@
         }
 
         // ============================================================
-        //  Init
+        //  INIT
         // ============================================================
         async function init() {
             await openDB();
@@ -1610,7 +1231,7 @@
         setInterval(fetchQuote, 3600000);
         setInterval(updateTodayStats, 60000);
         setInterval(updateDateInfo, 60000);
-        setInterval(updateTotalBalance, 60000);
+        setInterval(updateTotalBalance, 30000);
     </script>
 </body>
-                        </html>
+    </html>

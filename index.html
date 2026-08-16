@@ -2,30 +2,33 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مه‌دیار</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💰 مه‌دیار - مدیریت مالی</title>
     <style>
+        /* -------------------- Reset & Base -------------------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Vazir', 'Tahoma', sans-serif;
         }
         body {
-            font-family: 'Vazir', Tahoma, sans-serif;
-            background: #f4f6f9;
-            padding: 16px;
+            background: #f4f7fc;
+            padding: 16px 12px;
             color: #1e293b;
+            direction: rtl;
         }
         .container {
             max-width: 500px;
             margin: 0 auto;
         }
+        /* -------------------- Cards -------------------- */
         .card {
             background: #ffffff;
             border-radius: 20px;
             padding: 16px;
             margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
             border: 1px solid #e9edf2;
         }
         .card-title {
@@ -40,11 +43,13 @@
         .badge {
             background: #dbeafe;
             color: #2563eb;
-            padding: 2px 12px;
+            padding: 0 12px;
             border-radius: 30px;
             font-size: 11px;
             font-weight: 600;
+            line-height: 22px;
         }
+        /* -------------------- Buttons -------------------- */
         .btn {
             padding: 8px 14px;
             border: none;
@@ -55,10 +60,14 @@
             transition: 0.2s;
             background: #e2e8f0;
             color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
         .btn:hover {
             transform: scale(0.97);
-            opacity: 0.9;
+            opacity: 0.85;
         }
         .btn-success {
             background: #10b981;
@@ -84,10 +93,12 @@
         }
         .btn-group .btn {
             flex: 1;
-            min-width: 50px;
+            min-width: 60px;
             text-align: center;
         }
-        input {
+        /* -------------------- Inputs -------------------- */
+        input,
+        select {
             width: 100%;
             padding: 10px 12px;
             border: 1.5px solid #e2e8f0;
@@ -102,6 +113,7 @@
             border-color: #3b82f6;
             background: #fff;
         }
+        /* -------------------- Month Box -------------------- */
         .month-box {
             background: #f8fafc;
             padding: 12px;
@@ -133,6 +145,7 @@
             padding: 4px 0;
             font-size: 14px;
         }
+        /* -------------------- Item Row -------------------- */
         .item-row {
             display: flex;
             justify-content: space-between;
@@ -169,6 +182,7 @@
             cursor: pointer;
             font-weight: 600;
         }
+        /* -------------------- Info Grid -------------------- */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -199,6 +213,7 @@
             margin-top: 8px;
             font-size: 14px;
         }
+        /* -------------------- Tab Bar -------------------- */
         .tab-bar {
             display: flex;
             gap: 4px;
@@ -224,6 +239,7 @@
         .hidden {
             display: none !important;
         }
+        /* -------------------- Other Components -------------------- */
         .invest-summary {
             display: flex;
             justify-content: space-around;
@@ -407,6 +423,7 @@
 <body>
     <div class="container">
 
+        <!-- ====== Header / Quote ====== -->
         <div class="quote" id="quote">🌙 به مه‌دیار خوش آمدید</div>
 
         <!-- ====== Today Info ====== -->
@@ -427,12 +444,13 @@
             <button class="btn" onclick="showTab('invest')">📈 سرمایه</button>
             <button class="btn" onclick="showTab('balance')">⚖️ تراز</button>
             <button class="btn" onclick="showTab('reports')">📋 گزارش</button>
+            <button class="btn" onclick="showTab('export')">📤 خروجی</button>
         </div>
 
-        <!-- ====== Dashboard ====== -->
+        <!-- ====== DASHBOARD TAB ====== -->
         <div id="tab-dashboard">
 
-            <!-- SMS -->
+            <!-- SMS Section -->
             <div id="smsSection" style="display:none;" class="card">
                 <div class="card-title">📩 پیامک جدید</div>
                 <div class="sms-box">
@@ -527,7 +545,7 @@
             </div>
         </div>
 
-        <!-- ====== Invest Tab ====== -->
+        <!-- ====== INVEST TAB ====== -->
         <div id="tab-invest" class="hidden">
             <div class="card">
                 <div class="card-title">📈 سرمایه‌گذاری (طلا، نقره، کریپتو)</div>
@@ -552,7 +570,7 @@
             </div>
         </div>
 
-        <!-- ====== Balance Tab ====== -->
+        <!-- ====== BALANCE TAB ====== -->
         <div id="tab-balance" class="hidden">
             <div class="card">
                 <div class="card-title">⚖️ تراز کلی</div>
@@ -570,7 +588,7 @@
             </div>
         </div>
 
-        <!-- ====== Reports ====== -->
+        <!-- ====== REPORTS TAB ====== -->
         <div id="tab-reports" class="hidden">
             <div class="card">
                 <div class="card-title">📋 گزارشات</div>
@@ -582,9 +600,17 @@
             </div>
         </div>
 
+        <!-- ====== EXPORT TAB ====== -->
+        <div id="tab-export" class="hidden">
+            <div class="card">
+                <div class="card-title">📤 خروجی اکسل</div>
+                <button class="export-btn gold" onclick="exportAllData()">📊 دریافت همه داده‌ها</button>
+            </div>
+        </div>
+
     </div>
 
-    <!-- ====== Modals ====== -->
+    <!-- ====== MODALS ====== -->
     <div class="modal" id="forceModal">
         <div class="modal-content">
             <h2>⏳ لطفاً پاسخ دهید!</h2>
@@ -595,9 +621,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
-        // ============================================================
+        // ================================================================
         //  DATABASE
-        // ============================================================
+        // ================================================================
         let db;
         const DB_NAME = 'MehdiarDB';
 
@@ -652,9 +678,9 @@
             });
         }
 
-        // ============================================================
+        // ================================================================
         //  PERSIAN DATE
-        // ============================================================
+        // ================================================================
         function toPersianDate(date) {
             return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(
             date));
@@ -694,9 +720,9 @@
             document.getElementById('motivationMessage').textContent = msgs[daysPassed % msgs.length];
         }
 
-        // ============================================================
+        // ================================================================
         //  TABS
-        // ============================================================
+        // ================================================================
         function showTab(tab) {
             document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tab).classList.remove('hidden');
@@ -707,9 +733,9 @@
             if (tab === 'reports') showReport('monthly');
         }
 
-        // ============================================================
+        // ================================================================
         //  QUOTE
-        // ============================================================
+        // ================================================================
         async function fetchQuote() {
             try {
                 const res = await fetch('https://api.quotable.io/random');
@@ -722,9 +748,9 @@
             }
         }
 
-        // ============================================================
+        // ================================================================
         //  INCOME / EXPENSE
-        // ============================================================
+        // ================================================================
         async function renderIncomeExpense() {
             const transactions = await getAllData('transactions');
             const container = document.getElementById('incomeExpenseContainer');
@@ -748,718 +774,4 @@
                 box.className = 'month-box';
                 const totalIncome = months[month].filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
                 const totalExpense = months[month].filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-                const balance = totalIncome - totalExpense;
-                const balanceColor = balance >= 0 ? '#10b981' : '#ef4444';
-                const balanceSign = balance >= 0 ? '+' : '';
-
-                box.innerHTML = `
-                    <div class="month-title">📅 ${month} <span>درآمد: ${totalIncome.toLocaleString()} | خرج: ${totalExpense.toLocaleString()}</span></div>
-                    <div class="balance-row" style="color:${balanceColor};">
-                        <span>💰 تراز:</span>
-                        <span>${balanceSign}${balance.toLocaleString()} ریال</span>
-                    </div>
-                `;
-
-                months[month].forEach(t => {
-                    const row = document.createElement('div');
-                    row.className = 'item-row';
-                    const typeLabel = t.type === 'income' ? '💰 درآمد' : '💸 خرج';
-                    row.innerHTML = `
-                        <span>${typeLabel} - ${t.amount.toLocaleString()} ریال <span class="badge">${t.description || ''}</span></span>
-                        <div>
-                            <button class="edit-btn" onclick="editTransaction(${t.id})">✏️</button>
-                            <button class="del-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
-                        </div>
-                    `;
-                    box.appendChild(row);
-                });
-                container.appendChild(box);
-            });
-        }
-
-        async function addIncome() {
-            const amount = parseInt(document.getElementById('amountInput').value);
-            const desc = document.getElementById('descInput').value.trim() || 'درآمد';
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            await addData('transactions', {
-                amount,
-                description: desc,
-                type: 'income',
-                category: 'درآمد',
-                persianDate: getTodayPersian(),
-                timestamp: new Date().toISOString()
-            });
-            document.getElementById('amountInput').value = '';
-            document.getElementById('descInput').value = '';
-            renderIncomeExpense();
-            updateTodayStats();
-            updateTotalBalance();
-            alert('✅ درآمد ثبت شد!');
-        }
-
-        async function addExpense() {
-            const amount = parseInt(document.getElementById('amountInput').value);
-            const desc = document.getElementById('descInput').value.trim() || 'خرج';
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            await addData('transactions', {
-                amount,
-                description: desc,
-                type: 'expense',
-                category: 'خرج',
-                persianDate: getTodayPersian(),
-                timestamp: new Date().toISOString()
-            });
-            document.getElementById('amountInput').value = '';
-            document.getElementById('descInput').value = '';
-            renderIncomeExpense();
-            updateTodayStats();
-            updateTotalBalance();
-            alert('✅ خرج ثبت شد!');
-        }
-
-        async function editTransaction(id) {
-            const transactions = await getAllData('transactions');
-            const t = transactions.find(tx => tx.id === id);
-            if (!t) return;
-            const newAmount = prompt('ویرایش مبلغ (ریال):', t.amount);
-            if (newAmount === null) return;
-            const numAmount = parseInt(newAmount);
-            if (!numAmount || numAmount <= 0) { alert('مبلغ نامعتبر!'); return; }
-            const newDesc = prompt('ویرایش توضیح:', t.description) || t.description;
-            t.amount = numAmount;
-            t.description = newDesc;
-            await updateData('transactions', t);
-            renderIncomeExpense();
-            updateTodayStats();
-            updateTotalBalance();
-            alert('✅ ویرایش شد!');
-        }
-
-        async function deleteTransaction(id) {
-            if (!confirm('حذف این مورد؟')) return;
-            await deleteData('transactions', id);
-            renderIncomeExpense();
-            updateTodayStats();
-            updateTotalBalance();
-            alert('🗑️ حذف شد!');
-        }
-
-        // ============================================================
-        //  SPECIFIC EXPENSES
-        // ============================================================
-        async function renderSpecificExpenses() {
-            const transactions = await getAllData('transactions');
-            const container = document.getElementById('specificExpensesContainer');
-            container.innerHTML = '';
-            const categories = ['اجاره', 'فائزه', 'شخصی'];
-            const data = transactions.filter(t => categories.includes(t.category));
-            if (data.length === 0) {
-                container.innerHTML = '<p style="color:#94a3b8;">هیچ مخارج اختصاصی ثبت نشده</p>';
-                return;
-            }
-            const grouped = {};
-            data.forEach(t => {
-                const key = t.category + '_' + t.persianDate.slice(0, 7);
-                if (!grouped[key]) grouped[key] = [];
-                grouped[key].push(t);
-            });
-            Object.keys(grouped).sort().forEach(key => {
-                const [cat, month] = key.split('_');
-                const box = document.createElement('div');
-                box.className = 'month-box';
-                const total = grouped[key].reduce((s, t) => s + t.amount, 0);
-                box.innerHTML =
-                    `<div class="month-title">🏠 ${cat} - ${month} <span>مجموع: ${total.toLocaleString()}</span></div>`;
-                grouped[key].forEach(t => {
-                    const row = document.createElement('div');
-                    row.className = 'item-row';
-                    row.innerHTML = `
-                        <span>${t.amount.toLocaleString()} ریال <span class="badge">${t.description || ''}</span></span>
-                        <div>
-                            <button class="edit-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
-                            <button class="del-btn" onclick="deleteSpecificExpense(${t.id})">🗑️</button>
-                        </div>
-                    `;
-                    box.appendChild(row);
-                });
-                container.appendChild(box);
-            });
-        }
-
-        async function addSpecificExpense(category) {
-            const amount = parseInt(document.getElementById('specAmountInput').value);
-            const desc = document.getElementById('specDescInput').value.trim() || category;
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            await addData('transactions', {
-                amount,
-                description: desc,
-                type: 'expense',
-                category,
-                persianDate: getTodayPersian(),
-                timestamp: new Date().toISOString()
-            });
-            document.getElementById('specAmountInput').value = '';
-            document.getElementById('specDescInput').value = '';
-            renderSpecificExpenses();
-            updateTodayStats();
-            updateTotalBalance();
-            alert(`✅ ${category} ثبت شد!`);
-        }
-
-        async function editSpecificExpense(id) {
-            const transactions = await getAllData('transactions');
-            const t = transactions.find(tx => tx.id === id);
-            if (!t) return;
-            const newAmount = prompt('ویرایش مبلغ (ریال):', t.amount);
-            if (newAmount === null) return;
-            const numAmount = parseInt(newAmount);
-            if (!numAmount || numAmount <= 0) { alert('مبلغ نامعتبر!'); return; }
-            const newDesc = prompt('ویرایش توضیح:', t.description) || t.description;
-            t.amount = numAmount;
-            t.description = newDesc;
-            await updateData('transactions', t);
-            renderSpecificExpenses();
-            updateTodayStats();
-            updateTotalBalance();
-            alert('✅ ویرایش شد!');
-        }
-
-        async function deleteSpecificExpense(id) {
-            if (!confirm('حذف این مورد؟')) return;
-            await deleteData('transactions', id);
-            renderSpecificExpenses();
-            updateTodayStats();
-            updateTotalBalance();
-            alert('🗑️ حذف شد!');
-        }
-
-        // ============================================================
-        //  SMS
-        // ============================================================
-        let pendingSMS = null;
-
-        function receiveSMS(bank, amount, date) {
-            const persianDate = date ? toPersianDate(date) : getTodayPersian();
-            pendingSMS = { bank, amount, date: persianDate, category: null };
-            document.getElementById('smsSection').style.display = 'block';
-            document.getElementById('smsAmount').textContent = amount;
-            document.getElementById('smsBank').textContent = bank;
-            document.getElementById('smsDate').textContent = persianDate;
-            showForceModal('یک دسته‌بندی انتخاب کنید!');
-            localStorage.setItem('pendingSMS', JSON.stringify(pendingSMS));
-        }
-
-        function setCategory(cat) {
-            if (pendingSMS) {
-                pendingSMS.category = cat;
-                localStorage.setItem('pendingSMS', JSON.stringify(pendingSMS));
-            }
-        }
-
-        async function saveTransaction() {
-            if (!pendingSMS || !pendingSMS.category) {
-                alert('دسته‌بندی را انتخاب کنید!');
-                return;
-            }
-            const custom = document.getElementById('customCategoryInput').value.trim();
-            await addData('transactions', {
-                bank: pendingSMS.bank,
-                amount: parseInt(pendingSMS.amount.replace(/,/g, '')),
-                date: pendingSMS.date,
-                category: custom || pendingSMS.category,
-                type: 'expense',
-                timestamp: new Date().toISOString(),
-                persianDate: getTodayPersian()
-            });
-            pendingSMS = null;
-            localStorage.removeItem('pendingSMS');
-            document.getElementById('smsSection').style.display = 'none';
-            document.getElementById('customCategoryInput').value = '';
-            renderIncomeExpense();
-            renderSpecificExpenses();
-            updateTodayStats();
-            updateTotalBalance();
-            hideForceModal();
-            alert('✅ ذخیره شد!');
-        }
-
-        function checkPendingSMS() {
-            const saved = localStorage.getItem('pendingSMS');
-            if (saved) {
-                pendingSMS = JSON.parse(saved);
-                if (pendingSMS && !pendingSMS.category) {
-                    document.getElementById('smsSection').style.display = 'block';
-                    document.getElementById('smsAmount').textContent = pendingSMS.amount;
-                    document.getElementById('smsBank').textContent = pendingSMS.bank;
-                    document.getElementById('smsDate').textContent = pendingSMS.date;
-                    showForceModal('دسته‌بندی را انتخاب کنید!');
-                }
-            }
-        }
-
-        // ============================================================
-        //  TASKS
-        // ============================================================
-        async function loadTasks() {
-            const tasks = await getAllData('tasks');
-            const list = document.getElementById('taskList');
-            list.innerHTML = '';
-            const today = getTodayPersian();
-            const todayTasks = tasks.filter(t => t.date === today);
-            if (todayTasks.length === 0) {
-                list.innerHTML = '<p style="color:#94a3b8;">✨ امروز کاری ثبت نشده</p>';
-                return;
-            }
-            todayTasks.forEach(task => {
-                const div = document.createElement('div');
-                div.className = 'task-item' + (task.done ? ' done' : '');
-                div.innerHTML = `
-                    <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id}, this.checked)">
-                    <label>${task.text}</label>
-                    <span class="date-badge">${task.date}</span>
-                    <button onclick="deleteTask(${task.id})" style="background:transparent;border:none;color:#ef4444;font-size:16px;cursor:pointer;">✕</button>
-                `;
-                list.appendChild(div);
-            });
-            if (todayTasks.some(t => !t.done)) showForceModal('کارها را تیک بزنید!');
-            else hideForceModal();
-        }
-
-        async function toggleTask(id, done) {
-            const tasks = await getAllData('tasks');
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.done = done;
-                await updateData('tasks', task);
-                loadTasks();
-            }
-        }
-
-        async function deleteTask(id) {
-            if (confirm('حذف؟')) {
-                await deleteData('tasks', id);
-                loadTasks();
-            }
-        }
-
-        async function addTask() {
-            const input = document.getElementById('newTaskInput');
-            const text = input.value.trim();
-            if (!text) { alert('متن کار را وارد کنید!'); return; }
-            await addData('tasks', { text, done: false, date: getTodayPersian() });
-            input.value = '';
-            loadTasks();
-        }
-
-        // ============================================================
-        //  LOANS
-        // ============================================================
-        async function loadLoans() {
-            const loans = await getAllData('loans');
-            const list = document.getElementById('loanList');
-            list.innerHTML = '';
-            if (loans.length === 0) {
-                list.innerHTML = '<p style="color:#94a3b8;">💳 هیچ قسطی ثبت نشده</p>';
-                return;
-            }
-            loans.forEach(loan => {
-                const rem = loan.total - loan.paid;
-                const prog = loan.total > 0 ? (loan.paid / loan.total) * 100 : 0;
-                const div = document.createElement('div');
-                div.className = 'loan-item' + (rem === 0 ? ' paid' : '');
-                div.innerHTML = `
-                    <strong>${loan.name}</strong>
-                    <div class="loan-detail">کل: ${loan.total.toLocaleString()} | پرداخت: ${loan.paid.toLocaleString()} | باقی: <strong style="color:${rem===0?'#10b981':'#ef4444'}">${rem.toLocaleString()}</strong></div>
-                    <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(prog,100)}%"></div></div>
-                    <div class="loan-detail">📅 ثبت: ${loan.createdAt ? toPersianDate(loan.createdAt) : 'نامشخص'} ${loan.nextDue && loan.nextDue !== 'نامشخص' ? '| قسط بعدی: ' + loan.nextDue : ''}</div>
-                    <div style="display:flex;gap:4px;margin-top:4px;">
-                        <input type="number" id="payment_${loan.id}" placeholder="مبلغ" style="flex:1;">
-                        <button class="btn btn-success" onclick="payLoan(${loan.id})" style="padding:4px 12px;">💳 پرداخت</button>
-                        <button class="btn" onclick="deleteLoan(${loan.id})" style="padding:4px 12px;background:#fee2e2;color:#dc2626;">🗑️</button>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-            checkLoanReminders(loans);
-        }
-
-        async function payLoan(id) {
-            const input = document.getElementById('payment_' + id);
-            const amount = parseInt(input.value);
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            const loans = await getAllData('loans');
-            const loan = loans.find(l => l.id === id);
-            if (loan) {
-                loan.paid += amount;
-                if (loan.paid > loan.total) loan.paid = loan.total;
-                await updateData('loans', loan);
-                loadLoans();
-                updateTotalBalance();
-                alert('✅ پرداخت ثبت شد!');
-            }
-        }
-
-        async function deleteLoan(id) {
-            if (confirm('حذف؟')) { await deleteData('loans', id);
-                loadLoans();
-                updateTotalBalance(); }
-        }
-
-        async function addLoan() {
-            const name = document.getElementById('loanName').value.trim();
-            const total = parseInt(document.getElementById('loanTotal').value);
-            const paid = parseInt(document.getElementById('loanPaid').value) || 0;
-            const nextDue = document.getElementById('loanDue').value.trim();
-            if (!name || !total) { alert('نام و مبلغ کل را وارد کنید!'); return; }
-            await addData('loans', { name, total, paid, nextDue: nextDue || 'نامشخص', createdAt: new Date().toISOString() });
-            document.getElementById('loanName').value = '';
-            document.getElementById('loanTotal').value = '';
-            document.getElementById('loanPaid').value = '0';
-            document.getElementById('loanDue').value = '';
-            loadLoans();
-            updateTotalBalance();
-            alert('✅ قسط اضافه شد!');
-        }
-
-        function checkLoanReminders(loans) {
-            const today = new Date();
-            loans.forEach(loan => {
-                if (loan.nextDue && loan.nextDue !== 'نامشخص' && loan.paid < loan.total) {
-                    const parts = loan.nextDue.split('/');
-                    if (parts.length === 3) {
-                        const due = new Date(parseInt(parts[0]) + 1300, parseInt(parts[1]) - 1, parseInt(parts[2]));
-                        const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
-                        if (diff === 3) alert('⚠️ ۳ روز تا قسط ' + loan.name + ' باقی مانده! (' + loan.nextDue + ')');
-                        if (diff === 0) alert('⚠️ امروز موعد قسط ' + loan.name + ' است!');
-                    }
-                }
-            });
-        }
-
-        // ============================================================
-        //  SAVINGS
-        // ============================================================
-        async function loadSavings() {
-            const savings = await getAllData('savings');
-            const goals = await getAllData('goals');
-            const now = new Date();
-            const goal = goals.find(g => g.month === now.getMonth() && g.year === now.getFullYear());
-            const monthlyGoal = goal ? goal.amount : 0;
-            const thisMonth = savings.filter(s => {
-                const d = new Date(s.date);
-                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-            });
-            const total = thisMonth.reduce((s, i) => s + i.amount, 0);
-            document.getElementById('monthlyGoal').textContent = monthlyGoal > 0 ? monthlyGoal.toLocaleString() +
-                ' ریال' : 'تعیین نشده';
-            document.getElementById('savedSoFar').textContent = total.toLocaleString() + ' ریال';
-            document.getElementById('remainingSave').textContent = Math.max(0, monthlyGoal - total).toLocaleString() +
-                ' ریال';
-            document.getElementById('savingsProgress').style.width = monthlyGoal > 0 ? Math.min((total / monthlyGoal) *
-                100, 100) + '%' : '0%';
-            const history = document.getElementById('savingsHistory');
-            history.innerHTML = '';
-            if (thisMonth.length === 0) history.innerHTML =
-                '<p style="color:#94a3b8;font-size:13px;">⏳ هنوز پس‌اندازی ثبت نشده</p>';
-            else thisMonth.slice(-5).reverse().forEach(s => {
-                const div = document.createElement('div');
-                div.className = 'savings-item';
-                div.innerHTML =
-                    `<span>📅 ${toPersianDate(s.date)}</span><span style="color:#10b981;font-weight:600;">+${s.amount.toLocaleString()} ریال</span>`;
-                history.appendChild(div);
-            });
-        }
-
-        async function addSavings() {
-            const amount = prompt('💰 چقدر پس‌انداز کردید؟ (ریال)');
-            if (!amount) return;
-            const num = parseInt(amount.replace(/,/g, ''));
-            if (!num || num <= 0) { alert('عدد معتبر وارد کنید!'); return; }
-            await addData('savings', { amount: num, date: new Date().toISOString() });
-            loadSavings();
-            updateTotalBalance();
-            alert('✅ پس‌انداز ثبت شد!');
-        }
-
-        async function setMonthlyGoal() {
-            const amount = prompt('🎯 هدف پس‌انداز این ماه را وارد کنید (ریال):');
-            if (!amount) return;
-            const num = parseInt(amount.replace(/,/g, ''));
-            if (!num || num <= 0) { alert('عدد معتبر وارد کنید!'); return; }
-            const now = new Date();
-            const goals = await getAllData('goals');
-            const existing = goals.find(g => g.month === now.getMonth() && g.year === now.getFullYear());
-            if (existing) await deleteData('goals', existing.id);
-            await addData('goals', { month: now.getMonth(), year: now.getFullYear(), amount: num });
-            loadSavings();
-            alert('✅ هدف ثبت شد!');
-        }
-
-        // ============================================================
-        //  INVEST
-        // ============================================================
-        async function renderInvest() {
-            const invest = await getAllData('invest');
-            const container = document.getElementById('investContainer');
-            container.innerHTML = '';
-
-            if (invest.length === 0) {
-                container.innerHTML = '<p style="color:#94a3b8;">📈 هنوز سرمایه‌گذاری ثبت نشده</p>';
-                updateInvestSummary([]);
-                return;
-            }
-
-            const grouped = {};
-            invest.forEach(item => {
-                const key = item.category + '_' + item.persianDate.slice(0, 7);
-                if (!grouped[key]) grouped[key] = [];
-                grouped[key].push(item);
-            });
-
-            Object.keys(grouped).sort().forEach(key => {
-                const [cat, month] = key.split('_');
-                const box = document.createElement('div');
-                box.className = 'month-box';
-                const total = grouped[key].reduce((s, item) => s + item.amount, 0);
-                const emoji = cat === 'طلا' ? '🥇' : cat === 'نقره' ? '🥈' : '₿';
-                box.innerHTML =
-                    `<div class="month-title">${emoji} ${cat} - ${month} <span>مجموع: ${total.toLocaleString()}</span></div>`;
-                grouped[key].forEach(item => {
-                    const row = document.createElement('div');
-                    row.className = 'item-row';
-                    row.innerHTML = `
-                        <span>${item.amount.toLocaleString()} ریال <span class="badge">${item.description || ''}</span></span>
-                        <div>
-                            <button class="edit-btn" onclick="editInvest(${item.id})">✏️</button>
-                            <button class="del-btn" onclick="deleteInvest(${item.id})">🗑️</button>
-                        </div>
-                    `;
-                    box.appendChild(row);
-                });
-                container.appendChild(box);
-            });
-
-            updateInvestSummary(invest);
-        }
-
-        async function addInvest(category) {
-            const amount = parseInt(document.getElementById('investAmount').value);
-            const desc = document.getElementById('investDesc').value.trim() || category;
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            await addData('invest', {
-                amount,
-                description: desc,
-                category,
-                persianDate: getTodayPersian(),
-                timestamp: new Date().toISOString()
-            });
-            document.getElementById('investAmount').value = '';
-            document.getElementById('investDesc').value = '';
-            renderInvest();
-            updateTotalBalance();
-            alert(`✅ ${category} ثبت شد!`);
-        }
-
-        async function editInvest(id) {
-            const invest = await getAllData('invest');
-            const item = invest.find(i => i.id === id);
-            if (!item) return;
-            const newAmount = prompt('ویرایش مبلغ (ریال):', item.amount);
-            if (newAmount === null) return;
-            const numAmount = parseInt(newAmount);
-            if (!numAmount || numAmount <= 0) { alert('مبلغ نامعتبر!'); return; }
-            const newDesc = prompt('ویرایش توضیح:', item.description) || item.description;
-            item.amount = numAmount;
-            item.description = newDesc;
-            await updateData('invest', item);
-            renderInvest();
-            updateTotalBalance();
-            alert('✅ ویرایش شد!');
-        }
-
-        async function deleteInvest(id) {
-            if (!confirm('حذف این مورد؟')) return;
-            await deleteData('invest', id);
-            renderInvest();
-            updateTotalBalance();
-            alert('🗑️ حذف شد!');
-        }
-
-        function updateInvestSummary(invest) {
-            const gold = invest.filter(i => i.category === 'طلا').reduce((s, i) => s + i.amount, 0);
-            const silver = invest.filter(i => i.category === 'نقره').reduce((s, i) => s + i.amount, 0);
-            const crypto = invest.filter(i => i.category === 'کریپتو').reduce((s, i) => s + i.amount, 0);
-            document.getElementById('sumGold').textContent = gold.toLocaleString();
-            document.getElementById('sumSilver').textContent = silver.toLocaleString();
-            document.getElementById('sumCrypto').textContent = crypto.toLocaleString();
-        }
-
-        // ============================================================
-        //  TOTAL BALANCE
-        // ============================================================
-        async function updateTotalBalance() {
-            const transactions = await getAllData('transactions');
-            const loans = await getAllData('loans');
-            const savings = await getAllData('savings');
-            const invest = await getAllData('invest');
-
-            const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
-            const totalExpense = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-            const totalInvest = invest.reduce((s, t) => s + t.amount, 0);
-            const totalLoans = loans.reduce((s, t) => s + (t.total - t.paid), 0);
-            const totalSavings = savings.reduce((s, t) => s + t.amount, 0);
-
-            const finalBalance = totalIncome - totalExpense - totalInvest - totalLoans;
-
-            document.getElementById('balTotalIncome').textContent = totalIncome.toLocaleString() + ' ریال';
-            document.getElementById('balTotalExpense').textContent = totalExpense.toLocaleString() + ' ریال';
-            document.getElementById('balTotalInvest').textContent = totalInvest.toLocaleString() + ' ریال';
-            document.getElementById('balTotalLoans').textContent = totalLoans.toLocaleString() + ' ریال';
-            document.getElementById('balTotalSavings').textContent = totalSavings.toLocaleString() + ' ریال';
-
-            const finalEl = document.getElementById('balFinalAmount');
-            finalEl.textContent = finalBalance.toLocaleString() + ' ریال';
-            finalEl.className = 'amount' + (finalBalance < 0 ? ' negative' : '');
-        }
-
-        // ============================================================
-        //  REPORTS
-        // ============================================================
-        async function showReport(type) {
-            const transactions = await getAllData('transactions');
-            const savings = await getAllData('savings');
-            const content = document.getElementById('reportContent');
-            let filtered = [];
-            let title = '';
-            if (type === 'monthly') {
-                const month = getCurrentMonth();
-                filtered = transactions.filter(t => t.persianDate && t.persianDate.startsWith(month));
-                title = '📅 گزارش ماه ' + month;
-            } else if (type === 'yearly') {
-                const year = getCurrentYear();
-                filtered = transactions.filter(t => t.persianDate && t.persianDate.startsWith(year));
-                title = '📅 گزارش سال ' + year;
-            }
-            const total = filtered.reduce((s, t) => s + t.amount, 0);
-            const cats = {};
-            filtered.forEach(t => { cats[t.category] = (cats[t.category] || 0) + t.amount; });
-            let html = `<p style="font-weight:600;">${title}</p><p>مجموع: ${total.toLocaleString()} ریال</p><p style="font-size:12px;color:#64748b;">تعداد تراکنش‌ها: ${filtered.length}</p>`;
-            if (Object.keys(cats).length > 0) {
-                html += '<div style="margin-top:8px;">';
-                for (const [cat, amt] of Object.entries(cats)) {
-                    html +=
-                    `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid #f1f5f9;"><span>${cat}</span><span>${amt.toLocaleString()} ریال</span></div>`;
-                }
-                html += '</div>';
-            } else {
-                html += '<p style="color:#94a3b8;margin-top:8px;">هیچ تراکنشی ثبت نشده</p>';
-            }
-            const now = new Date();
-            const monthSavings = savings.filter(s => {
-                const d = new Date(s.date);
-                if (type === 'monthly') return d.getMonth() === now.getMonth() && d.getFullYear() === now
-                .getFullYear();
-                else return d.getFullYear() === now.getFullYear();
-            });
-            const totalSave = monthSavings.reduce((s, i) => s + i.amount, 0);
-            html += `<p style="margin-top:8px;">🏦 پس‌انداز: ${totalSave.toLocaleString()} ریال</p>`;
-            content.innerHTML = html;
-        }
-
-        // ============================================================
-        //  TODAY STATS
-        // ============================================================
-        async function updateTodayStats() {
-            const transactions = await getAllData('transactions');
-            const today = getTodayPersian();
-            const todayTxs = transactions.filter(t => t.persianDate === today);
-            const totalExpense = todayTxs.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-            const totalIncome = todayTxs.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
-            document.getElementById('todayExpense').textContent = totalExpense.toLocaleString();
-            document.getElementById('todayIncome').textContent = totalIncome.toLocaleString();
-            document.getElementById('todayCount').textContent = todayTxs.length;
-        }
-
-        // ============================================================
-        //  MODAL
-        // ============================================================
-        function showForceModal(msg) {
-            document.getElementById('forceMessage').textContent = msg || 'برای ادامه، اقدام مورد نیاز را انجام دهید.';
-            document.getElementById('forceModal').style.display = 'flex';
-        }
-
-        function hideForceModal() { document.getElementById('forceModal').style.display = 'none'; }
-
-        function closeModal() { hideForceModal(); }
-
-        // ============================================================
-        //  EXPORT (Excel)
-        // ============================================================
-        async function exportAllData() {
-            const transactions = await getAllData('transactions');
-            const savings = await getAllData('savings');
-            const loans = await getAllData('loans');
-            const tasks = await getAllData('tasks');
-            const invest = await getAllData('invest');
-            const wb = XLSX.utils.book_new();
-
-            const txData = transactions.map(t => ({ 'تاریخ': t.persianDate || t.date || '', 'مبلغ (ریال)': t.amount || 0,
-                'دسته‌بندی': t.category || '', 'نوع': t.type === 'income' ? 'درآمد' : 'خرج', 'توضیحات': t.description ||
-                    '' }));
-            const ws1 = XLSX.utils.json_to_sheet(txData);
-            XLSX.utils.book_append_sheet(wb, ws1, 'تراکنش‌ها');
-
-            const svData = savings.map(s => ({ 'تاریخ': toPersianDate(s.date), 'مبلغ (ریال)': s.amount || 0 }));
-            const ws2 = XLSX.utils.json_to_sheet(svData);
-            XLSX.utils.book_append_sheet(wb, ws2, 'پس‌انداز');
-
-            const lnData = loans.map(l => ({ 'نام': l.name || '', 'کل (ریال)': l.total || 0, 'پرداخت شده (ریال)': l.paid ||
-                    0, 'باقیمانده (ریال)': (l.total - l.paid) || 0, 'قسط بعدی': l.nextDue || '' }));
-            const ws3 = XLSX.utils.json_to_sheet(lnData);
-            XLSX.utils.book_append_sheet(wb, ws3, 'اقساط');
-
-            const tkData = tasks.map(t => ({ 'کار': t.text || '', 'تاریخ': t.date || '', 'وضعیت': t.done ? 'انجام شده' :
-                    'انجام نشده' }));
-            const ws4 = XLSX.utils.json_to_sheet(tkData);
-            XLSX.utils.book_append_sheet(wb, ws4, 'کارها');
-
-            const invData = invest.map(i => ({ 'تاریخ': i.persianDate || '', 'دسته‌بندی': i.category || '',
-                    'مبلغ (ریال)': i.amount || 0, 'توضیحات': i.description || '' }));
-            const ws5 = XLSX.utils.json_to_sheet(invData);
-            XLSX.utils.book_append_sheet(wb, ws5, 'سرمایه‌گذاری');
-
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-            const blob = new Blob([wbout], { type: 'application/octet-stream' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'مه‌دیار_همه_داده‌ها_' + getTodayPersian() + '.xlsx';
-            link.click();
-            URL.revokeObjectURL(link.href);
-            alert('✅ فایل اکسل دانلود شد!');
-        }
-
-        // ============================================================
-        //  INIT
-        // ============================================================
-        async function init() {
-            await openDB();
-            updateDateInfo();
-            loadTasks();
-            loadLoans();
-            loadSavings();
-            renderIncomeExpense();
-            renderSpecificExpenses();
-            renderInvest();
-            updateTodayStats();
-            updateTotalBalance();
-            checkPendingSMS();
-            fetchQuote();
-        }
-        init();
-        setInterval(fetchQuote, 3600000);
-        setInterval(updateTodayStats, 60000);
-        setInterval(updateDateInfo, 60000);
-        setInterval(updateTotalBalance, 30000);
-    </script>
-</body>
-    </html>
+                const balance = totalIncome - totalExpense

@@ -411,7 +411,7 @@
                 </div>
             </div>
 
-            <!-- اجاره (ماهانه با تیک) -->
+            <!-- اجاره -->
             <div class="card">
                 <div class="card-title">🏠 اجاره ماهانه</div>
                 <div id="rentContainer"></div>
@@ -420,7 +420,25 @@
                 <button class="btn btn-primary" onclick="addRent()" style="width:100%;margin-top:6px;">➕ ثبت اجاره جدید</button>
             </div>
 
-            <!-- اقساط (ماهانه با تیک) -->
+            <!-- فائزه -->
+            <div class="card">
+                <div class="card-title">👩 فائزه</div>
+                <div id="faezehContainer"></div>
+                <input type="number" id="faezehAmountInput" placeholder="مبلغ ماه">
+                <input type="text" id="faezehMonthInput" placeholder="ماه (مثلاً ۱۴۰۵/۰۵)">
+                <button class="btn btn-primary" onclick="addFaezeh()" style="width:100%;margin-top:6px;">➕ ثبت جدید</button>
+            </div>
+
+            <!-- شخصی -->
+            <div class="card">
+                <div class="card-title">🧑 مخارج شخصی</div>
+                <div id="personalContainer"></div>
+                <input type="number" id="personalAmountInput" placeholder="مبلغ ماه">
+                <input type="text" id="personalMonthInput" placeholder="ماه (مثلاً ۱۴۰۵/۰۵)">
+                <button class="btn btn-primary" onclick="addPersonal()" style="width:100%;margin-top:6px;">➕ ثبت جدید</button>
+            </div>
+
+            <!-- اقساط -->
             <div class="card">
                 <div class="card-title">💰 اقساط ماهانه</div>
                 <div id="loanContainer"></div>
@@ -529,12 +547,13 @@
 
         function updateDateInfo() {
             const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 1);
-            const end = new Date(now.getFullYear(), 11, 31);
-            const diff = (now - start) / (1000 * 60 * 60 * 24);
+            const year = now.getFullYear();
+            const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            const daysInYear = isLeap ? 366 : 365;
+            const startOfYear = new Date(year, 0, 1);
+            const diff = (now - startOfYear) / (1000 * 60 * 60 * 24);
             const daysPassed = Math.floor(diff) + 1;
-            const totalDays = (end - start) / (1000 * 60 * 60 * 24) + 1;
-            const daysRemaining = Math.floor(totalDays - daysPassed);
+            const daysRemaining = daysInYear - daysPassed;
             const weeksRemaining = Math.floor(daysRemaining / 7);
 
             document.getElementById('todayDate').textContent = getTodayPersian();
@@ -591,7 +610,7 @@
             renderAll();
         }
 
-        // ========== اجاره (ماهانه با تیک) ==========
+        // ========== اجاره ==========
         function addRent() {
             const amount = document.getElementById('rentAmountInput').value;
             const month = document.getElementById('rentMonthInput').value.trim() || getTodayPersian().slice(0, 7);
@@ -611,7 +630,6 @@
             if (rent) {
                 rent.paid = !rent.paid;
                 setData('rents', rents);
-                // اگه پرداخت شده، به مخارج اضافه کن
                 if (rent.paid) {
                     const transactions = getData('transactions');
                     transactions.push({ id: Date.now(), amount: rent.amount, description: 'اجاره ' + rent.month, type: 'expense', persianDate: getTodayPersian() });
@@ -651,7 +669,125 @@
             });
         }
 
-        // ========== اقساط (ماهانه با تیک) ==========
+        // ========== فائزه ==========
+        function addFaezeh() {
+            const amount = document.getElementById('faezehAmountInput').value;
+            const month = document.getElementById('faezehMonthInput').value.trim() || getTodayPersian().slice(0, 7);
+            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
+            const faezeh = getData('faezeh');
+            faezeh.push({ id: Date.now(), amount: parseInt(amount), month: month, paid: false });
+            setData('faezeh', faezeh);
+            document.getElementById('faezehAmountInput').value = '';
+            document.getElementById('faezehMonthInput').value = '';
+            renderAll();
+            alert('✅ فائزه ثبت شد!');
+        }
+
+        function toggleFaezeh(id) {
+            const faezeh = getData('faezeh');
+            const item = faezeh.find(r => r.id === id);
+            if (item) {
+                item.paid = !item.paid;
+                setData('faezeh', faezeh);
+                if (item.paid) {
+                    const transactions = getData('transactions');
+                    transactions.push({ id: Date.now(), amount: item.amount, description: 'فائزه ' + item.month, type: 'expense', persianDate: getTodayPersian() });
+                    setData('transactions', transactions);
+                }
+                renderAll();
+            }
+        }
+
+        function deleteFaezeh(id) {
+            if (!confirm('حذف کنم؟')) return;
+            let faezeh = getData('faezeh');
+            faezeh = faezeh.filter(r => r.id !== id);
+            setData('faezeh', faezeh);
+            renderAll();
+        }
+
+        function renderFaezeh() {
+            const faezeh = getData('faezeh');
+            const container = document.getElementById('faezehContainer');
+            container.innerHTML = '';
+            if (faezeh.length === 0) { container.innerHTML = '<p style="color:#94a3b8;">هیچ موردی ثبت نشده</p>'; return; }
+            faezeh.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'month-box';
+                box.innerHTML = `
+                    <div class="month-title">📅 ${item.month} <span>${item.amount.toLocaleString()} ریال</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                        <span style="color:${item.paid ? '#10b981' : '#ef4444'};font-weight:600;">${item.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}</span>
+                        <div>
+                            <button class="btn ${item.paid ? 'btn-outline' : 'btn-success'}" onclick="toggleFaezeh(${item.id})" style="padding:4px 12px;font-size:12px;">${item.paid ? '↩️ لغو' : '✅ پرداخت شد'}</button>
+                            <button class="del-btn" onclick="deleteFaezeh(${item.id})" style="margin-right:4px;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        // ========== شخصی ==========
+        function addPersonal() {
+            const amount = document.getElementById('personalAmountInput').value;
+            const month = document.getElementById('personalMonthInput').value.trim() || getTodayPersian().slice(0, 7);
+            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
+            const personal = getData('personal');
+            personal.push({ id: Date.now(), amount: parseInt(amount), month: month, paid: false });
+            setData('personal', personal);
+            document.getElementById('personalAmountInput').value = '';
+            document.getElementById('personalMonthInput').value = '';
+            renderAll();
+            alert('✅ شخصی ثبت شد!');
+        }
+
+        function togglePersonal(id) {
+            const personal = getData('personal');
+            const item = personal.find(r => r.id === id);
+            if (item) {
+                item.paid = !item.paid;
+                setData('personal', personal);
+                if (item.paid) {
+                    const transactions = getData('transactions');
+                    transactions.push({ id: Date.now(), amount: item.amount, description: 'شخصی ' + item.month, type: 'expense', persianDate: getTodayPersian() });
+                    setData('transactions', transactions);
+                }
+                renderAll();
+            }
+        }
+
+        function deletePersonal(id) {
+            if (!confirm('حذف کنم؟')) return;
+            let personal = getData('personal');
+            personal = personal.filter(r => r.id !== id);
+            setData('personal', personal);
+            renderAll();
+        }
+
+        function renderPersonal() {
+            const personal = getData('personal');
+            const container = document.getElementById('personalContainer');
+            container.innerHTML = '';
+            if (personal.length === 0) { container.innerHTML = '<p style="color:#94a3b8;">هیچ موردی ثبت نشده</p>'; return; }
+            personal.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'month-box';
+                box.innerHTML = `
+                    <div class="month-title">📅 ${item.month} <span>${item.amount.toLocaleString()} ریال</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                        <span style="color:${item.paid ? '#10b981' : '#ef4444'};font-weight:600;">${item.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}</span>
+                        <div>
+                            <button class="btn ${item.paid ? 'btn-outline' : 'btn-success'}" onclick="togglePersonal(${item.id})" style="padding:4px 12px;font-size:12px;">${item.paid ? '↩️ لغو' : '✅ پرداخت شد'}</button>
+                            <button class="del-btn" onclick="deletePersonal(${item.id})" style="margin-right:4px;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        // ========== اقساط ==========
         function addLoanItem() {
             const name = document.getElementById('loanNameInput').value.trim();
             const amount = document.getElementById('loanAmountInput').value;
@@ -878,12 +1014,24 @@
         // ========== تراز کلی ==========
         function updateTotalBalance() {
             const transactions = getData('transactions');
+            const rents = getData('rents');
+            const faezeh = getData('faezeh');
+            const personal = getData('personal');
             const loans = getData('loanItems');
             const savings = getData('savings');
             const invest = getData('invest');
 
+            // کل درآمد
             const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
-            const totalExpense = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+
+            // کل مخارج = تراکنش‌های خرج + اجاره‌های پرداخت‌شده + فائزه‌های پرداخت‌شده + شخصی‌های پرداخت‌شده + اقساط پرداخت‌شده
+            const totalExpenseFromTx = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+            const totalRentPaid = rents.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
+            const totalFaezehPaid = faezeh.filter(f => f.paid).reduce((s, f) => s + f.amount, 0);
+            const totalPersonalPaid = personal.filter(p => p.paid).reduce((s, p) => s + p.amount, 0);
+            const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
+            const totalExpense = totalExpenseFromTx + totalRentPaid + totalFaezehPaid + totalPersonalPaid + totalLoanPaid;
+
             const totalInvest = invest.reduce((s, t) => s + t.amount, 0);
             const totalLoans = loans.filter(l => !l.paid).reduce((s, l) => s + l.amount, 0);
             const totalSavings = savings.reduce((s, t) => s + t.amount, 0);
@@ -904,6 +1052,8 @@
         function renderAll() {
             renderIncomeExpense();
             renderRents();
+            renderFaezeh();
+            renderPersonal();
             renderLoanItems();
             renderTasks();
             renderSavings();
@@ -963,46 +1113,69 @@
 
         // ========== خروجی اکسل ==========
         function exportAllData() {
-            const transactions = getData('transactions');
-            const rents = getData('rents');
-            const loans = getData('loanItems');
-            const savings = getData('savings');
-            const tasks = getData('tasks');
-            const invest = getData('invest');
-            const wb = XLSX.utils.book_new();
+            try {
+                const transactions = getData('transactions');
+                const rents = getData('rents');
+                const faezeh = getData('faezeh');
+                const personal = getData('personal');
+                const loans = getData('loanItems');
+                const savings = getData('savings');
+                const tasks = getData('tasks');
+                const invest = getData('invest');
 
-            const txData = transactions.map(t => ({ 'تاریخ': t.persianDate || '', 'مبلغ (ریال)': t.amount || 0, 'دسته‌بندی': t.category || t.type || '', 'توضیحات': t.description || '' }));
-            const ws1 = XLSX.utils.json_to_sheet(txData);
-            XLSX.utils.book_append_sheet(wb, ws1, 'تراکنش‌ها');
+                if (typeof XLSX === 'undefined') {
+                    alert('❌ کتابخانه اکسل بارگذاری نشد! لطفاً اتصال اینترنت خود را بررسی کنید.');
+                    return;
+                }
 
-            const rentData = rents.map(r => ({ 'ماه': r.month || '', 'مبلغ (ریال)': r.amount || 0, 'وضعیت': r.paid ? 'پرداخت شد' : 'پرداخت نشده' }));
-            const ws2 = XLSX.utils.json_to_sheet(rentData);
-            XLSX.utils.book_append_sheet(wb, ws2, 'اجاره');
+                const wb = XLSX.utils.book_new();
 
-            const loanData = loans.map(l => ({ 'ماه': l.month || '', 'نام': l.name || '', 'مبلغ (ریال)': l.amount || 0, 'وضعیت': l.paid ? 'پرداخت شد' : 'پرداخت نشده' }));
-            const ws3 = XLSX.utils.json_to_sheet(loanData);
-            XLSX.utils.book_append_sheet(wb, ws3, 'اقساط');
+                const txData = transactions.map(t => ({ 'تاریخ': t.persianDate || '', 'مبلغ (ریال)': t.amount || 0, 'دسته‌بندی': t.category || t.type || '', 'توضیحات': t.description || '' }));
+                const ws1 = XLSX.utils.json_to_sheet(txData);
+                XLSX.utils.book_append_sheet(wb, ws1, 'تراکنش‌ها');
 
-            const svData = savings.map(s => ({ 'تاریخ': toPersianDate(s.date), 'مبلغ (ریال)': s.amount || 0 }));
-            const ws4 = XLSX.utils.json_to_sheet(svData);
-            XLSX.utils.book_append_sheet(wb, ws4, 'پس‌انداز');
+                const rentData = rents.map(r => ({ 'ماه': r.month || '', 'مبلغ (ریال)': r.amount || 0, 'وضعیت': r.paid ? 'پرداخت شد' : 'پرداخت نشده' }));
+                const ws2 = XLSX.utils.json_to_sheet(rentData);
+                XLSX.utils.book_append_sheet(wb, ws2, 'اجاره');
 
-            const tkData = tasks.map(t => ({ 'کار': t.text || '', 'تاریخ': t.date || '', 'وضعیت': t.done ? 'انجام شده' : 'انجام نشده' }));
-            const ws5 = XLSX.utils.json_to_sheet(tkData);
-            XLSX.utils.book_append_sheet(wb, ws5, 'کارها');
+                const faezehData = faezeh.map(f => ({ 'ماه': f.month || '', 'مبلغ (ریال)': f.amount || 0, 'وضعیت': f.paid ? 'پرداخت شد' : 'پرداخت نشده' }));
+                const ws3 = XLSX.utils.json_to_sheet(faezehData);
+                XLSX.utils.book_append_sheet(wb, ws3, 'فائزه');
 
-            const invData = invest.map(i => ({ 'تاریخ': i.persianDate || '', 'دسته‌بندی': i.category || '', 'مبلغ (ریال)': i.amount || 0, 'توضیحات': i.description || '' }));
-            const ws6 = XLSX.utils.json_to_sheet(invData);
-            XLSX.utils.book_append_sheet(wb, ws6, 'سرمایه‌گذاری');
+                const personalData = personal.map(p => ({ 'ماه': p.month || '', 'مبلغ (ریال)': p.amount || 0, 'وضعیت': p.paid ? 'پرداخت شد' : 'پرداخت نشده' }));
+                const ws4 = XLSX.utils.json_to_sheet(personalData);
+                XLSX.utils.book_append_sheet(wb, ws4, 'شخصی');
 
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-            const blob = new Blob([wbout], { type: 'application/octet-stream' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'مه‌دیار_همه_داده‌ها_' + getTodayPersian() + '.xlsx';
-            link.click();
-            URL.revokeObjectURL(link.href);
-            alert('✅ فایل اکسل دانلود شد!');
+                const loanData = loans.map(l => ({ 'ماه': l.month || '', 'نام': l.name || '', 'مبلغ (ریال)': l.amount || 0, 'وضعیت': l.paid ? 'پرداخت شد' : 'پرداخت نشده' }));
+                const ws5 = XLSX.utils.json_to_sheet(loanData);
+                XLSX.utils.book_append_sheet(wb, ws5, 'اقساط');
+
+                const svData = savings.map(s => ({ 'تاریخ': toPersianDate(s.date), 'مبلغ (ریال)': s.amount || 0 }));
+                const ws6 = XLSX.utils.json_to_sheet(svData);
+                XLSX.utils.book_append_sheet(wb, ws6, 'پس‌انداز');
+
+                const tkData = tasks.map(t => ({ 'کار': t.text || '', 'تاریخ': t.date || '', 'وضعیت': t.done ? 'انجام شده' : 'انجام نشده' }));
+                const ws7 = XLSX.utils.json_to_sheet(tkData);
+                XLSX.utils.book_append_sheet(wb, ws7, 'کارها');
+
+                const invData = invest.map(i => ({ 'تاریخ': i.persianDate || '', 'دسته‌بندی': i.category || '', 'مبلغ (ریال)': i.amount || 0, 'توضیحات': i.description || '' }));
+                const ws8 = XLSX.utils.json_to_sheet(invData);
+                XLSX.utils.book_append_sheet(wb, ws8, 'سرمایه‌گذاری');
+
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([wbout], { type: 'application/octet-stream' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'مه‌دیار_همه_داده‌ها_' + getTodayPersian() + '.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+
+                alert('✅ فایل اکسل با موفقیت دانلود شد!');
+            } catch (error) {
+                alert('❌ خطا در ساخت فایل اکسل: ' + error.message);
+            }
         }
 
         // ========== شروع ==========

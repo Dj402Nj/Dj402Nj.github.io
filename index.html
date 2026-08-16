@@ -431,6 +431,29 @@
         .balance-negative {
             color: #ef4444;
         }
+        .big-number {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .total-balance {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 6px;
+        }
+        .total-balance .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            font-size: 14px;
+        }
+        .total-balance .final {
+            font-size: 18px;
+            font-weight: 700;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 6px;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -453,6 +476,7 @@
         <div class="tab-bar">
             <button class="btn active" onclick="showTab('dashboard')">📊 Home</button>
             <button class="btn" onclick="showTab('invest')">📈 Invest</button>
+            <button class="btn" onclick="showTab('balance')">📊 Balance</button>
             <button class="btn" onclick="showTab('reports')">📋 Report</button>
             <button class="btn" onclick="showTab('export')">📤 Export</button>
         </div>
@@ -578,6 +602,24 @@
                         <span>🥇 Gold: <strong id="sumGold">0</strong></span>
                         <span>🥈 Silver: <strong id="sumSilver">0</strong></span>
                         <span>₿ Crypto: <strong id="sumCrypto">0</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== Balance Tab ====== -->
+        <div id="tab-balance" class="hidden">
+            <div class="card">
+                <div class="card-title">📊 Total Balance</div>
+                <div class="total-balance" id="totalBalanceContainer">
+                    <div class="row"><span>💰 Total Income:</span> <strong id="balTotalIncome">0</strong></div>
+                    <div class="row"><span>💸 Total Expense:</span> <strong id="balTotalExpense">0</strong></div>
+                    <div class="row"><span>📈 Total Investments:</span> <strong id="balTotalInvest">0</strong></div>
+                    <div class="row"><span>💳 Total Loans (Remaining):</span> <strong id="balTotalLoans">0</strong></div>
+                    <div class="row"><span>🏦 Total Savings:</span> <strong id="balTotalSavings">0</strong></div>
+                    <div class="final" id="balFinal">
+                        <span>⚖️ Final Balance:</span>
+                        <span id="balFinalAmount">0</span>
                     </div>
                 </div>
             </div>
@@ -737,6 +779,7 @@
             document.querySelector('.tab-bar .btn[onclick*="' + tab + '"]').classList.add('active');
             if (tab === 'invest') renderInvest();
             if (tab === 'reports') showReport('monthly');
+            if (tab === 'balance') updateTotalBalance();
         }
 
         // ============================================================
@@ -825,6 +868,7 @@
             document.getElementById('descInput').value = '';
             renderIncomeExpense();
             updateTodayStats();
+            updateTotalBalance();
             alert('✅ Income added!');
         }
 
@@ -844,6 +888,7 @@
             document.getElementById('descInput').value = '';
             renderIncomeExpense();
             updateTodayStats();
+            updateTotalBalance();
             alert('✅ Expense added!');
         }
 
@@ -861,6 +906,7 @@
             await updateData('transactions', t);
             renderIncomeExpense();
             updateTodayStats();
+            updateTotalBalance();
             alert('✅ Updated!');
         }
 
@@ -869,6 +915,7 @@
             await deleteData('transactions', id);
             renderIncomeExpense();
             updateTodayStats();
+            updateTotalBalance();
             alert('🗑️ Deleted!');
         }
 
@@ -930,6 +977,7 @@
             document.getElementById('specDescInput').value = '';
             renderSpecificExpenses();
             updateTodayStats();
+            updateTotalBalance();
             alert(`✅ ${category} added!`);
         }
 
@@ -947,6 +995,7 @@
             await updateData('transactions', t);
             renderSpecificExpenses();
             updateTodayStats();
+            updateTotalBalance();
             alert('✅ Updated!');
         }
 
@@ -955,6 +1004,7 @@
             await deleteData('transactions', id);
             renderSpecificExpenses();
             updateTodayStats();
+            updateTotalBalance();
             alert('🗑️ Deleted!');
         }
 
@@ -1003,6 +1053,7 @@
             renderIncomeExpense();
             renderSpecificExpenses();
             updateTodayStats();
+            updateTotalBalance();
             hideForceModal();
             alert('✅ Saved!');
         }
@@ -1118,13 +1169,15 @@
                 if (loan.paid > loan.total) loan.paid = loan.total;
                 await updateData('loans', loan);
                 loadLoans();
+                updateTotalBalance();
                 alert('✅ Payment recorded!');
             }
         }
 
         async function deleteLoan(id) {
             if (confirm('Delete?')) { await deleteData('loans', id);
-                loadLoans(); }
+                loadLoans();
+                updateTotalBalance(); }
         }
 
         async function addLoan() {
@@ -1139,6 +1192,7 @@
             document.getElementById('loanPaid').value = '0';
             document.getElementById('loanDue').value = '';
             loadLoans();
+            updateTotalBalance();
             alert('✅ Loan added!');
         }
 
@@ -1197,6 +1251,7 @@
             if (!num || num <= 0) { alert('Enter a valid number!'); return; }
             await addData('savings', { amount: num, date: new Date().toISOString() });
             loadSavings();
+            updateTotalBalance();
             alert('✅ Savings added!');
         }
 
@@ -1251,7 +1306,7 @@
         }
 
         // ============================================================
-        //  INVEST
+        //  INVEST (Gold, Silver, Crypto)
         // ============================================================
         async function renderInvest() {
             const invest = await getAllData('invest');
@@ -1311,6 +1366,7 @@
             document.getElementById('investAmount').value = '';
             document.getElementById('investDesc').value = '';
             renderInvest();
+            updateTotalBalance();
             alert(`✅ ${category} investment added!`);
         }
 
@@ -1327,6 +1383,7 @@
             item.description = newDesc;
             await updateData('invest', item);
             renderInvest();
+            updateTotalBalance();
             alert('✅ Updated!');
         }
 
@@ -1334,6 +1391,7 @@
             if (!confirm('Delete this item?')) return;
             await deleteData('invest', id);
             renderInvest();
+            updateTotalBalance();
             alert('🗑️ Deleted!');
         }
 
@@ -1344,6 +1402,34 @@
             document.getElementById('sumGold').textContent = gold.toLocaleString();
             document.getElementById('sumSilver').textContent = silver.toLocaleString();
             document.getElementById('sumCrypto').textContent = crypto.toLocaleString();
+        }
+
+        // ============================================================
+        //  TOTAL BALANCE
+        // ============================================================
+        async function updateTotalBalance() {
+            const transactions = await getAllData('transactions');
+            const loans = await getAllData('loans');
+            const savings = await getAllData('savings');
+            const invest = await getAllData('invest');
+
+            const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+            const totalExpense = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+            const totalInvest = invest.reduce((s, t) => s + t.amount, 0);
+            const totalLoans = loans.reduce((s, t) => s + (t.total - t.paid), 0);
+            const totalSavings = savings.reduce((s, t) => s + t.amount, 0);
+
+            const finalBalance = totalIncome - totalExpense - totalInvest - totalLoans;
+
+            document.getElementById('balTotalIncome').textContent = totalIncome.toLocaleString() + ' IRR';
+            document.getElementById('balTotalExpense').textContent = totalExpense.toLocaleString() + ' IRR';
+            document.getElementById('balTotalInvest').textContent = totalInvest.toLocaleString() + ' IRR';
+            document.getElementById('balTotalLoans').textContent = totalLoans.toLocaleString() + ' IRR';
+            document.getElementById('balTotalSavings').textContent = totalSavings.toLocaleString() + ' IRR';
+
+            const finalEl = document.getElementById('balFinalAmount');
+            finalEl.textContent = finalBalance.toLocaleString() + ' IRR';
+            finalEl.style.color = finalBalance >= 0 ? '#10b981' : '#ef4444';
         }
 
         // ============================================================
@@ -1516,6 +1602,7 @@
             renderSpecificExpenses();
             renderInvest();
             updateTodayStats();
+            updateTotalBalance();
             checkPendingSMS();
             fetchQuote();
         }
@@ -1523,6 +1610,7 @@
         setInterval(fetchQuote, 3600000);
         setInterval(updateTodayStats, 60000);
         setInterval(updateDateInfo, 60000);
+        setInterval(updateTotalBalance, 60000);
     </script>
 </body>
-        </html>
+                        </html>

@@ -12,303 +12,333 @@
             box-sizing: border-box;
         }
         body {
-            font-family: Tahoma, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            min-height: 100vh;
-            padding: 15px;
-            color: #fff;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f0f2f5;
+            padding: 16px;
+            color: #1e293b;
         }
         .container {
             max-width: 500px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 15px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 12px;
-            margin-bottom: 12px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         .card-title {
+            font-weight: 700;
             font-size: 16px;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 8px;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-title span {
+            background: #e2e8f0;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            color: #334155;
         }
         .btn {
             padding: 8px 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            transition: 0.3s;
-            margin: 3px;
+            background: #e2e8f0;
+            color: #1e293b;
+            transition: 0.2s;
         }
         .btn:hover {
-            opacity: 0.8;
-            transform: scale(1.02);
-        }
-        .btn-primary {
-            background: #ffd700;
-            color: #333;
+            transform: scale(0.97);
         }
         .btn-success {
-            background: #00c853;
+            background: #10b981;
             color: #fff;
         }
         .btn-danger {
-            background: #ff1744;
+            background: #ef4444;
             color: #fff;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #cbd5e1;
         }
         .btn-group {
             display: flex;
-            gap: 5px;
+            gap: 6px;
             flex-wrap: wrap;
             margin-top: 8px;
         }
         .btn-group .btn {
             flex: 1;
-            min-width: 50px;
+            min-width: 60px;
             text-align: center;
         }
         input,
         select {
             width: 100%;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            margin: 4px 0;
+            padding: 10px 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            background: #f8fafc;
             font-size: 13px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
+            margin: 4px 0;
+            transition: 0.2s;
+        }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #fff;
         }
         .month-box {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 10px;
-            border-radius: 10px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
             margin-bottom: 10px;
         }
         .month-title {
+            font-weight: 600;
             font-size: 14px;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 5px;
+            color: #0f172a;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 4px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .month-title span {
+            font-weight: 400;
+            font-size: 12px;
+            color: #475569;
+        }
+        .balance-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin: 4px 0;
+            padding: 4px 0;
+            font-size: 14px;
         }
         .item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px 10px;
-            border-radius: 8px;
-            margin: 3px 0;
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            margin: 4px 0;
             font-size: 13px;
+            border: 1px solid #f1f5f9;
+        }
+        .item-row .badge {
+            background: #e2e8f0;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 11px;
         }
         .item-row .del-btn {
-            background: #ff1744;
-            color: #fff;
+            background: #fee2e2;
             border: none;
-            border-radius: 5px;
+            color: #dc2626;
             padding: 2px 10px;
-            cursor: pointer;
+            border-radius: 30px;
             font-size: 12px;
-            margin-left: 5px;
+            cursor: pointer;
+            font-weight: 600;
         }
         .item-row .edit-btn {
-            background: #ffd700;
-            color: #333;
+            background: #dbeafe;
             border: none;
-            border-radius: 5px;
+            color: #2563eb;
             padding: 2px 10px;
-            cursor: pointer;
+            border-radius: 30px;
             font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .stat {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .stat-number.red {
+            color: #ef4444;
+        }
+        .stat-number.green {
+            color: #10b981;
+        }
+        .stat-number.blue {
+            color: #3b82f6;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #64748b;
         }
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            font-size: 13px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 10px;
-            border-radius: 10px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
         }
         .info-item {
             text-align: center;
         }
         .info-number {
+            font-weight: 700;
             font-size: 20px;
-            font-weight: bold;
-            color: #ffd700;
+            color: #0f172a;
         }
         .info-label {
             font-size: 11px;
-            opacity: 0.7;
+            color: #64748b;
         }
         .motivation {
-            font-size: 15px;
-            font-weight: bold;
-            color: #ffd700;
             text-align: center;
+            font-weight: 600;
+            color: #3b82f6;
             padding: 8px;
-            background: rgba(255, 215, 0, 0.15);
-            border-radius: 10px;
+            background: #eff6ff;
+            border-radius: 16px;
             margin-top: 8px;
+            font-size: 14px;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            background: #fff;
+            padding: 6px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .tab-bar .btn {
+            flex: 1;
+            font-size: 11px;
+            padding: 8px 4px;
+            background: transparent;
+            border-radius: 16px;
+            color: #64748b;
+        }
+        .tab-bar .btn.active {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .hidden {
+            display: none !important;
         }
         .task-item {
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 6px 8px;
-            margin: 3px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            flex-wrap: wrap;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin: 4px 0;
+            font-size: 13px;
         }
         .task-item.done label {
             text-decoration: line-through;
-            opacity: 0.6;
+            color: #94a3b8;
         }
         .task-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: #ffd700;
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
         }
         .task-item label {
             flex: 1;
         }
-        .stat {
-            display: flex;
-            justify-content: space-around;
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin: 8px 0;
-        }
-        .stat-item {
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffd700;
-        }
-        .stat-number.red {
-            color: #ff5252;
-        }
-        .stat-number.green {
-            color: #00e676;
-        }
-        .stat-label {
-            font-size: 10px;
-            opacity: 0.8;
-        }
-        .tab-bar {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-        .tab-bar .btn {
-            flex: 1;
-            font-size: 11px;
-            padding: 6px 4px;
-            background: rgba(255, 255, 255, 0.1);
-            min-width: 45px;
-        }
-        .tab-bar .btn.active {
-            background: #ffd700;
-            color: #333;
-        }
-        .hidden {
-            display: none;
-        }
         .loan-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 8px;
-            margin: 3px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            flex-wrap: wrap;
-            border-right: 3px solid #ff5252;
+            border-right: 4px solid #ef4444;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin: 4px 0;
         }
         .loan-item.paid {
-            border-right-color: #00e676;
+            border-right-color: #10b981;
         }
         .loan-detail {
-            font-size: 11px;
-            opacity: 0.8;
-            width: 100%;
+            font-size: 12px;
+            color: #475569;
         }
         .progress-bar {
             width: 100%;
             height: 6px;
-            background: rgba(255, 255, 255, 0.2);
+            background: #e2e8f0;
             border-radius: 10px;
             margin: 4px 0;
-            overflow: hidden;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ff6b6b);
             border-radius: 10px;
-            transition: width 0.5s;
+            background: #3b82f6;
+            transition: 0.3s;
         }
         .progress-fill.green {
-            background: linear-gradient(90deg, #00c853, #00e676);
+            background: #10b981;
         }
-        .savings-item {
+        .savings-item,
+        .purchase-item,
+        .invest-item {
             display: flex;
             justify-content: space-between;
             padding: 4px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 12px;
-        }
-        .export-btn {
-            background: #00c853;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 8px;
-        }
-        .export-btn:hover {
-            background: #00e676;
-        }
-        .export-btn.gold {
-            background: #ffd700;
-            color: #333;
-        }
-        .export-btn.red {
-            background: #ff5252;
-            color: #fff;
-        }
-        .export-btn.blue {
-            background: #448aff;
-            color: #fff;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
         }
         .quote {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px;
-            border-radius: 15px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
             text-align: center;
             font-style: italic;
-            font-size: 13px;
-            margin-bottom: 15px;
-            border-right: 3px solid #ffd700;
+            color: #475569;
+            margin-bottom: 16px;
+            border-right: 4px solid #3b82f6;
+        }
+        .export-btn {
+            background: #0f172a;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        .export-btn.gold {
+            background: #f59e0b;
+        }
+        .export-btn.blue {
+            background: #3b82f6;
+        }
+        .export-btn.red {
+            background: #ef4444;
         }
         .modal {
             position: fixed;
@@ -316,48 +346,90 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 999;
-            backdrop-filter: blur(5px);
         }
         .modal-content {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            padding: 20px;
-            border-radius: 20px;
+            background: #fff;
+            padding: 24px;
+            border-radius: 28px;
             max-width: 380px;
             width: 90%;
             text-align: center;
+            color: #0f172a;
         }
         .modal-content h2 {
-            color: #ffd700;
             margin-bottom: 12px;
+            font-size: 18px;
         }
-        .modal-content .btn {
-            margin: 4px;
+        .modal-content input {
+            margin: 6px 0;
         }
         .sms-box {
-            background: rgba(255, 255, 255, 0.2);
+            background: #f8fafc;
             padding: 12px;
-            border-radius: 10px;
-            margin: 8px 0;
-            border-right: 3px solid #00ff88;
-        }
-        .date-badge {
-            font-size: 9px;
-            opacity: 0.5;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 10px;
+            border-radius: 16px;
+            border-right: 4px solid #10b981;
         }
         .report-item {
             display: flex;
             justify-content: space-between;
             padding: 4px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .date-badge {
+            background: #e2e8f0;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            color: #475569;
+        }
+        .sub-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 12px;
+            margin-top: 8px;
+        }
+        .sub-card .sub-title {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        .invest-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .invest-group .btn {
+            flex: 1;
+            min-width: 50px;
             font-size: 12px;
+        }
+        .invest-summary {
+            display: flex;
+            justify-content: space-around;
+            background: #e2e8f0;
+            padding: 6px;
+            border-radius: 14px;
+            margin: 6px 0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .invest-summary span {
+            color: #0f172a;
+        }
+        .balance-positive {
+            color: #10b981;
+        }
+        .balance-negative {
+            color: #ef4444;
         }
     </style>
 </head>
@@ -365,40 +437,29 @@
     <div class="container">
         <div class="quote" id="quote">🌙 Welcome to Mehdiar</div>
 
-        <!-- ====== Date Info ====== -->
+        <!-- ====== Today Info ====== -->
         <div class="card">
             <div class="card-title">📅 Today</div>
-            <div id="dateInfo" class="info-grid">
-                <div class="info-item">
-                    <div class="info-number" id="todayDate">-</div>
-                    <div class="info-label">Today</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-number" id="daysPassed">-</div>
-                    <div class="info-label">Days Passed</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-number" id="daysRemaining">-</div>
-                    <div class="info-label">Days Left</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-number" id="weeksRemaining">-</div>
-                    <div class="info-label">Weeks Left</div>
-                </div>
+            <div class="info-grid" id="dateInfo">
+                <div class="info-item"><div class="info-number" id="todayDate">-</div><div class="info-label">Today</div></div>
+                <div class="info-item"><div class="info-number" id="daysPassed">-</div><div class="info-label">Days Passed</div></div>
+                <div class="info-item"><div class="info-number" id="daysRemaining">-</div><div class="info-label">Days Left</div></div>
+                <div class="info-item"><div class="info-number" id="weeksRemaining">-</div><div class="info-label">Weeks Left</div></div>
             </div>
-            <div id="motivationMessage" class="motivation">🔥 Get up and go after your goal!</div>
+            <div class="motivation" id="motivationMessage">🔥 Get up and go after your goal!</div>
         </div>
 
+        <!-- ====== Tab Bar ====== -->
         <div class="tab-bar">
             <button class="btn active" onclick="showTab('dashboard')">📊 Home</button>
-            <button class="btn" onclick="showTab('reports')">📈 Report</button>
-            <button class="btn" onclick="showTab('savings')">🏦 Savings</button>
-            <button class="btn" onclick="showTab('loans')">💰 Loans</button>
+            <button class="btn" onclick="showTab('invest')">📈 Invest</button>
+            <button class="btn" onclick="showTab('reports')">📋 Report</button>
             <button class="btn" onclick="showTab('export')">📤 Export</button>
         </div>
 
         <!-- ====== Dashboard ====== -->
         <div id="tab-dashboard">
+            <!-- SMS -->
             <div id="smsSection" style="display:none;" class="card">
                 <div class="card-title">📩 New SMS</div>
                 <div class="sms-box">
@@ -406,7 +467,7 @@
                     <p>🏦 Bank: <strong id="smsBank"></strong></p>
                     <p>📅 Date: <strong id="smsDate"></strong></p>
                 </div>
-                <div class="card-title">❓ For what?</div>
+                <div class="card-title" style="margin-top:8px;">❓ For what?</div>
                 <div class="btn-group">
                     <button class="btn" onclick="setCategory('Food')">🍔 Food</button>
                     <button class="btn" onclick="setCategory('Bill')">💡 Bill</button>
@@ -418,12 +479,12 @@
                 <button class="btn btn-primary" onclick="saveTransaction()" style="width:100%;margin-top:8px;">✅ Save</button>
             </div>
 
-            <!-- ====== Income / Expense ====== -->
+            <!-- Income / Expense -->
             <div class="card">
                 <div class="card-title">💰 Income / Expense</div>
                 <div id="incomeExpenseContainer"></div>
-                <div style="display:flex;gap:5px;margin-top:10px;">
-                    <input type="number" id="amountInput" placeholder="Amount (IRR)" style="flex:1;">
+                <div style="display:flex;gap:6px;margin-top:8px;">
+                    <input type="number" id="amountInput" placeholder="Amount" style="flex:1;">
                     <input type="text" id="descInput" placeholder="Desc" style="flex:1;">
                 </div>
                 <div class="btn-group">
@@ -432,12 +493,12 @@
                 </div>
             </div>
 
-            <!-- ====== Rent, Faezeh, Personal ====== -->
+            <!-- Rent / Faezeh / Personal -->
             <div class="card">
                 <div class="card-title">🏠 Specific Expenses</div>
                 <div id="specificExpensesContainer"></div>
-                <div style="display:flex;gap:5px;margin-top:10px;">
-                    <input type="number" id="specAmountInput" placeholder="Amount (IRR)" style="flex:1;">
+                <div style="display:flex;gap:6px;margin-top:8px;">
+                    <input type="number" id="specAmountInput" placeholder="Amount" style="flex:1;">
                     <input type="text" id="specDescInput" placeholder="Desc" style="flex:1;">
                 </div>
                 <div class="btn-group">
@@ -447,27 +508,76 @@
                 </div>
             </div>
 
+            <!-- Tasks -->
             <div class="card">
                 <div class="card-title">✅ Today's Tasks</div>
                 <div id="taskList"></div>
                 <input type="text" id="newTaskInput" placeholder="New task...">
-                <button class="btn" onclick="addTask()" style="width:100%;margin-top:4px;">➕ Add Task</button>
+                <button class="btn btn-primary" onclick="addTask()" style="width:100%;margin-top:6px;">➕ Add Task</button>
             </div>
 
+            <!-- Today Stats -->
             <div class="card">
                 <div class="card-title">📊 Today</div>
                 <div class="stat">
-                    <div class="stat-item">
-                        <div class="stat-number red" id="todayExpense">0</div>
-                        <div class="stat-label">Expense</div>
+                    <div class="stat-item"><div class="stat-number red" id="todayExpense">0</div><div class="stat-label">Expense</div></div>
+                    <div class="stat-item"><div class="stat-number green" id="todayIncome">0</div><div class="stat-label">Income</div></div>
+                    <div class="stat-item"><div class="stat-number blue" id="todayCount">0</div><div class="stat-label">Total</div></div>
+                </div>
+            </div>
+
+            <!-- Savings -->
+            <div class="card">
+                <div class="card-title">🏦 Monthly Savings</div>
+                <div id="savingsDisplay">
+                    <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0;"><span>🎯 Goal:</span> <strong id="monthlyGoal">0</strong></div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0;"><span>💰 Saved:</span> <strong id="savedSoFar" style="color:#10b981;">0</strong></div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;padding:2px 0;"><span>⏳ Remaining:</span> <strong id="remainingSave" style="color:#3b82f6;">0</strong></div>
+                    <div class="progress-bar"><div class="progress-fill green" id="savingsProgress" style="width:0%;"></div></div>
+                    <div class="btn-group">
+                        <button class="btn btn-success" onclick="addSavings()">➕ Add</button>
+                        <button class="btn btn-outline" onclick="setMonthlyGoal()">🎯 Set Goal</button>
+                        <button class="btn btn-primary" onclick="showPurchaseModal()">🛍 Purchase</button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number green" id="todayIncome">0</div>
-                        <div class="stat-label">Income</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="todayCount">0</div>
-                        <div class="stat-label">Total</div>
+                    <div id="savingsHistory" style="margin-top:6px;"></div>
+                    <div id="purchasesList" style="margin-top:6px;"></div>
+                </div>
+            </div>
+
+            <!-- Loans -->
+            <div class="card">
+                <div class="card-title">💰 Loans</div>
+                <div id="loanList"></div>
+                <input type="text" id="loanName" placeholder="Loan name...">
+                <input type="number" id="loanTotal" placeholder="Total amount">
+                <input type="number" id="loanPaid" placeholder="Paid" value="0">
+                <input type="text" id="loanDue" placeholder="Next due (e.g. 1405/06/05)">
+                <button class="btn btn-primary" onclick="addLoan()" style="width:100%;margin-top:6px;">➕ Add Loan</button>
+            </div>
+        </div>
+
+        <!-- ====== Invest Tab ====== -->
+        <div id="tab-invest" class="hidden">
+            <div class="card">
+                <div class="card-title">📈 Investments (Gold / Silver / Crypto)</div>
+                <div id="investContainer"></div>
+
+                <div style="display:flex;gap:6px;margin-top:8px;">
+                    <input type="number" id="investAmount" placeholder="Amount" style="flex:1;">
+                    <input type="text" id="investDesc" placeholder="Desc" style="flex:1;">
+                </div>
+                <div class="invest-group">
+                    <button class="btn" style="background:#f59e0b;color:#fff;" onclick="addInvest('Gold')">🥇 Gold</button>
+                    <button class="btn" style="background:#94a3b8;color:#fff;" onclick="addInvest('Silver')">🥈 Silver</button>
+                    <button class="btn" style="background:#8b5cf6;color:#fff;" onclick="addInvest('Crypto')">₿ Crypto</button>
+                </div>
+
+                <div class="sub-card" style="margin-top:12px;">
+                    <div class="sub-title">📊 Summary</div>
+                    <div class="invest-summary" id="investSummary">
+                        <span>🥇 Gold: <strong id="sumGold">0</strong></span>
+                        <span>🥈 Silver: <strong id="sumSilver">0</strong></span>
+                        <span>₿ Crypto: <strong id="sumCrypto">0</strong></span>
                     </div>
                 </div>
             </div>
@@ -476,58 +586,12 @@
         <!-- ====== Reports ====== -->
         <div id="tab-reports" class="hidden">
             <div class="card">
-                <div class="card-title">📈 Reports</div>
+                <div class="card-title">📋 Reports</div>
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="showReport('monthly')">📅 Monthly</button>
-                    <button class="btn" onclick="showReport('yearly')">📅 Yearly</button>
+                    <button class="btn btn-outline" onclick="showReport('yearly')">📅 Yearly</button>
                 </div>
-                <div id="reportContent" style="margin-top:12px;">
-                    <p style="opacity:0.6;">Select an option</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ====== Savings ====== -->
-        <div id="tab-savings" class="hidden">
-            <div class="card">
-                <div class="card-title">🏦 Monthly Savings</div>
-                <div id="savingsDisplay">
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
-                        <span>🎯 Goal:</span>
-                        <strong id="monthlyGoal">0</strong>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
-                        <span>💰 Saved:</span>
-                        <strong id="savedSoFar" style="color:#00e676;">0</strong>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
-                        <span>⏳ Remaining:</span>
-                        <strong id="remainingSave" style="color:#ffd700;">0</strong>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill green" id="savingsProgress" style="width:0%;"></div>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn" onclick="addSavings()">➕ Add</button>
-                        <button class="btn" onclick="setMonthlyGoal()">🎯 Set Goal</button>
-                        <button class="btn btn-success" onclick="showPurchaseModal()">🛍 Purchase</button>
-                    </div>
-                    <div id="savingsHistory" style="margin-top:8px;max-height:120px;overflow-y:auto;"></div>
-                    <div id="purchasesList" style="margin-top:8px;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ====== Loans ====== -->
-        <div id="tab-loans" class="hidden">
-            <div class="card">
-                <div class="card-title">💰 Loans</div>
-                <div id="loanList"></div>
-                <input type="text" id="loanName" placeholder="Loan name...">
-                <input type="number" id="loanTotal" placeholder="Total amount (IRR)">
-                <input type="number" id="loanPaid" placeholder="Paid (IRR)" value="0">
-                <input type="text" id="loanDue" placeholder="Next due date (e.g. 1405/06/05)">
-                <button class="btn btn-primary" onclick="addLoan()" style="width:100%;margin-top:4px;">➕ Add Loan</button>
+                <div id="reportContent" style="margin-top:12px;"><p style="color:#64748b;">Select an option</p></div>
             </div>
         </div>
 
@@ -535,11 +599,11 @@
         <div id="tab-export" class="hidden">
             <div class="card">
                 <div class="card-title">📤 Export to Excel</div>
-                <p style="font-size:13px;opacity:0.8;margin-bottom:10px;">Download all your financial data as Excel files.</p>
                 <button class="export-btn gold" onclick="exportAllData()">📊 Download All</button>
-                <button class="export-btn" onclick="exportTransactions()">💰 Transactions</button>
-                <button class="export-btn blue" onclick="exportSavings()">🏦 Savings</button>
-                <button class="export-btn red" onclick="exportLoans()">💳 Loans</button>
+                <button class="export-btn blue" onclick="exportTransactions()" style="margin-top:6px;">💰 Transactions</button>
+                <button class="export-btn" onclick="exportSavings()" style="margin-top:6px;background:#10b981;">🏦 Savings</button>
+                <button class="export-btn red" onclick="exportLoans()" style="margin-top:6px;">💳 Loans</button>
+                <button class="export-btn" onclick="exportInvest()" style="margin-top:6px;background:#8b5cf6;">📈 Investments</button>
             </div>
         </div>
     </div>
@@ -560,7 +624,7 @@
             <input type="number" id="purchaseAmount" placeholder="Amount (IRR)">
             <div class="btn-group">
                 <button class="btn btn-success" onclick="savePurchase()">✅ Save</button>
-                <button class="btn" onclick="closePurchaseModal()">❌ Cancel</button>
+                <button class="btn btn-outline" onclick="closePurchaseModal()">❌ Cancel</button>
             </div>
         </div>
     </div>
@@ -588,6 +652,8 @@
                     if (!db.objectStoreNames.contains('goals')) db.createObjectStore('goals', { keyPath: 'id',
                             autoIncrement: true });
                     if (!db.objectStoreNames.contains('purchases')) db.createObjectStore('purchases', { keyPath: 'id',
+                            autoIncrement: true });
+                    if (!db.objectStoreNames.contains('invest')) db.createObjectStore('invest', { keyPath: 'id',
                             autoIncrement: true });
                 };
                 req.onsuccess = () => { db = req.result;
@@ -653,32 +719,24 @@
             document.getElementById('weeksRemaining').textContent = weeksRemaining;
 
             const msgs = [
-                '🔥 Get up and go after your goal!',
-                '💪 Every day is a new chance!',
-                '🚀 Start now, don\'t wait!',
-                '🌟 Your future self will thank you!',
-                '🏆 Small steps lead to big wins!',
-                '⚡ Time is now, don\'t waste it!',
-                '📈 Progress, not perfection!',
-                '🎯 Stay focused, stay strong!'
+                '🔥 Get up and go after your goal!', '💪 Every day is a new chance!',
+                '🚀 Start now, don\'t wait!', '🌟 Your future self will thank you!',
+                '🏆 Small steps lead to big wins!', '⚡ Time is now, don\'t waste it!',
+                '📈 Progress, not perfection!', '🎯 Stay focused, stay strong!'
             ];
             document.getElementById('motivationMessage').textContent = msgs[daysPassed % msgs.length];
         }
 
         // ============================================================
-        //  Tabs & Render
+        //  Tabs
         // ============================================================
         function showTab(tab) {
             document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tab).classList.remove('hidden');
             document.querySelectorAll('.tab-bar .btn').forEach(el => el.classList.remove('active'));
             document.querySelector('.tab-bar .btn[onclick*="' + tab + '"]').classList.add('active');
+            if (tab === 'invest') renderInvest();
             if (tab === 'reports') showReport('monthly');
-            if (tab === 'savings') { loadSavings();
-                loadPurchases(); }
-            if (tab === 'loans') loadLoans();
-            if (tab === 'dashboard') { renderIncomeExpense();
-                renderSpecificExpenses(); }
         }
 
         // ============================================================
@@ -697,7 +755,7 @@
         }
 
         // ============================================================
-        //  Income / Expense
+        //  Income / Expense with Balance
         // ============================================================
         async function renderIncomeExpense() {
             const transactions = await getAllData('transactions');
@@ -713,7 +771,7 @@
 
             const sortedMonths = Object.keys(months).sort();
             if (sortedMonths.length === 0) {
-                container.innerHTML = '<p style="opacity:0.7;">No data yet.</p>';
+                container.innerHTML = '<p style="color:#94a3b8;">No data yet.</p>';
                 return;
             }
 
@@ -722,14 +780,24 @@
                 box.className = 'month-box';
                 const totalIncome = months[month].filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
                 const totalExpense = months[month].filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+                const balance = totalIncome - totalExpense;
+                const balanceColor = balance >= 0 ? '#10b981' : '#ef4444';
+                const balanceSign = balance >= 0 ? '+' : '';
 
-                box.innerHTML = `<div class="month-title">📅 ${month} (Income: ${totalIncome} | Expense: ${totalExpense})</div>`;
+                box.innerHTML = `
+                        <div class="month-title">📅 ${month} <span>Income: ${totalIncome.toLocaleString()} | Expense: ${totalExpense.toLocaleString()}</span></div>
+                        <div class="balance-row" style="color:${balanceColor};">
+                            <span>💰 Balance:</span>
+                            <span>${balanceSign}${balance.toLocaleString()} IRR</span>
+                        </div>
+                    `;
+
                 months[month].forEach(t => {
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     const typeLabel = t.type === 'income' ? '💰 Income' : '💸 Expense';
                     row.innerHTML = `
-                            <span>${typeLabel} - ${t.amount.toLocaleString()} IRR (${t.description || ''})</span>
+                            <span>${typeLabel} - ${t.amount.toLocaleString()} IRR <span class="badge">${t.description || ''}</span></span>
                             <div>
                                 <button class="edit-btn" onclick="editTransaction(${t.id})">✏️</button>
                                 <button class="del-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
@@ -746,7 +814,7 @@
             const desc = document.getElementById('descInput').value.trim() || 'Income';
             if (!amount || amount <= 0) { alert('Enter a valid amount!'); return; }
             await addData('transactions', {
-                amount: amount,
+                amount,
                 description: desc,
                 type: 'income',
                 category: 'Income',
@@ -765,7 +833,7 @@
             const desc = document.getElementById('descInput').value.trim() || 'Expense';
             if (!amount || amount <= 0) { alert('Enter a valid amount!'); return; }
             await addData('transactions', {
-                amount: amount,
+                amount,
                 description: desc,
                 type: 'expense',
                 category: 'Expense',
@@ -805,39 +873,36 @@
         }
 
         // ============================================================
-        //  Rent, Faezeh, Personal
+        //  Specific Expenses
         // ============================================================
         async function renderSpecificExpenses() {
             const transactions = await getAllData('transactions');
             const container = document.getElementById('specificExpensesContainer');
             container.innerHTML = '';
-
             const categories = ['Rent', 'Faezeh', 'Personal'];
             const data = transactions.filter(t => categories.includes(t.category));
-
             if (data.length === 0) {
-                container.innerHTML = '<p style="opacity:0.7;">No specific expenses yet.</p>';
+                container.innerHTML = '<p style="color:#94a3b8;">No specific expenses yet.</p>';
                 return;
             }
-
             const grouped = {};
             data.forEach(t => {
                 const key = t.category + '_' + t.persianDate.slice(0, 7);
                 if (!grouped[key]) grouped[key] = [];
                 grouped[key].push(t);
             });
-
             Object.keys(grouped).sort().forEach(key => {
                 const [cat, month] = key.split('_');
                 const box = document.createElement('div');
                 box.className = 'month-box';
                 const total = grouped[key].reduce((s, t) => s + t.amount, 0);
-                box.innerHTML = `<div class="month-title">🏠 ${cat} - ${month} (Total: ${total.toLocaleString()} IRR)</div>`;
+                box.innerHTML =
+                    `<div class="month-title">🏠 ${cat} - ${month} <span>Total: ${total.toLocaleString()}</span></div>`;
                 grouped[key].forEach(t => {
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     row.innerHTML = `
-                            <span>${t.amount.toLocaleString()} IRR - ${t.description || ''}</span>
+                            <span>${t.amount.toLocaleString()} IRR <span class="badge">${t.description || ''}</span></span>
                             <div>
                                 <button class="edit-btn" onclick="editSpecificExpense(${t.id})">✏️</button>
                                 <button class="del-btn" onclick="deleteSpecificExpense(${t.id})">🗑️</button>
@@ -854,10 +919,10 @@
             const desc = document.getElementById('specDescInput').value.trim() || category;
             if (!amount || amount <= 0) { alert('Enter a valid amount!'); return; }
             await addData('transactions', {
-                amount: amount,
+                amount,
                 description: desc,
                 type: 'expense',
-                category: category,
+                category,
                 persianDate: getTodayPersian(),
                 timestamp: new Date().toISOString()
             });
@@ -966,17 +1031,18 @@
             const today = getTodayPersian();
             const todayTasks = tasks.filter(t => t.date === today);
             if (todayTasks.length === 0) {
-                list.innerHTML = '<p style="opacity:0.7;">✨ No tasks for today</p>';
+                list.innerHTML = '<p style="color:#94a3b8;">✨ No tasks for today</p>';
                 return;
             }
             todayTasks.forEach(task => {
                 const div = document.createElement('div');
                 div.className = 'task-item' + (task.done ? ' done' : '');
-                div.innerHTML = '<input type="checkbox" ' + (task.done ? 'checked' : '') +
-                    ' onchange="toggleTask(' + task.id + ', this.checked)"><label>' + task.text +
-                    '</label><span class="date-badge">' + task.date +
-                    '</span><button onclick="deleteTask(' + task.id +
-                    ')" style="background:rgba(255,0,0,0.3);border:none;color:#fff;border-radius:5px;padding:0 6px;cursor:pointer;">✕</button>';
+                div.innerHTML = `
+                        <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id}, this.checked)">
+                        <label>${task.text}</label>
+                        <span class="date-badge">${task.date}</span>
+                        <button onclick="deleteTask(${task.id})" style="background:transparent;border:none;color:#ef4444;font-size:16px;cursor:pointer;">✕</button>
+                    `;
                 list.appendChild(div);
             });
             if (todayTasks.some(t => !t.done)) showForceModal('Complete your tasks!');
@@ -1003,10 +1069,7 @@
         async function addTask() {
             const input = document.getElementById('newTaskInput');
             const text = input.value.trim();
-            if (!text) {
-                alert('Enter a task!');
-                return;
-            }
+            if (!text) { alert('Enter a task!'); return; }
             await addData('tasks', { text, done: false, date: getTodayPersian() });
             input.value = '';
             loadTasks();
@@ -1020,7 +1083,7 @@
             const list = document.getElementById('loanList');
             list.innerHTML = '';
             if (loans.length === 0) {
-                list.innerHTML = '<p style="opacity:0.7;">💳 No loans recorded</p>';
+                list.innerHTML = '<p style="color:#94a3b8;">💳 No loans recorded</p>';
                 return;
             }
             loans.forEach(loan => {
@@ -1028,22 +1091,17 @@
                 const prog = loan.total > 0 ? (loan.paid / loan.total) * 100 : 0;
                 const div = document.createElement('div');
                 div.className = 'loan-item' + (rem === 0 ? ' paid' : '');
-                div.innerHTML = '<strong>' + loan.name +
-                    '</strong><div class="loan-detail">Total: ' + loan.total.toLocaleString() + ' | Paid: ' + loan
-                    .paid.toLocaleString() + ' | Remaining: <strong style="color:' + (rem === 0 ? '#00e676' :
-                        '#ff5252') +
-                    '">' + rem.toLocaleString() +
-                    '</strong></div><div class="progress-bar"><div class="progress-fill" style="width:' + Math.min(prog,
-                        100) + '%"></div></div><div class="loan-detail">📅 Registered: ' + (loan.createdAt ?
-                        toPersianDate(loan
-                            .createdAt) : 'Unknown') + (loan.nextDue && loan.nextDue !== 'Unknown' ? ' | Next due: ' +
-                        loan
-                        .nextDue : '') +
-                    '</div><div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;"><input type="number" id="payment_' +
-                    loan.id + '" placeholder="Amount" style="flex:1;min-width:60px;"><button class="btn btn-success" onclick="payLoan(' +
-                    loan.id +
-                    ')" style="padding:4px 8px;font-size:11px;">💳 Pay</button><button class="btn btn-danger" onclick="deleteLoan(' +
-                    loan.id + ')" style="padding:4px 8px;font-size:11px;">🗑️</button></div>';
+                div.innerHTML = `
+                        <strong>${loan.name}</strong>
+                        <div class="loan-detail">Total: ${loan.total.toLocaleString()} | Paid: ${loan.paid.toLocaleString()} | Remaining: <strong style="color:${rem===0?'#10b981':'#ef4444'}">${rem.toLocaleString()}</strong></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(prog,100)}%"></div></div>
+                        <div class="loan-detail">📅 Registered: ${loan.createdAt ? toPersianDate(loan.createdAt) : 'Unknown'} ${loan.nextDue && loan.nextDue !== 'Unknown' ? '| Next due: ' + loan.nextDue : ''}</div>
+                        <div style="display:flex;gap:4px;margin-top:4px;">
+                            <input type="number" id="payment_${loan.id}" placeholder="Amount" style="flex:1;">
+                            <button class="btn btn-success" onclick="payLoan(${loan.id})" style="padding:4px 12px;">💳 Pay</button>
+                            <button class="btn" onclick="deleteLoan(${loan.id})" style="padding:4px 12px;background:#fee2e2;color:#dc2626;">🗑️</button>
+                        </div>
+                    `;
                 list.appendChild(div);
             });
             checkLoanReminders(loans);
@@ -1052,10 +1110,7 @@
         async function payLoan(id) {
             const input = document.getElementById('payment_' + id);
             const amount = parseInt(input.value);
-            if (!amount || amount <= 0) {
-                alert('Enter a valid amount!');
-                return;
-            }
+            if (!amount || amount <= 0) { alert('Enter a valid amount!'); return; }
             const loans = await getAllData('loans');
             const loan = loans.find(l => l.id === id);
             if (loan) {
@@ -1068,10 +1123,8 @@
         }
 
         async function deleteLoan(id) {
-            if (confirm('Delete?')) {
-                await deleteData('loans', id);
-                loadLoans();
-            }
+            if (confirm('Delete?')) { await deleteData('loans', id);
+                loadLoans(); }
         }
 
         async function addLoan() {
@@ -1079,10 +1132,7 @@
             const total = parseInt(document.getElementById('loanTotal').value);
             const paid = parseInt(document.getElementById('loanPaid').value) || 0;
             const nextDue = document.getElementById('loanDue').value.trim();
-            if (!name || !total) {
-                alert('Enter name and total amount!');
-                return;
-            }
+            if (!name || !total) { alert('Enter name and total amount!'); return; }
             await addData('loans', { name, total, paid, nextDue: nextDue || 'Unknown', createdAt: new Date().toISOString() });
             document.getElementById('loanName').value = '';
             document.getElementById('loanTotal').value = '';
@@ -1131,13 +1181,11 @@
             const history = document.getElementById('savingsHistory');
             history.innerHTML = '';
             if (thisMonth.length === 0) history.innerHTML =
-            '<p style="opacity:0.7;font-size:12px;">⏳ No savings recorded</p>';
+            '<p style="color:#94a3b8;font-size:13px;">⏳ No savings recorded</p>';
             else thisMonth.slice(-5).reverse().forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'savings-item';
-                div.innerHTML = '<span class="date" style="opacity:0.6;font-size:10px;">📅 ' + toPersianDate(s.date) +
-                    '</span><span class="amount" style="color:#00e676;font-weight:bold;">+' + s.amount
-                    .toLocaleString() + ' IRR</span>';
+                div.innerHTML = `<span>📅 ${toPersianDate(s.date)}</span><span style="color:#10b981;font-weight:600;">+${s.amount.toLocaleString()} IRR</span>`;
                 history.appendChild(div);
             });
         }
@@ -1146,10 +1194,7 @@
             const amount = prompt('💰 How much did you save? (IRR)');
             if (!amount) return;
             const num = parseInt(amount.replace(/,/g, ''));
-            if (!num || num <= 0) {
-                alert('Enter a valid number!');
-                return;
-            }
+            if (!num || num <= 0) { alert('Enter a valid number!'); return; }
             await addData('savings', { amount: num, date: new Date().toISOString() });
             loadSavings();
             alert('✅ Savings added!');
@@ -1159,10 +1204,7 @@
             const amount = prompt('🎯 Set monthly savings goal (IRR):');
             if (!amount) return;
             const num = parseInt(amount.replace(/,/g, ''));
-            if (!num || num <= 0) {
-                alert('Enter a valid number!');
-                return;
-            }
+            if (!num || num <= 0) { alert('Enter a valid number!'); return; }
             const now = new Date();
             const goals = await getAllData('goals');
             const existing = goals.find(g => g.month === now.getMonth() && g.year === now.getFullYear());
@@ -1180,15 +1222,14 @@
             const list = document.getElementById('purchasesList');
             list.innerHTML = '';
             if (purchases.length === 0) {
-                list.innerHTML = '<p style="opacity:0.5;font-size:12px;">🛍 No purchases recorded</p>';
+                list.innerHTML = '<p style="color:#94a3b8;font-size:13px;">🛍 No purchases recorded</p>';
                 return;
             }
             purchases.slice(-5).reverse().forEach(p => {
                 const div = document.createElement('div');
-                div.className = 'savings-item';
-                div.innerHTML = '<span>🛍 ' + p.item + '</span><span class="amount" style="color:#00e676;font-weight:bold;">' +
-                    p.amount.toLocaleString() + ' IRR</span><span class="date" style="opacity:0.6;font-size:10px;">' +
-                    (p.date ? toPersianDate(p.date) : getTodayPersian()) + '</span>';
+                div.className = 'purchase-item';
+                div.innerHTML =
+                    `<span>🛍 ${p.item}</span><span style="font-weight:600;">${p.amount.toLocaleString()} IRR</span><span style="color:#94a3b8;font-size:12px;">${p.date ? toPersianDate(p.date) : getTodayPersian()}</span>`;
                 list.appendChild(div);
             });
         }
@@ -1200,16 +1241,109 @@
         async function savePurchase() {
             const item = document.getElementById('purchaseItem').value.trim();
             const amount = parseInt(document.getElementById('purchaseAmount').value);
-            if (!item || !amount) {
-                alert('Enter item and amount!');
-                return;
-            }
+            if (!item || !amount) { alert('Enter item and amount!'); return; }
             await addData('purchases', { item, amount, date: new Date().toISOString() });
             document.getElementById('purchaseItem').value = '';
             document.getElementById('purchaseAmount').value = '';
             closePurchaseModal();
             loadPurchases();
             alert('✅ Purchase saved!');
+        }
+
+        // ============================================================
+        //  INVEST
+        // ============================================================
+        async function renderInvest() {
+            const invest = await getAllData('invest');
+            const container = document.getElementById('investContainer');
+            container.innerHTML = '';
+
+            if (invest.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;">📈 No investments recorded yet.</p>';
+                updateInvestSummary([]);
+                return;
+            }
+
+            const grouped = {};
+            invest.forEach(item => {
+                const key = item.category + '_' + item.persianDate.slice(0, 7);
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(item);
+            });
+
+            Object.keys(grouped).sort().forEach(key => {
+                const [cat, month] = key.split('_');
+                const box = document.createElement('div');
+                box.className = 'month-box';
+                const total = grouped[key].reduce((s, item) => s + item.amount, 0);
+                const emoji = cat === 'Gold' ? '🥇' : cat === 'Silver' ? '🥈' : '₿';
+                box.innerHTML =
+                    `<div class="month-title">${emoji} ${cat} - ${month} <span>Total: ${total.toLocaleString()}</span></div>`;
+                grouped[key].forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    row.innerHTML = `
+                            <span>${item.amount.toLocaleString()} IRR <span class="badge">${item.description || ''}</span></span>
+                            <div>
+                                <button class="edit-btn" onclick="editInvest(${item.id})">✏️</button>
+                                <button class="del-btn" onclick="deleteInvest(${item.id})">🗑️</button>
+                            </div>
+                        `;
+                    box.appendChild(row);
+                });
+                container.appendChild(box);
+            });
+
+            updateInvestSummary(invest);
+        }
+
+        async function addInvest(category) {
+            const amount = parseInt(document.getElementById('investAmount').value);
+            const desc = document.getElementById('investDesc').value.trim() || category;
+            if (!amount || amount <= 0) { alert('Enter a valid amount!'); return; }
+            await addData('invest', {
+                amount,
+                description: desc,
+                category,
+                persianDate: getTodayPersian(),
+                timestamp: new Date().toISOString()
+            });
+            document.getElementById('investAmount').value = '';
+            document.getElementById('investDesc').value = '';
+            renderInvest();
+            alert(`✅ ${category} investment added!`);
+        }
+
+        async function editInvest(id) {
+            const invest = await getAllData('invest');
+            const item = invest.find(i => i.id === id);
+            if (!item) return;
+            const newAmount = prompt('Edit amount (IRR):', item.amount);
+            if (newAmount === null) return;
+            const numAmount = parseInt(newAmount);
+            if (!numAmount || numAmount <= 0) { alert('Invalid amount!'); return; }
+            const newDesc = prompt('Edit description:', item.description) || item.description;
+            item.amount = numAmount;
+            item.description = newDesc;
+            await updateData('invest', item);
+            renderInvest();
+            alert('✅ Updated!');
+        }
+
+        async function deleteInvest(id) {
+            if (!confirm('Delete this item?')) return;
+            await deleteData('invest', id);
+            renderInvest();
+            alert('🗑️ Deleted!');
+        }
+
+        function updateInvestSummary(invest) {
+            const gold = invest.filter(i => i.category === 'Gold').reduce((s, i) => s + i.amount, 0);
+            const silver = invest.filter(i => i.category === 'Silver').reduce((s, i) => s + i.amount, 0);
+            const crypto = invest.filter(i => i.category === 'Crypto').reduce((s, i) => s + i.amount, 0);
+            document.getElementById('sumGold').textContent = gold.toLocaleString();
+            document.getElementById('sumSilver').textContent = silver.toLocaleString();
+            document.getElementById('sumCrypto').textContent = crypto.toLocaleString();
         }
 
         // ============================================================
@@ -1233,17 +1367,16 @@
             const total = filtered.reduce((s, t) => s + t.amount, 0);
             const cats = {};
             filtered.forEach(t => { cats[t.category] = (cats[t.category] || 0) + t.amount; });
-            let html = '<p style="font-weight:bold;">' + title + '</p><p>Total: ' + total.toLocaleString() +
-                ' IRR</p><p style="font-size:12px;opacity:0.7;">Transactions: ' + filtered.length + '</p>';
+            let html = `<p style="font-weight:600;">${title}</p><p>Total: ${total.toLocaleString()} IRR</p><p style="font-size:12px;color:#64748b;">Transactions: ${filtered.length}</p>`;
             if (Object.keys(cats).length > 0) {
                 html += '<div style="margin-top:8px;">';
                 for (const [cat, amt] of Object.entries(cats)) {
-                    html += '<div class="report-item"><span class="cat">' + cat + '</span><span class="amt">' + amt
-                        .toLocaleString() + ' IRR</span></div>';
+                    html +=
+                        `<div class="report-item"><span>${cat}</span><span>${amt.toLocaleString()} IRR</span></div>`;
                 }
                 html += '</div>';
             } else {
-                html += '<p style="opacity:0.6;margin-top:8px;">No transactions</p>';
+                html += '<p style="color:#94a3b8;margin-top:8px;">No transactions</p>';
             }
             const now = new Date();
             const monthSavings = savings.filter(s => {
@@ -1253,7 +1386,7 @@
                 else return d.getFullYear() === now.getFullYear();
             });
             const totalSave = monthSavings.reduce((s, i) => s + i.amount, 0);
-            html += '<p style="margin-top:8px;">🏦 Savings: ' + totalSave.toLocaleString() + ' IRR</p>';
+            html += `<p style="margin-top:8px;">🏦 Savings: ${totalSave.toLocaleString()} IRR</p>`;
             content.innerHTML = html;
         }
 
@@ -1279,13 +1412,9 @@
             document.getElementById('forceModal').style.display = 'flex';
         }
 
-        function hideForceModal() {
-            document.getElementById('forceModal').style.display = 'none';
-        }
+        function hideForceModal() { document.getElementById('forceModal').style.display = 'none'; }
 
-        function closeModal() {
-            hideForceModal();
-        }
+        function closeModal() { hideForceModal(); }
 
         // ============================================================
         //  Export
@@ -1295,43 +1424,32 @@
             const savings = await getAllData('savings');
             const loans = await getAllData('loans');
             const tasks = await getAllData('tasks');
-
+            const invest = await getAllData('invest');
             const wb = XLSX.utils.book_new();
 
-            const txData = transactions.map(t => ({
-                'Date': t.persianDate || t.date || '',
-                'Amount (IRR)': t.amount || 0,
-                'Category': t.category || '',
-                'Type': t.type || '',
-                'Description': t.description || ''
-            }));
+            const txData = transactions.map(t => ({ 'Date': t.persianDate || t.date || '', 'Amount (IRR)': t.amount || 0,
+                'Category': t.category || '', 'Type': t.type || '', 'Description': t.description || '' }));
             const ws1 = XLSX.utils.json_to_sheet(txData);
             XLSX.utils.book_append_sheet(wb, ws1, 'Transactions');
 
-            const svData = savings.map(s => ({
-                'Date': toPersianDate(s.date),
-                'Amount (IRR)': s.amount || 0
-            }));
+            const svData = savings.map(s => ({ 'Date': toPersianDate(s.date), 'Amount (IRR)': s.amount || 0 }));
             const ws2 = XLSX.utils.json_to_sheet(svData);
             XLSX.utils.book_append_sheet(wb, ws2, 'Savings');
 
-            const lnData = loans.map(l => ({
-                'Name': l.name || '',
-                'Total (IRR)': l.total || 0,
-                'Paid (IRR)': l.paid || 0,
-                'Remaining (IRR)': (l.total - l.paid) || 0,
-                'Next Due': l.nextDue || ''
-            }));
+            const lnData = loans.map(l => ({ 'Name': l.name || '', 'Total (IRR)': l.total || 0, 'Paid (IRR)': l.paid || 0,
+                'Remaining (IRR)': (l.total - l.paid) || 0, 'Next Due': l.nextDue || '' }));
             const ws3 = XLSX.utils.json_to_sheet(lnData);
             XLSX.utils.book_append_sheet(wb, ws3, 'Loans');
 
-            const tkData = tasks.map(t => ({
-                'Task': t.text || '',
-                'Date': t.date || '',
-                'Status': t.done ? 'Done' : 'Pending'
-            }));
+            const tkData = tasks.map(t => ({ 'Task': t.text || '', 'Date': t.date || '', 'Status': t.done ? 'Done' :
+                    'Pending' }));
             const ws4 = XLSX.utils.json_to_sheet(tkData);
             XLSX.utils.book_append_sheet(wb, ws4, 'Tasks');
+
+            const invData = invest.map(i => ({ 'Date': i.persianDate || '', 'Category': i.category || '',
+                    'Amount (IRR)': i.amount || 0, 'Description': i.description || '' }));
+            const ws5 = XLSX.utils.json_to_sheet(invData);
+            XLSX.utils.book_append_sheet(wb, ws5, 'Investments');
 
             const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
             const blob = new Blob([wbout], { type: 'application/octet-stream' });
@@ -1345,35 +1463,29 @@
 
         async function exportTransactions() {
             const transactions = await getAllData('transactions');
-            const data = transactions.map(t => ({
-                'Date': t.persianDate || t.date || '',
-                'Amount (IRR)': t.amount || 0,
-                'Category': t.category || '',
-                'Type': t.type || '',
-                'Description': t.description || ''
-            }));
+            const data = transactions.map(t => ({ 'Date': t.persianDate || t.date || '', 'Amount (IRR)': t.amount || 0,
+                'Category': t.category || '', 'Type': t.type || '', 'Description': t.description || '' }));
             downloadExcel(data, 'Transactions');
         }
 
         async function exportSavings() {
             const savings = await getAllData('savings');
-            const data = savings.map(s => ({
-                'Date': toPersianDate(s.date),
-                'Amount (IRR)': s.amount || 0
-            }));
+            const data = savings.map(s => ({ 'Date': toPersianDate(s.date), 'Amount (IRR)': s.amount || 0 }));
             downloadExcel(data, 'Savings');
         }
 
         async function exportLoans() {
             const loans = await getAllData('loans');
-            const data = loans.map(l => ({
-                'Name': l.name || '',
-                'Total (IRR)': l.total || 0,
-                'Paid (IRR)': l.paid || 0,
-                'Remaining (IRR)': (l.total - l.paid) || 0,
-                'Next Due': l.nextDue || ''
-            }));
+            const data = loans.map(l => ({ 'Name': l.name || '', 'Total (IRR)': l.total || 0, 'Paid (IRR)': l.paid || 0,
+                'Remaining (IRR)': (l.total - l.paid) || 0, 'Next Due': l.nextDue || '' }));
             downloadExcel(data, 'Loans');
+        }
+
+        async function exportInvest() {
+            const invest = await getAllData('invest');
+            const data = invest.map(i => ({ 'Date': i.persianDate || '', 'Category': i.category || '',
+                    'Amount (IRR)': i.amount || 0, 'Description': i.description || '' }));
+            downloadExcel(data, 'Investments');
         }
 
         function downloadExcel(data, sheetName) {
@@ -1402,15 +1514,15 @@
             loadPurchases();
             renderIncomeExpense();
             renderSpecificExpenses();
+            renderInvest();
             updateTodayStats();
             checkPendingSMS();
             fetchQuote();
         }
-
         init();
         setInterval(fetchQuote, 3600000);
         setInterval(updateTodayStats, 60000);
         setInterval(updateDateInfo, 60000);
     </script>
 </body>
-                    </html>
+    </html>

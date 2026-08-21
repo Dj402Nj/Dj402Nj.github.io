@@ -6,7 +6,6 @@
     <title>مه‌دیار</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ====== ظاهر کلی ====== */
         * {
             margin: 0;
             padding: 0;
@@ -347,9 +346,10 @@
         .monthly-expense-box .input-row {
             display: flex;
             gap: 4px;
+            flex-wrap: wrap;
             margin-top: 4px;
         }
-        .monthly-expense-box .input-row input { flex: 1; }
+        .monthly-expense-box .input-row input { flex: 1; min-width: 60px; }
         .monthly-expense-box .list { font-size: 12px; margin-top: 4px; }
         .month-end-highlight {
             border: 2px solid #f59e0b !important;
@@ -427,6 +427,7 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="houseAmount" placeholder="مبلغ">
+                        <input type="text" id="houseDesc" placeholder="توضیحات">
                         <button class="btn btn-primary" onclick="addExpense('house')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="houseList"></div>
@@ -440,6 +441,7 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="faezehAmount" placeholder="مبلغ">
+                        <input type="text" id="faezehDesc" placeholder="توضیحات">
                         <button class="btn btn-primary" onclick="addExpense('faezeh')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="faezehList"></div>
@@ -453,6 +455,7 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="mehdiAmount" placeholder="مبلغ">
+                        <input type="text" id="mehdiDesc" placeholder="توضیحات">
                         <button class="btn btn-primary" onclick="addExpense('mehdi')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="mehdiList"></div>
@@ -466,6 +469,7 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="kidsAmount" placeholder="مبلغ">
+                        <input type="text" id="kidsDesc" placeholder="توضیحات">
                         <button class="btn btn-primary" onclick="addExpense('kids')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="kidsList"></div>
@@ -487,7 +491,7 @@
                 <button class="btn btn-primary" onclick="addLoanItem()" style="width:100%;margin-top:6px;">➕ ثبت قسط جدید</button>
             </div>
 
-            <!-- کارهای روزانه (با حذف خودکار) -->
+            <!-- کارهای روزانه -->
             <div class="card">
                 <div class="card-title">✅ کارهای امروز</div>
                 <div id="taskList"></div>
@@ -677,7 +681,7 @@
             alert('✅ درآمد ثبت شد!');
         }
 
-        function addExpense() {
+        function addExpenseGeneral() {
             const amount = document.getElementById('amountInput').value;
             const desc = document.getElementById('descInput').value || 'خرج';
             if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
@@ -757,7 +761,7 @@
             });
         }
 
-        // ========== ۴ بخش هزینه‌های ماهانه (جدید) ==========
+        // ========== ۴ بخش هزینه‌های ماهانه ==========
         const EXPENSE_TYPES = {
             HOUSE: 'house',
             FAEZEH: 'faezeh',
@@ -785,10 +789,10 @@
 
         function addExpense(type) {
             const inputMap = {
-                [EXPENSE_TYPES.HOUSE]: 'houseAmount',
-                [EXPENSE_TYPES.FAEZEH]: 'faezehAmount',
-                [EXPENSE_TYPES.MEHDI]: 'mehdiAmount',
-                [EXPENSE_TYPES.KIDS]: 'kidsAmount'
+                [EXPENSE_TYPES.HOUSE]: { amount: 'houseAmount', desc: 'houseDesc' },
+                [EXPENSE_TYPES.FAEZEH]: { amount: 'faezehAmount', desc: 'faezehDesc' },
+                [EXPENSE_TYPES.MEHDI]: { amount: 'mehdiAmount', desc: 'mehdiDesc' },
+                [EXPENSE_TYPES.KIDS]: { amount: 'kidsAmount', desc: 'kidsDesc' }
             };
             const labelMap = {
                 [EXPENSE_TYPES.HOUSE]: 'خانه',
@@ -797,8 +801,11 @@
                 [EXPENSE_TYPES.KIDS]: 'نیلان و دلوان'
             };
 
-            const input = document.getElementById(inputMap[type]);
-            const amount = parseInt(input.value);
+            const amountInput = document.getElementById(inputMap[type].amount);
+            const descInput = document.getElementById(inputMap[type].desc);
+            const amount = parseInt(amountInput.value);
+            const desc = descInput.value.trim() || 'بدون توضیح';
+            
             if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
 
             const monthKey = getCurrentMonthKey();
@@ -813,12 +820,14 @@
             
             expenses[monthKey][type].push({
                 amount: amount,
+                description: desc,
                 date: new Date().toISOString(),
                 month: monthKey
             });
             
             setMonthlyExpenses(expenses);
-            input.value = '';
+            amountInput.value = '';
+            descInput.value = '';
             renderMonthlyExpenses();
             alert('✅ ' + labelMap[type] + ' ثبت شد!');
         }
@@ -851,10 +860,10 @@
                 } else {
                     items.slice(-5).reverse().forEach((item, index) => {
                         const div = document.createElement('div');
-                        div.style.cssText = 'display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #e2e8f0;';
+                        div.style.cssText = 'display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #e2e8f0;font-size:12px;';
                         const realIndex = items.length - 1 - index;
                         div.innerHTML = `
-                            <span>${item.amount.toLocaleString()} ریال</span>
+                            <span>${item.amount.toLocaleString()} ریال <span style="color:#64748b;font-size:11px;">(${item.description || 'بدون توضیح'})</span></span>
                             <button onclick="deleteExpense('${monthKey}','${key}',${realIndex})" style="background:#fee2e2;border:none;color:#dc2626;border-radius:30px;padding:0 8px;font-size:11px;cursor:pointer;">✕</button>
                         `;
                         list.appendChild(div);
@@ -950,7 +959,7 @@
             });
         }
 
-        // ========== کارهای روزانه (با حذف خودکار) ==========
+        // ========== کارهای روزانه (حذف خودکار) ==========
         function addTask() {
             const text = document.getElementById('newTaskInput').value.trim();
             if (!text) { alert('متن کار را وارد کنید!'); return; }
@@ -1234,7 +1243,17 @@
             const totalExpenseFromTx = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
             const totalRentPaid = rents.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
             const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
-            const totalExpense = totalExpenseFromTx + totalRentPaid + totalLoanPaid;
+            
+            // جمع هزینه‌های ماهانه
+            const monthlyExpenses = getMonthlyExpenses();
+            const monthKey = getCurrentMonthKey();
+            const currentMonthData = monthlyExpenses[monthKey] || {};
+            let totalMonthlyExpenses = 0;
+            for (const items of Object.values(currentMonthData)) {
+                totalMonthlyExpenses += items.reduce((s, item) => s + item.amount, 0);
+            }
+            
+            const totalExpense = totalExpenseFromTx + totalRentPaid + totalLoanPaid + totalMonthlyExpenses;
 
             const totalInvest = invest.reduce((s, i) => s + i.amount, 0);
             const totalLoans = loans.filter(l => !l.paid).reduce((s, l) => s + l.amount, 0);
@@ -1549,6 +1568,9 @@
                     const total = items.reduce((s, item) => s + item.amount, 0);
                     if (total > 0) {
                         txt += `${typeLabels[type] || type}: ${total.toLocaleString()} ریال\n`;
+                        items.forEach(item => {
+                            txt += `  └─ ${item.amount.toLocaleString()} ریال (${item.description || 'بدون توضیح'})\n`;
+                        });
                         hasMonthlyExpenses = true;
                     }
                 }
@@ -1614,4 +1636,4 @@
         setInterval(renderAll, 30000);
     </script>
 </body>
-    </html>
+                            </html>

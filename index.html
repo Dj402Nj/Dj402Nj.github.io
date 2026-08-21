@@ -6,7 +6,7 @@
     <title>مه‌دیار</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ====== ظاهر مثل قبل ====== */
+        /* ====== ظاهر کلی ====== */
         * {
             margin: 0;
             padding: 0;
@@ -226,10 +226,6 @@
             font-size: 13px;
             border: 1px solid #e9edf2;
         }
-        .task-item.done label {
-            text-decoration: line-through;
-            color: #94a3b8;
-        }
         .task-item input[type="checkbox"] {
             width: 18px;
             height: 18px;
@@ -323,20 +319,6 @@
             margin-bottom: 16px;
             border-right: 4px solid #3b82f6;
             border: 1px solid #e9edf2;
-        }
-        .export-btn {
-            background: #0f172a;
-            color: #fff;
-            padding: 12px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            width: 100%;
-            margin-top: 8px;
-            cursor: pointer;
-        }
-        .export-btn.gold {
-            background: #f59e0b;
         }
         .month-box {
             background: #f8fafc;
@@ -490,7 +472,7 @@
                 <button class="btn btn-primary" onclick="addFaezeh()" style="width:100%;margin-top:6px;">➕ ثبت</button>
             </div>
 
-            <!-- شخصی با نوع هزینه -->
+            <!-- شخصی -->
             <div class="card">
                 <div class="card-title">🧑 مخارج شخصی</div>
                 <div id="personalContainer"></div>
@@ -518,7 +500,7 @@
                 <button class="btn btn-primary" onclick="addLoanItem()" style="width:100%;margin-top:6px;">➕ ثبت قسط جدید</button>
             </div>
 
-            <!-- کارهای روزانه (با حذف خودکار بعد از تیک) -->
+            <!-- کارهای روزانه (با حذف خودکار) -->
             <div class="card">
                 <div class="card-title">✅ کارهای امروز</div>
                 <div id="taskList"></div>
@@ -599,13 +581,13 @@
             </div>
         </div>
 
-        <!-- ====== انبار اقلام مورد نیاز خانه ====== -->
+        <!-- ====== انبار ====== -->
         <div id="tab-inventory" class="hidden">
             <div class="card">
                 <div class="card-title">📦 موجودی انبار</div>
                 <div id="inventoryContainer" class="inventory-grid"></div>
                 <div style="margin-top:10px;">
-                    <select id="inventoryItemSelect" style="flex:1;">
+                    <select id="inventoryItemSelect" style="width:100%;">
                         <option value="روغن">روغن (تعداد)</option>
                         <option value="برنج">برنج (کیلو)</option>
                         <option value="چای">چای (کیلو)</option>
@@ -622,7 +604,7 @@
                         <option value="شوینده">شوینده (تعداد)</option>
                         <option value="ماکارانی">ماکارانی (تعداد)</option>
                     </select>
-                    <input type="number" id="inventoryAmountInput" placeholder="مقدار">
+                    <input type="number" id="inventoryAmountInput" placeholder="مقدار" style="margin-top:4px;">
                     <button class="btn btn-primary" onclick="updateInventory()" style="width:100%;margin-top:4px;">➕ افزودن/ویرایش</button>
                 </div>
             </div>
@@ -941,7 +923,7 @@
             });
         }
 
-        // ========== کارهای روزانه (با حذف خودکار بعد از تیک) ==========
+        // ========== کارهای روزانه (حذف خودکار بعد از تیک) ==========
         function addTask() {
             const text = document.getElementById('newTaskInput').value.trim();
             if (!text) { alert('متن کار را وارد کنید!'); return; }
@@ -956,7 +938,6 @@
             const tasks = getData('tasks');
             const task = tasks.find(t => t.id === id);
             if (task) {
-                // حذف خودکار بعد از تیک خوردن
                 const newTasks = tasks.filter(t => t.id !== id);
                 setData('tasks', newTasks);
                 renderAll();
@@ -976,7 +957,10 @@
             const tasks = getData('tasks');
             const list = document.getElementById('taskList');
             list.innerHTML = '';
-            if (tasks.length === 0) { list.innerHTML = '<p style="color:#94a3b8;">✨ هیچ کاری ثبت نشده</p>'; return; }
+            if (tasks.length === 0) {
+                list.innerHTML = '<p style="color:#94a3b8;">✨ هیچ کاری ثبت نشده</p>';
+                return;
+            }
             tasks.forEach(task => {
                 const div = document.createElement('div');
                 div.className = 'task-item';
@@ -1139,7 +1123,7 @@
             document.getElementById('sumCrypto').textContent = crypto.toLocaleString();
         }
 
-        // ========== انبار اقلام مورد نیاز خانه ==========
+        // ========== انبار ==========
         function getInventory() {
             try { return JSON.parse(localStorage.getItem('inventory')) || {}; } catch { return {}; }
         }
@@ -1418,12 +1402,110 @@
                 txt += '        📊 گزارش کامل مه‌دیار\n';
                 txt += '═══════════════════════════════════════════════════\n\n';
 
-                // ... (سایر بخش‌ها مثل قبل)
+                // ====== تراکنش‌ها ======
+                txt += '💰 تراکنش‌ها:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (transactions.length === 0) {
+                    txt += 'هیچ تراکنشی ثبت نشده\n';
+                } else {
+                    transactions.forEach(t => {
+                        txt += `📅 ${t.persianDate || 'نامشخص'} | ${t.type === 'income' ? '➕ درآمد' : '➖ خرج'} | ${t.amount.toLocaleString()} ریال | ${t.description || ''}\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== اجاره ======
+                txt += '🏠 اجاره:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (rents.length === 0) {
+                    txt += 'هیچ اجاره‌ای ثبت نشده\n';
+                } else {
+                    rents.forEach(r => {
+                        txt += `📅 ${r.month || 'نامشخص'} | ${r.amount.toLocaleString()} ریال | ${r.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== فائزه ======
+                txt += '👩 فائزه:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (faezeh.length === 0) {
+                    txt += 'هیچ موردی ثبت نشده\n';
+                } else {
+                    faezeh.forEach(f => {
+                        txt += `📅 ${f.month || 'نامشخص'} | ${f.amount.toLocaleString()} ریال\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== شخصی ======
+                txt += '🧑 مخارج شخصی:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (personal.length === 0) {
+                    txt += 'هیچ موردی ثبت نشده\n';
+                } else {
+                    personal.forEach(p => {
+                        const emoji = { 'خوراک': '🍔', 'پوشاک': '👕', 'تفریح': '🎮', 'بهداشت': '🧴', 'سایر': '📦' };
+                        txt += `📅 ${p.month || 'نامشخص'} | ${p.amount.toLocaleString()} ریال | ${emoji[p.type] || '📦'} ${p.type || 'سایر'}\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== اقساط ======
+                txt += '💰 اقساط:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (loans.length === 0) {
+                    txt += 'هیچ قسطی ثبت نشده\n';
+                } else {
+                    loans.forEach(l => {
+                        txt += `📅 ${l.month || 'نامشخص'} | ${l.name || ''} | ${l.amount.toLocaleString()} ریال | ${l.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== پس‌انداز ======
+                txt += '🏦 پس‌انداز:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (savings.length === 0) {
+                    txt += 'هیچ پس‌اندازی ثبت نشده\n';
+                } else {
+                    savings.forEach(s => {
+                        txt += `📅 ${toPersianDate(s.date)} | +${s.amount.toLocaleString()} ریال\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== کارها ======
+                txt += '✅ کارها:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (tasks.length === 0) {
+                    txt += 'هیچ کاری ثبت نشده\n';
+                } else {
+                    tasks.forEach(t => {
+                        txt += `📅 ${t.date || 'نامشخص'} | ${t.text || ''} | ${t.done ? '✅ انجام شده' : '❌ انجام نشده'}\n`;
+                    });
+                }
+                txt += '\n';
+
+                // ====== سرمایه‌گذاری ======
+                txt += '📈 سرمایه‌گذاری:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                if (invest.length === 0) {
+                    txt += 'هیچ سرمایه‌گذاری ثبت نشده\n';
+                } else {
+                    invest.forEach(i => {
+                        const emoji = i.type === 'gold' ? '🥇' : i.type === 'silver' ? '🥈' : '₿';
+                        const unit = i.type === 'gold' || i.type === 'silver' ? 'گرم' : 'ریال';
+                        const label = i.type === 'gold' ? 'طلا' : i.type === 'silver' ? 'نقره' : 'کریپتو';
+                        txt += `📅 ${i.persianDate || 'نامشخص'} | ${emoji} ${label} | ${i.amount.toLocaleString()} ${unit} | ${i.description || ''}\n`;
+                    });
+                }
+                txt += '\n';
 
                 // ====== انبار ======
                 txt += '📦 موجودی انبار:\n';
                 txt += '─────────────────────────────────────────────────\n';
-                const items = {
+                const inventoryItems = {
                     'روغن': 'تعداد',
                     'برنج': 'کیلو',
                     'چای': 'کیلو',
@@ -1441,7 +1523,7 @@
                     'ماکارانی': 'تعداد'
                 };
                 let hasInventory = false;
-                for (const [key, unit] of Object.entries(items)) {
+                for (const [key, unit] of Object.entries(inventoryItems)) {
                     const value = inventory[key] || 0;
                     if (value > 0) {
                         txt += `${key}: ${value} ${unit}\n`;
@@ -1451,7 +1533,28 @@
                 if (!hasInventory) txt += 'هیچ موردی ثبت نشده\n';
                 txt += '\n';
 
-                // ... (بقیه بخش‌ها مثل قبل)
+                // ====== خلاصه مالی ======
+                const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+                const totalExpense = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+                const totalRentPaid = rents.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
+                const totalFaezeh = faezeh.reduce((s, f) => s + f.amount, 0);
+                const totalPersonal = personal.reduce((s, p) => s + p.amount, 0);
+                const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
+                const totalInvest = invest.reduce((s, i) => s + i.amount, 0);
+                const totalSavings = savings.reduce((s, i) => s + i.amount, 0);
+
+                const totalExpenses = totalExpense + totalRentPaid + totalFaezeh + totalPersonal + totalLoanPaid;
+                const balance = totalIncome - totalExpenses - totalInvest;
+
+                txt += '═══════════════════════════════════════════════════\n';
+                txt += '📊 خلاصه مالی:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                txt += `💰 کل درآمدها: ${totalIncome.toLocaleString()} ریال\n`;
+                txt += `💸 کل مخارج: ${totalExpenses.toLocaleString()} ریال\n`;
+                txt += `📈 کل سرمایه‌گذاری: ${totalInvest.toLocaleString()} (گرم/ریال)\n`;
+                txt += `🏦 کل پس‌انداز: ${totalSavings.toLocaleString()} ریال\n`;
+                txt += `⚖️ تراز نهایی: ${balance >= 0 ? '+' : ''}${balance.toLocaleString()} ریال\n`;
+                txt += '═══════════════════════════════════════════════════\n';
 
                 // دانلود
                 const blob = new Blob([txt], { type: 'text/plain;charset=utf-8;' });
@@ -1486,4 +1589,4 @@
         setInterval(renderAll, 30000);
     </script>
 </body>
-</html>
+    </html>

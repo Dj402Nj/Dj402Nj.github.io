@@ -6,6 +6,7 @@
     <title>مه‌دیار</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
+        /* ====== ظاهر کلی ====== */
         * {
             margin: 0;
             padding: 0;
@@ -414,11 +415,11 @@
                 <button class="btn btn-primary" onclick="addRent()" style="width:100%;margin-top:6px;">➕ ثبت اجاره جدید</button>
             </div>
 
-            <!-- ۴ بخش هزینه‌های ماهانه -->
+            <!-- ====== ۴ بخش هزینه‌های ماهانه ====== -->
             <div class="card" id="monthlyExpensesCard">
                 <div class="card-title">📊 هزینه‌های ماهانه</div>
                 
-                <!-- خانه -->
+                <!-- ۱. خانه -->
                 <div class="monthly-expense-box">
                     <div class="header">
                         <span>🏠 خانه</span>
@@ -426,12 +427,12 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="houseAmount" placeholder="مبلغ">
-                        <button class="btn btn-primary" onclick="addHouseExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                        <button class="btn btn-primary" onclick="addExpense('house')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="houseList"></div>
                 </div>
 
-                <!-- فائزه -->
+                <!-- ۲. فائزه -->
                 <div class="monthly-expense-box">
                     <div class="header">
                         <span>👩 فائزه</span>
@@ -439,12 +440,12 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="faezehAmount" placeholder="مبلغ">
-                        <button class="btn btn-primary" onclick="addFaezehExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                        <button class="btn btn-primary" onclick="addExpense('faezeh')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="faezehList"></div>
                 </div>
 
-                <!-- مهدی -->
+                <!-- ۳. مهدی -->
                 <div class="monthly-expense-box">
                     <div class="header">
                         <span>👨 مهدی</span>
@@ -452,12 +453,12 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="mehdiAmount" placeholder="مبلغ">
-                        <button class="btn btn-primary" onclick="addMehdiExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                        <button class="btn btn-primary" onclick="addExpense('mehdi')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="mehdiList"></div>
                 </div>
 
-                <!-- نیلان و دلوان -->
+                <!-- ۴. نیلان و دلوان -->
                 <div class="monthly-expense-box">
                     <div class="header">
                         <span>👧 نیلان و دلوان</span>
@@ -465,7 +466,7 @@
                     </div>
                     <div class="input-row">
                         <input type="number" id="kidsAmount" placeholder="مبلغ">
-                        <button class="btn btn-primary" onclick="addKidsExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                        <button class="btn btn-primary" onclick="addExpense('kids')" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
                     </div>
                     <div class="list" id="kidsList"></div>
                 </div>
@@ -486,7 +487,7 @@
                 <button class="btn btn-primary" onclick="addLoanItem()" style="width:100%;margin-top:6px;">➕ ثبت قسط جدید</button>
             </div>
 
-            <!-- کارهای روزانه -->
+            <!-- کارهای روزانه (با حذف خودکار) -->
             <div class="card">
                 <div class="card-title">✅ کارهای امروز</div>
                 <div id="taskList"></div>
@@ -756,7 +757,7 @@
             });
         }
 
-        // ========== ۴ بخش هزینه‌های ماهانه ==========
+        // ========== ۴ بخش هزینه‌های ماهانه (جدید) ==========
         const EXPENSE_TYPES = {
             HOUSE: 'house',
             FAEZEH: 'faezeh',
@@ -821,11 +822,6 @@
             renderMonthlyExpenses();
             alert('✅ ' + labelMap[type] + ' ثبت شد!');
         }
-
-        function addHouseExpense() { addExpense(EXPENSE_TYPES.HOUSE); }
-        function addFaezehExpense() { addExpense(EXPENSE_TYPES.FAEZEH); }
-        function addMehdiExpense() { addExpense(EXPENSE_TYPES.MEHDI); }
-        function addKidsExpense() { addExpense(EXPENSE_TYPES.KIDS); }
 
         function renderMonthlyExpenses() {
             const monthKey = getCurrentMonthKey();
@@ -954,7 +950,7 @@
             });
         }
 
-        // ========== کارهای روزانه (حذف خودکار) ==========
+        // ========== کارهای روزانه (با حذف خودکار) ==========
         function addTask() {
             const text = document.getElementById('newTaskInput').value.trim();
             if (!text) { alert('متن کار را وارد کنید!'); return; }
@@ -1432,7 +1428,6 @@
                 txt += '        📊 گزارش کامل مه‌دیار\n';
                 txt += '═══════════════════════════════════════════════════\n\n';
 
-                // ... (سایر بخش‌ها مثل قبل)
                 // ====== تراکنش‌ها ======
                 txt += '💰 تراکنش‌ها:\n';
                 txt += '─────────────────────────────────────────────────\n';

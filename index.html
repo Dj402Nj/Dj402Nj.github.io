@@ -6,7 +6,6 @@
     <title>مه‌دیار</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ====== ظاهر کلی ====== */
         * {
             margin: 0;
             padding: 0;
@@ -29,7 +28,7 @@
             padding: 16px;
             margin-bottom: 14px;
             border: 1px solid #e9edf2;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .card-title {
             font-weight: 700;
@@ -51,38 +50,14 @@
             background: #e2e8f0;
             color: #1e293b;
         }
-        .btn:hover {
-            opacity: 0.8;
-        }
-        .btn-success {
-            background: #10b981;
-            color: #fff;
-        }
-        .btn-danger {
-            background: #ef4444;
-            color: #fff;
-        }
-        .btn-primary {
-            background: #3b82f6;
-            color: #fff;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #cbd5e1;
-        }
-        .btn-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .btn-group .btn {
-            flex: 1;
-            min-width: 50px;
-            text-align: center;
-        }
-        input,
-        select {
+        .btn:hover { opacity: 0.8; }
+        .btn-success { background: #10b981; color: #fff; }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-primary { background: #3b82f6; color: #fff; }
+        .btn-outline { background: transparent; border: 1.5px solid #cbd5e1; }
+        .btn-group { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+        .btn-group .btn { flex: 1; min-width: 50px; text-align: center; }
+        input, select {
             width: 100%;
             padding: 10px 12px;
             border: 1.5px solid #e2e8f0;
@@ -91,8 +66,7 @@
             font-size: 13px;
             margin: 4px 0;
         }
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #3b82f6;
             background: #fff;
@@ -126,18 +100,9 @@
             padding: 12px;
             border-radius: 16px;
         }
-        .info-item {
-            text-align: center;
-        }
-        .info-number {
-            font-weight: 700;
-            font-size: 20px;
-            color: #0f172a;
-        }
-        .info-label {
-            font-size: 11px;
-            color: #64748b;
-        }
+        .info-item { text-align: center; }
+        .info-number { font-weight: 700; font-size: 20px; color: #0f172a; }
+        .info-label { font-size: 11px; color: #64748b; }
         .motivation {
             text-align: center;
             font-weight: 600;
@@ -165,13 +130,8 @@
             border-radius: 16px;
             color: #64748b;
         }
-        .tab-bar .btn.active {
-            background: #3b82f6;
-            color: #fff;
-        }
-        .hidden {
-            display: none !important;
-        }
+        .tab-bar .btn.active { background: #3b82f6; color: #fff; }
+        .hidden { display: none !important; }
         .invest-summary {
             display: flex;
             justify-content: space-around;
@@ -184,9 +144,7 @@
             flex-wrap: wrap;
             gap: 4px;
         }
-        .invest-summary span {
-            color: #0f172a;
-        }
+        .invest-summary span { color: #0f172a; }
         .total-balance {
             background: #f8fafc;
             padding: 16px;
@@ -209,12 +167,8 @@
             justify-content: space-between;
             border-top: 2px solid #cbd5e1;
         }
-        .total-balance .final .amount {
-            color: #10b981;
-        }
-        .total-balance .final .amount.negative {
-            color: #ef4444;
-        }
+        .total-balance .final .amount { color: #10b981; }
+        .total-balance .final .amount.negative { color: #ef4444; }
         .task-item {
             display: flex;
             align-items: center;
@@ -226,14 +180,8 @@
             font-size: 13px;
             border: 1px solid #e9edf2;
         }
-        .task-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #3b82f6;
-        }
-        .task-item label {
-            flex: 1;
-        }
+        .task-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #3b82f6; }
+        .task-item label { flex: 1; }
         .loan-item {
             border-right: 4px solid #ef4444;
             padding: 8px 12px;
@@ -242,13 +190,8 @@
             margin: 4px 0;
             border: 1px solid #e9edf2;
         }
-        .loan-item.paid {
-            border-right-color: #10b981;
-        }
-        .loan-detail {
-            font-size: 12px;
-            color: #475569;
-        }
+        .loan-item.paid { border-right-color: #10b981; }
+        .loan-detail { font-size: 12px; color: #475569; }
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -262,9 +205,7 @@
             background: #3b82f6;
             transition: 0.3s;
         }
-        .progress-fill.green {
-            background: #10b981;
-        }
+        .progress-fill.green { background: #10b981; }
         .savings-item {
             display: flex;
             justify-content: space-between;
@@ -285,7 +226,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
@@ -302,13 +243,8 @@
             color: #0f172a;
             border: 1px solid #e9edf2;
         }
-        .modal-content h2 {
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        .modal-content input {
-            margin: 6px 0;
-        }
+        .modal-content h2 { margin-bottom: 12px; font-size: 18px; }
+        .modal-content input { margin: 6px 0; }
         .quote {
             background: #f8fafc;
             padding: 12px;
@@ -338,11 +274,7 @@
             flex-wrap: wrap;
             gap: 4px;
         }
-        .month-title span {
-            font-weight: 400;
-            font-size: 12px;
-            color: #475569;
-        }
+        .month-title span { font-weight: 400; font-size: 12px; color: #475569; }
         .chart-container {
             position: relative;
             height: 250px;
@@ -357,16 +289,8 @@
             margin-top: 8px;
             font-size: 13px;
         }
-        .chart-summary .item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .chart-summary .color-box {
-            width: 14px;
-            height: 14px;
-            border-radius: 4px;
-        }
+        .chart-summary .item { display: flex; align-items: center; gap: 6px; }
+        .chart-summary .color-box { width: 14px; height: 14px; border-radius: 4px; }
         .export-txt-btn {
             background: #3b82f6;
             color: #fff;
@@ -378,9 +302,7 @@
             margin-top: 8px;
             cursor: pointer;
         }
-        .export-txt-btn:hover {
-            background: #2563eb;
-        }
+        .export-txt-btn:hover { background: #2563eb; }
         .inventory-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -396,12 +318,8 @@
             font-size: 13px;
             border: 1px solid #e2e8f0;
         }
-        .inventory-item .label {
-            color: #475569;
-        }
-        .inventory-item .value {
-            font-weight: 600;
-        }
+        .inventory-item .label { color: #475569; }
+        .inventory-item .value { font-weight: 600; }
         .inventory-item .edit-btn {
             background: #dbeafe;
             border: none;
@@ -411,14 +329,47 @@
             font-size: 11px;
             cursor: pointer;
         }
+        .monthly-expense-box {
+            background: #f8fafc;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #e9edf2;
+        }
+        .monthly-expense-box .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .monthly-expense-box .input-row {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .monthly-expense-box .input-row input { flex: 1; }
+        .monthly-expense-box .list { font-size: 12px; margin-top: 4px; }
+        .month-end-highlight {
+            border: 2px solid #f59e0b !important;
+            background: #fffbeb !important;
+        }
+        .month-total-display {
+            margin-top: 10px;
+            padding: 8px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ====== Header ====== -->
+        <!-- Header -->
         <div class="quote" id="quote">🌙 به مه‌دیار خوش آمدید</div>
 
-        <!-- ====== تاریخ و زمان ====== -->
+        <!-- تاریخ و زمان -->
         <div class="card">
             <div class="card-title">📅 امروز</div>
             <div class="info-grid" id="dateInfo">
@@ -430,7 +381,7 @@
             <div class="motivation" id="motivationMessage">🔥 برخیز و به دنبال هدفت برو!</div>
         </div>
 
-        <!-- ====== تب‌ها ====== -->
+        <!-- تب‌ها -->
         <div class="tab-bar">
             <button class="btn active" onclick="showTab('dashboard')">📊 خانه</button>
             <button class="btn" onclick="showTab('invest')">📈 سرمایه</button>
@@ -463,31 +414,66 @@
                 <button class="btn btn-primary" onclick="addRent()" style="width:100%;margin-top:6px;">➕ ثبت اجاره جدید</button>
             </div>
 
-            <!-- فائزه -->
-            <div class="card">
-                <div class="card-title">👩 فائزه</div>
-                <div id="faezehContainer"></div>
-                <input type="number" id="faezehAmountInput" placeholder="مبلغ">
-                <input type="text" id="faezehMonthInput" placeholder="ماه (مثلاً ۱۴۰۵/۰۵)">
-                <button class="btn btn-primary" onclick="addFaezeh()" style="width:100%;margin-top:6px;">➕ ثبت</button>
-            </div>
-
-            <!-- شخصی -->
-            <div class="card">
-                <div class="card-title">🧑 مخارج شخصی</div>
-                <div id="personalContainer"></div>
-                <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                    <input type="number" id="personalAmountInput" placeholder="مبلغ" style="flex:2;">
-                    <select id="personalTypeInput" style="flex:1; min-width:80px;">
-                        <option value="خوراک">🍔 خوراک</option>
-                        <option value="پوشاک">👕 پوشاک</option>
-                        <option value="تفریح">🎮 تفریح</option>
-                        <option value="بهداشت">🧴 بهداشت</option>
-                        <option value="سایر">📦 سایر</option>
-                    </select>
+            <!-- ۴ بخش هزینه‌های ماهانه -->
+            <div class="card" id="monthlyExpensesCard">
+                <div class="card-title">📊 هزینه‌های ماهانه</div>
+                
+                <!-- خانه -->
+                <div class="monthly-expense-box">
+                    <div class="header">
+                        <span>🏠 خانه</span>
+                        <span id="houseDisplay">۰ ریال</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="number" id="houseAmount" placeholder="مبلغ">
+                        <button class="btn btn-primary" onclick="addHouseExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                    </div>
+                    <div class="list" id="houseList"></div>
                 </div>
-                <input type="text" id="personalMonthInput" placeholder="ماه (مثلاً ۱۴۰۵/۰۵)">
-                <button class="btn btn-primary" onclick="addPersonal()" style="width:100%;margin-top:6px;">➕ ثبت</button>
+
+                <!-- فائزه -->
+                <div class="monthly-expense-box">
+                    <div class="header">
+                        <span>👩 فائزه</span>
+                        <span id="faezehDisplay">۰ ریال</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="number" id="faezehAmount" placeholder="مبلغ">
+                        <button class="btn btn-primary" onclick="addFaezehExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                    </div>
+                    <div class="list" id="faezehList"></div>
+                </div>
+
+                <!-- مهدی -->
+                <div class="monthly-expense-box">
+                    <div class="header">
+                        <span>👨 مهدی</span>
+                        <span id="mehdiDisplay">۰ ریال</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="number" id="mehdiAmount" placeholder="مبلغ">
+                        <button class="btn btn-primary" onclick="addMehdiExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                    </div>
+                    <div class="list" id="mehdiList"></div>
+                </div>
+
+                <!-- نیلان و دلوان -->
+                <div class="monthly-expense-box">
+                    <div class="header">
+                        <span>👧 نیلان و دلوان</span>
+                        <span id="kidsDisplay">۰ ریال</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="number" id="kidsAmount" placeholder="مبلغ">
+                        <button class="btn btn-primary" onclick="addKidsExpense()" style="padding:4px 12px;font-size:12px;">➕ ثبت</button>
+                    </div>
+                    <div class="list" id="kidsList"></div>
+                </div>
+
+                <!-- جمع کل ماه -->
+                <div class="month-total-display">
+                    جمع کل ماه: <span id="totalMonthDisplay">۰</span> ریال
+                </div>
             </div>
 
             <!-- اقساط -->
@@ -500,7 +486,7 @@
                 <button class="btn btn-primary" onclick="addLoanItem()" style="width:100%;margin-top:6px;">➕ ثبت قسط جدید</button>
             </div>
 
-            <!-- کارهای روزانه (با حذف خودکار) -->
+            <!-- کارهای روزانه -->
             <div class="card">
                 <div class="card-title">✅ کارهای امروز</div>
                 <div id="taskList"></div>
@@ -620,7 +606,7 @@
         </div>
     </div>
 
-    <!-- ====== مودال ====== -->
+    <!-- مودال -->
     <div class="modal" id="forceModal">
         <div class="modal-content"><h2>⏳ لطفاً پاسخ دهید!</h2><p id="forceMessage">برای ادامه، اقدام مورد نیاز را انجام دهید.</p><button class="btn btn-primary" onclick="closeModal()">باشه</button></div>
     </div>
@@ -630,7 +616,6 @@
         function getData(key) {
             try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; }
         }
-
         function setData(key, data) {
             localStorage.setItem(key, JSON.stringify(data));
         }
@@ -639,7 +624,6 @@
         function toPersianDate(date) {
             return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(date));
         }
-
         function getTodayPersian() {
             return toPersianDate(new Date());
         }
@@ -772,94 +756,141 @@
             });
         }
 
-        // ========== فائزه ==========
-        function addFaezeh() {
-            const amount = document.getElementById('faezehAmountInput').value;
-            const month = document.getElementById('faezehMonthInput').value.trim() || getTodayPersian().slice(0, 7);
+        // ========== ۴ بخش هزینه‌های ماهانه ==========
+        const EXPENSE_TYPES = {
+            HOUSE: 'house',
+            FAEZEH: 'faezeh',
+            MEHDI: 'mehdi',
+            KIDS: 'kids'
+        };
+
+        function getMonthlyExpenses() {
+            try { return JSON.parse(localStorage.getItem('monthlyExpenses')) || {}; } catch { return {}; }
+        }
+
+        function setMonthlyExpenses(data) {
+            localStorage.setItem('monthlyExpenses', JSON.stringify(data));
+        }
+
+        function getCurrentMonthKey() {
+            const now = new Date();
+            return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+        }
+
+        function isEndOfMonth() {
+            const now = new Date();
+            return now.getDate() >= 28;
+        }
+
+        function addExpense(type) {
+            const inputMap = {
+                [EXPENSE_TYPES.HOUSE]: 'houseAmount',
+                [EXPENSE_TYPES.FAEZEH]: 'faezehAmount',
+                [EXPENSE_TYPES.MEHDI]: 'mehdiAmount',
+                [EXPENSE_TYPES.KIDS]: 'kidsAmount'
+            };
+            const labelMap = {
+                [EXPENSE_TYPES.HOUSE]: 'خانه',
+                [EXPENSE_TYPES.FAEZEH]: 'فائزه',
+                [EXPENSE_TYPES.MEHDI]: 'مهدی',
+                [EXPENSE_TYPES.KIDS]: 'نیلان و دلوان'
+            };
+
+            const input = document.getElementById(inputMap[type]);
+            const amount = parseInt(input.value);
             if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            const faezeh = getData('faezeh');
-            faezeh.push({ id: Date.now(), amount: parseInt(amount), month: month });
-            setData('faezeh', faezeh);
-            document.getElementById('faezehAmountInput').value = '';
-            document.getElementById('faezehMonthInput').value = '';
-            renderAll();
-            alert('✅ فائزه ثبت شد!');
-        }
 
-        function deleteFaezeh(id) {
-            if (!confirm('حذف کنم؟')) return;
-            let faezeh = getData('faezeh');
-            faezeh = faezeh.filter(r => r.id !== id);
-            setData('faezeh', faezeh);
-            renderAll();
-        }
-
-        function renderFaezeh() {
-            const faezeh = getData('faezeh');
-            const container = document.getElementById('faezehContainer');
-            container.innerHTML = '';
-            if (faezeh.length === 0) { container.innerHTML = '<p style="color:#94a3b8;">هیچ موردی ثبت نشده</p>'; return; }
-            faezeh.forEach(item => {
-                const box = document.createElement('div');
-                box.className = 'month-box';
-                box.innerHTML = `
-                    <div class="month-title">📅 ${item.month} <span>${item.amount.toLocaleString()} ریال</span></div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-                        <span>ثبت شده</span>
-                        <button class="del-btn" onclick="deleteFaezeh(${item.id})">🗑️</button>
-                    </div>
-                `;
-                container.appendChild(box);
+            const monthKey = getCurrentMonthKey();
+            const expenses = getMonthlyExpenses();
+            
+            if (!expenses[monthKey]) {
+                expenses[monthKey] = {};
+            }
+            if (!expenses[monthKey][type]) {
+                expenses[monthKey][type] = [];
+            }
+            
+            expenses[monthKey][type].push({
+                amount: amount,
+                date: new Date().toISOString(),
+                month: monthKey
             });
+            
+            setMonthlyExpenses(expenses);
+            input.value = '';
+            renderMonthlyExpenses();
+            alert('✅ ' + labelMap[type] + ' ثبت شد!');
         }
 
-        // ========== شخصی ==========
-        function addPersonal() {
-            const amount = document.getElementById('personalAmountInput').value;
-            const type = document.getElementById('personalTypeInput').value;
-            const month = document.getElementById('personalMonthInput').value.trim() || getTodayPersian().slice(0, 7);
-            if (!amount || amount <= 0) { alert('مبلغ معتبر وارد کنید!'); return; }
-            const personal = getData('personal');
-            personal.push({ id: Date.now(), amount: parseInt(amount), month: month, type: type });
-            setData('personal', personal);
-            document.getElementById('personalAmountInput').value = '';
-            document.getElementById('personalMonthInput').value = '';
-            renderAll();
-            alert('✅ شخصی ثبت شد!');
-        }
+        function addHouseExpense() { addExpense(EXPENSE_TYPES.HOUSE); }
+        function addFaezehExpense() { addExpense(EXPENSE_TYPES.FAEZEH); }
+        function addMehdiExpense() { addExpense(EXPENSE_TYPES.MEHDI); }
+        function addKidsExpense() { addExpense(EXPENSE_TYPES.KIDS); }
 
-        function deletePersonal(id) {
-            if (!confirm('حذف کنم؟')) return;
-            let personal = getData('personal');
-            personal = personal.filter(r => r.id !== id);
-            setData('personal', personal);
-            renderAll();
-        }
-
-        function renderPersonal() {
-            const personal = getData('personal');
-            const container = document.getElementById('personalContainer');
-            container.innerHTML = '';
-            if (personal.length === 0) { container.innerHTML = '<p style="color:#94a3b8;">هیچ موردی ثبت نشده</p>'; return; }
-            personal.forEach(item => {
-                const box = document.createElement('div');
-                box.className = 'month-box';
-                const typeEmoji = {
-                    'خوراک': '🍔',
-                    'پوشاک': '👕',
-                    'تفریح': '🎮',
-                    'بهداشت': '🧴',
-                    'سایر': '📦'
-                };
-                box.innerHTML = `
-                    <div class="month-title">📅 ${item.month} <span>${item.amount.toLocaleString()} ریال</span></div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-                        <span>${typeEmoji[item.type] || '📦'} ${item.type || 'سایر'}</span>
-                        <button class="del-btn" onclick="deletePersonal(${item.id})">🗑️</button>
-                    </div>
-                `;
-                container.appendChild(box);
+        function renderMonthlyExpenses() {
+            const monthKey = getCurrentMonthKey();
+            const expenses = getMonthlyExpenses();
+            const currentMonthData = expenses[monthKey] || {};
+            
+            const types = [
+                { key: EXPENSE_TYPES.HOUSE, displayId: 'houseDisplay', listId: 'houseList', label: 'خانه' },
+                { key: EXPENSE_TYPES.FAEZEH, displayId: 'faezehDisplay', listId: 'faezehList', label: 'فائزه' },
+                { key: EXPENSE_TYPES.MEHDI, displayId: 'mehdiDisplay', listId: 'mehdiList', label: 'مهدی' },
+                { key: EXPENSE_TYPES.KIDS, displayId: 'kidsDisplay', listId: 'kidsList', label: 'نیلان و دلوان' }
+            ];
+            
+            let totalMonth = 0;
+            
+            types.forEach(({ key, displayId, listId, label }) => {
+                const items = currentMonthData[key] || [];
+                const total = items.reduce((sum, item) => sum + item.amount, 0);
+                totalMonth += total;
+                
+                document.getElementById(displayId).textContent = total.toLocaleString() + ' ریال';
+                
+                const list = document.getElementById(listId);
+                list.innerHTML = '';
+                if (items.length === 0) {
+                    list.innerHTML = '<span style="color:#94a3b8;font-size:11px;">هیچ موردی ثبت نشده</span>';
+                } else {
+                    items.slice(-5).reverse().forEach((item, index) => {
+                        const div = document.createElement('div');
+                        div.style.cssText = 'display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #e2e8f0;';
+                        const realIndex = items.length - 1 - index;
+                        div.innerHTML = `
+                            <span>${item.amount.toLocaleString()} ریال</span>
+                            <button onclick="deleteExpense('${monthKey}','${key}',${realIndex})" style="background:#fee2e2;border:none;color:#dc2626;border-radius:30px;padding:0 8px;font-size:11px;cursor:pointer;">✕</button>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
             });
+            
+            document.getElementById('totalMonthDisplay').textContent = totalMonth.toLocaleString();
+            
+            // هایلایت پایان ماه
+            const card = document.getElementById('monthlyExpensesCard');
+            if (isEndOfMonth()) {
+                card.classList.add('month-end-highlight');
+            } else {
+                card.classList.remove('month-end-highlight');
+            }
+        }
+
+        function deleteExpense(monthKey, type, index) {
+            if (!confirm('حذف شود؟')) return;
+            const expenses = getMonthlyExpenses();
+            if (expenses[monthKey] && expenses[monthKey][type]) {
+                expenses[monthKey][type].splice(index, 1);
+                if (expenses[monthKey][type].length === 0) {
+                    delete expenses[monthKey][type];
+                }
+                if (Object.keys(expenses[monthKey]).length === 0) {
+                    delete expenses[monthKey];
+                }
+                setMonthlyExpenses(expenses);
+                renderMonthlyExpenses();
+            }
         }
 
         // ========== اقساط ==========
@@ -923,7 +954,7 @@
             });
         }
 
-        // ========== کارهای روزانه (حذف خودکار بعد از تیک) ==========
+        // ========== کارهای روزانه (حذف خودکار) ==========
         function addTask() {
             const text = document.getElementById('newTaskInput').value.trim();
             if (!text) { alert('متن کار را وارد کنید!'); return; }
@@ -1199,8 +1230,6 @@
         function updateTotalBalance() {
             const transactions = getData('transactions');
             const rents = getData('rents');
-            const faezeh = getData('faezeh');
-            const personal = getData('personal');
             const loans = getData('loanItems');
             const savings = getData('savings');
             const invest = getData('invest');
@@ -1208,10 +1237,8 @@
             const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
             const totalExpenseFromTx = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
             const totalRentPaid = rents.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
-            const totalFaezeh = faezeh.reduce((s, f) => s + f.amount, 0);
-            const totalPersonal = personal.reduce((s, p) => s + p.amount, 0);
             const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
-            const totalExpense = totalExpenseFromTx + totalRentPaid + totalFaezeh + totalPersonal + totalLoanPaid;
+            const totalExpense = totalExpenseFromTx + totalRentPaid + totalLoanPaid;
 
             const totalInvest = invest.reduce((s, i) => s + i.amount, 0);
             const totalLoans = loans.filter(l => !l.paid).reduce((s, l) => s + l.amount, 0);
@@ -1233,8 +1260,6 @@
         function renderChart() {
             const transactions = getData('transactions');
             const rents = getData('rents');
-            const faezeh = getData('faezeh');
-            const personal = getData('personal');
             const loans = getData('loanItems');
 
             const expenseMap = {};
@@ -1248,18 +1273,26 @@
                 expenseMap['اجاره'] = (expenseMap['اجاره'] || 0) + r.amount;
             });
 
-            faezeh.forEach(f => {
-                expenseMap['فائزه'] = (expenseMap['فائزه'] || 0) + f.amount;
-            });
-
-            personal.forEach(p => {
-                const cat = p.type || 'شخصی';
-                expenseMap[cat] = (expenseMap[cat] || 0) + p.amount;
-            });
-
             loans.filter(l => l.paid).forEach(l => {
                 expenseMap['قسط ' + l.name] = (expenseMap['قسط ' + l.name] || 0) + l.amount;
             });
+
+            // اضافه کردن هزینه‌های ماهانه (۴ بخش)
+            const monthlyExpenses = getMonthlyExpenses();
+            const monthKey = getCurrentMonthKey();
+            const currentMonthData = monthlyExpenses[monthKey] || {};
+            const typeLabels = {
+                house: 'خانه',
+                faezeh: 'فائزه',
+                mehdi: 'مهدی',
+                kids: 'نیلان و دلوان'
+            };
+            for (const [type, items] of Object.entries(currentMonthData)) {
+                const total = items.reduce((s, item) => s + item.amount, 0);
+                if (total > 0) {
+                    expenseMap[typeLabels[type] || type] = (expenseMap[typeLabels[type] || type] || 0) + total;
+                }
+            }
 
             Object.keys(expenseMap).forEach(key => {
                 if (expenseMap[key] === 0) delete expenseMap[key];
@@ -1310,9 +1343,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
@@ -1332,8 +1363,7 @@
         function renderAll() {
             renderIncomeExpense();
             renderRents();
-            renderFaezeh();
-            renderPersonal();
+            renderMonthlyExpenses();
             renderLoanItems();
             renderTasks();
             renderSavings();
@@ -1390,18 +1420,19 @@
             try {
                 const transactions = getData('transactions');
                 const rents = getData('rents');
-                const faezeh = getData('faezeh');
-                const personal = getData('personal');
                 const loans = getData('loanItems');
                 const savings = getData('savings');
                 const tasks = getData('tasks');
                 const invest = getData('invest');
                 const inventory = getInventory();
+                const monthlyExpenses = getMonthlyExpenses();
+                const monthKey = getCurrentMonthKey();
 
                 let txt = '═══════════════════════════════════════════════════\n';
                 txt += '        📊 گزارش کامل مه‌دیار\n';
                 txt += '═══════════════════════════════════════════════════\n\n';
 
+                // ... (سایر بخش‌ها مثل قبل)
                 // ====== تراکنش‌ها ======
                 txt += '💰 تراکنش‌ها:\n';
                 txt += '─────────────────────────────────────────────────\n';
@@ -1422,31 +1453,6 @@
                 } else {
                     rents.forEach(r => {
                         txt += `📅 ${r.month || 'نامشخص'} | ${r.amount.toLocaleString()} ریال | ${r.paid ? '✅ پرداخت شد' : '❌ پرداخت نشده'}\n`;
-                    });
-                }
-                txt += '\n';
-
-                // ====== فائزه ======
-                txt += '👩 فائزه:\n';
-                txt += '─────────────────────────────────────────────────\n';
-                if (faezeh.length === 0) {
-                    txt += 'هیچ موردی ثبت نشده\n';
-                } else {
-                    faezeh.forEach(f => {
-                        txt += `📅 ${f.month || 'نامشخص'} | ${f.amount.toLocaleString()} ریال\n`;
-                    });
-                }
-                txt += '\n';
-
-                // ====== شخصی ======
-                txt += '🧑 مخارج شخصی:\n';
-                txt += '─────────────────────────────────────────────────\n';
-                if (personal.length === 0) {
-                    txt += 'هیچ موردی ثبت نشده\n';
-                } else {
-                    personal.forEach(p => {
-                        const emoji = { 'خوراک': '🍔', 'پوشاک': '👕', 'تفریح': '🎮', 'بهداشت': '🧴', 'سایر': '📦' };
-                        txt += `📅 ${p.month || 'نامشخص'} | ${p.amount.toLocaleString()} ریال | ${emoji[p.type] || '📦'} ${p.type || 'سایر'}\n`;
                     });
                 }
                 txt += '\n';
@@ -1533,17 +1539,42 @@
                 if (!hasInventory) txt += 'هیچ موردی ثبت نشده\n';
                 txt += '\n';
 
+                // ====== هزینه‌های ماهانه (۴ بخش) ======
+                txt += '📊 هزینه‌های ماهانه:\n';
+                txt += '─────────────────────────────────────────────────\n';
+                const currentMonthData = monthlyExpenses[monthKey] || {};
+                const typeLabels = {
+                    house: 'خانه',
+                    faezeh: 'فائزه',
+                    mehdi: 'مهدی',
+                    kids: 'نیلان و دلوان'
+                };
+                let hasMonthlyExpenses = false;
+                for (const [type, items] of Object.entries(currentMonthData)) {
+                    const total = items.reduce((s, item) => s + item.amount, 0);
+                    if (total > 0) {
+                        txt += `${typeLabels[type] || type}: ${total.toLocaleString()} ریال\n`;
+                        hasMonthlyExpenses = true;
+                    }
+                }
+                if (!hasMonthlyExpenses) txt += 'هیچ هزینه‌ای ثبت نشده\n';
+                txt += '\n';
+
                 // ====== خلاصه مالی ======
                 const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
                 const totalExpense = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
                 const totalRentPaid = rents.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
-                const totalFaezeh = faezeh.reduce((s, f) => s + f.amount, 0);
-                const totalPersonal = personal.reduce((s, p) => s + p.amount, 0);
                 const totalLoanPaid = loans.filter(l => l.paid).reduce((s, l) => s + l.amount, 0);
                 const totalInvest = invest.reduce((s, i) => s + i.amount, 0);
                 const totalSavings = savings.reduce((s, i) => s + i.amount, 0);
 
-                const totalExpenses = totalExpense + totalRentPaid + totalFaezeh + totalPersonal + totalLoanPaid;
+                // جمع هزینه‌های ماهانه
+                let totalMonthlyExpenses = 0;
+                for (const items of Object.values(currentMonthData)) {
+                    totalMonthlyExpenses += items.reduce((s, item) => s + item.amount, 0);
+                }
+
+                const totalExpenses = totalExpense + totalRentPaid + totalLoanPaid + totalMonthlyExpenses;
                 const balance = totalIncome - totalExpenses - totalInvest;
 
                 txt += '═══════════════════════════════════════════════════\n';
@@ -1556,7 +1587,6 @@
                 txt += `⚖️ تراز نهایی: ${balance >= 0 ? '+' : ''}${balance.toLocaleString()} ریال\n`;
                 txt += '═══════════════════════════════════════════════════\n';
 
-                // دانلود
                 const blob = new Blob([txt], { type: 'text/plain;charset=utf-8;' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
@@ -1589,4 +1619,4 @@
         setInterval(renderAll, 30000);
     </script>
 </body>
-                </html>
+    </html>
